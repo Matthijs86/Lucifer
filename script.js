@@ -27,9 +27,9 @@ const STANDAARD_CATEGORIEEN = [
     "Boodschappen",
     "Afspraken",
     "Ideeën",
-    "Overig",
-    "Franciska (Terwille)",
-    "ADHD / Autisme"
+    "Franciska (terwille)",
+    "ADHD/Autisme",
+    "Overig"
 ];
 
 
@@ -156,6 +156,8 @@ document.addEventListener(
 
         categorieenLaden();
 
+        categorieSelectVullen();
+
         vandaagDatumInstellen();
 
         paginaInstellen();
@@ -191,7 +193,10 @@ function dataLaden() {
                 JSON.parse(opgeslagenTaken);
 
             if (Array.isArray(data)) {
-                taken = data;
+
+                taken =
+                    takenNormaliseren(data);
+
             }
 
         }
@@ -203,7 +208,9 @@ function dataLaden() {
                 JSON.parse(opgeslagenGedachten);
 
             if (Array.isArray(data)) {
+
                 gedachten = data;
+
             }
 
         }
@@ -219,6 +226,127 @@ function dataLaden() {
         gedachten = [];
 
     }
+
+}
+
+
+// ======================================
+// TAKEN NORMALISEREN
+// ======================================
+// Zorgt ervoor dat oudere taken,
+// ook zonder subtaken, blijven werken.
+// ======================================
+
+function takenNormaliseren(data) {
+
+    return data.map(
+        taak => {
+
+            return {
+
+                id:
+                    taak.id ||
+                    maakId(),
+
+                titel:
+                    taak.titel ||
+                    "",
+
+                categorie:
+                    taak.categorie ||
+                    "",
+
+                label:
+                    taak.label ||
+                    "",
+
+                notitie:
+                    taak.notitie ||
+                    "",
+
+                datum:
+                    taak.datum ||
+                    "",
+
+                subtaken:
+                    subtakenNormaliseren(
+                        taak.subtaken
+                    ),
+
+                afgerond:
+                    taak.afgerond === true,
+
+                verwerkt:
+                    taak.verwerkt === true,
+
+                aangemaakt:
+                    taak.aangemaakt ||
+                    new Date().toISOString(),
+
+                gewijzigd:
+                    taak.gewijzigd ||
+                    new Date().toISOString(),
+
+                afgerondOp:
+                    taak.afgerondOp ||
+                    ""
+
+            };
+
+        }
+    );
+
+}
+
+
+// ======================================
+// SUBTAKEN NORMALISEREN
+// ======================================
+
+function subtakenNormaliseren(subtaken) {
+
+    if (!Array.isArray(subtaken)) {
+        return [];
+    }
+
+
+    return subtaken.map(
+        subtaak => {
+
+            // Oude subtaken kunnen eventueel
+            // als string opgeslagen zijn.
+            if (typeof subtaak === "string") {
+
+                return {
+
+                    id: maakId(),
+
+                    titel: subtaak,
+
+                    afgerond: false
+
+                };
+
+            }
+
+
+            return {
+
+                id:
+                    subtaak.id ||
+                    maakId(),
+
+                titel:
+                    subtaak.titel ||
+                    "",
+
+                afgerond:
+                    subtaak.afgerond === true
+
+            };
+
+        }
+    );
 
 }
 
@@ -243,45 +371,40 @@ function dataOpslaan() {
 
 
 // ======================================
-// CATEGORIEËN
+// CATEGORIEËN LADEN
 // ======================================
 
 function categorieenLaden() {
 
-    const opgeslagen =
-        localStorage.getItem(OPSLAG_CATEGORIEEN);
-
-
     let categorieen = [];
 
 
-    if (opgeslagen) {
+    try {
 
-        try {
-
-            const data =
-                JSON.parse(opgeslagen);
-
-            if (Array.isArray(data)) {
-                categorieen = data;
-            }
-
-        } catch (fout) {
-
-            console.error(
-                "Lucy kon de categorieën niet laden:",
-                fout
+        const opgeslagen =
+            localStorage.getItem(
+                OPSLAG_CATEGORIEEN
             );
 
+
+        if (opgeslagen) {
+
+            categorieen =
+                JSON.parse(opgeslagen);
+
         }
+
+    } catch (fout) {
+
+        console.error(
+            "Categorieën konden niet worden geladen:",
+            fout
+        );
 
     }
 
 
-    // Als er nog geen categorieën zijn,
-    // gebruiken we alle standaardcategorieën.
-
-    if (categorieen.length === 0) {
+    if (!Array.isArray(categorieen)) {
 
         categorieen =
             [...STANDAARD_CATEGORIEEN];
@@ -289,18 +412,21 @@ function categorieenLaden() {
     }
 
 
-    // Ontbrekende standaardcategorieën
-    // automatisch toevoegen.
-    //
-    // Hierdoor verschijnen de nieuwe categorieën
-    // ook bij bestaande Lucy-gebruikers.
+    // Nieuwe standaardcategorieën toevoegen
+    // zonder bestaande categorieën te verwijderen.
 
     STANDAARD_CATEGORIEEN.forEach(
         categorie => {
 
-            if (!categorieen.includes(categorie)) {
+            if (
+                !categorieen.includes(
+                    categorie
+                )
+            ) {
 
-                categorieen.push(categorie);
+                categorieen.push(
+                    categorie
+                );
 
             }
 
@@ -312,6 +438,68 @@ function categorieenLaden() {
         OPSLAG_CATEGORIEEN,
         JSON.stringify(categorieen)
     );
+
+}
+
+
+// ======================================
+// CATEGORIE SELECT VULLEN
+// ======================================
+
+function categorieSelectVullen() {
+
+    const huidigeWaarde =
+        categorieSelect.value;
+
+
+    categorieSelect.innerHTML = "";
+
+
+    const geenCategorie =
+        document.createElement("option");
+
+    geenCategorie.value = "";
+
+    geenCategorie.textContent =
+        "Geen categorie";
+
+    categorieSelect.appendChild(
+        geenCategorie
+    );
+
+
+    const categorieen =
+        JSON.parse(
+            localStorage.getItem(
+                OPSLAG_CATEGORIEEN
+            )
+        ) || STANDAARD_CATEGORIEEN;
+
+
+    categorieen.forEach(
+        categorie => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                categorie;
+
+            option.textContent =
+                categorieIcoon(categorie) +
+                " " +
+                categorie;
+
+            categorieSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    categorieSelect.value =
+        huidigeWaarde;
 
 }
 
@@ -371,7 +559,10 @@ snelToevoegenForm.addEventListener(
         };
 
 
-        taken.unshift(nieuweTaak);
+        taken.unshift(
+            nieuweTaak
+        );
+
 
         dataOpslaan();
 
@@ -416,7 +607,9 @@ document
                     const pagina =
                         knop.dataset.pagina;
 
-                    paginaOpenen(pagina);
+                    paginaOpenen(
+                        pagina
+                    );
 
                 }
             );
@@ -441,7 +634,9 @@ function paginaOpenen(paginaId) {
 
 
     const gewenstePagina =
-        document.getElementById(paginaId);
+        document.getElementById(
+            paginaId
+        );
 
 
     if (gewenstePagina) {
@@ -460,7 +655,8 @@ function paginaOpenen(paginaId) {
 
                 knop.classList.toggle(
                     "actief",
-                    knop.dataset.pagina === paginaId
+                    knop.dataset.pagina ===
+                    paginaId
                 );
 
             }
@@ -468,7 +664,8 @@ function paginaOpenen(paginaId) {
 
 
     if (
-        paginaId === "paginaVandaag"
+        paginaId ===
+        "paginaVandaag"
     ) {
 
         vandaagWeergeven();
@@ -477,7 +674,8 @@ function paginaOpenen(paginaId) {
 
 
     if (
-        paginaId === "paginaCategorieen"
+        paginaId ===
+        "paginaCategorieen"
     ) {
 
         categorieenWeergeven();
@@ -486,19 +684,11 @@ function paginaOpenen(paginaId) {
 
 
     if (
-        paginaId === "paginaGedachten"
+        paginaId ===
+        "paginaGedachten"
     ) {
 
         gedachtenWeergeven();
-
-    }
-
-
-    if (
-        paginaId === "paginaInstellingen"
-    ) {
-
-        // niets nodig
 
     }
 
@@ -618,7 +808,7 @@ function hoofdLijstWeergeven() {
             .toLowerCase();
 
 
-    let zichtbareTaken =
+    const zichtbareTaken =
         taken.filter(
             taak => {
 
@@ -723,6 +913,15 @@ function taakZoekbaar(
     zoekterm
 ) {
 
+    const subtakenTekst =
+        (taak.subtaken || [])
+            .map(
+                subtaak =>
+                    subtaak.titel
+            )
+            .join(" ");
+
+
     const tekst = [
 
         taak.titel,
@@ -733,11 +932,7 @@ function taakZoekbaar(
 
         taak.notitie,
 
-        ...(taak.subtaken || [])
-            .map(
-                subtaak =>
-                    subtaak.titel
-            )
+        subtakenTekst
 
     ]
         .join(" ")
@@ -758,36 +953,28 @@ function taakZoekbaar(
 function taakKaartMaken(taak) {
 
     const kaart =
-        document.createElement(
-            "article"
-        );
+        document.createElement("article");
 
     kaart.className =
         "taak-kaart";
 
 
     const boven =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     boven.className =
         "taak-boven";
 
 
     const check =
-        document.createElement(
-            "button"
-        );
+        document.createElement("button");
 
     check.className =
         "taak-check";
 
-    check.type =
-        "button";
+    check.type = "button";
 
-    check.innerHTML =
-        "✓";
+    check.innerHTML = "✓";
 
     check.setAttribute(
         "aria-label",
@@ -810,18 +997,14 @@ function taakKaartMaken(taak) {
 
 
     const inhoud =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     inhoud.className =
         "taak-inhoud";
 
 
     const titel =
-        document.createElement(
-            "h3"
-        );
+        document.createElement("h3");
 
     titel.className =
         "taak-titel";
@@ -836,9 +1019,7 @@ function taakKaartMaken(taak) {
 
 
     const meta =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     meta.className =
         "taak-meta";
@@ -847,9 +1028,7 @@ function taakKaartMaken(taak) {
     if (taak.label) {
 
         const badge =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
         badge.className =
             "badge " +
@@ -870,18 +1049,13 @@ function taakKaartMaken(taak) {
     if (taak.categorie) {
 
         const badge =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
         badge.className =
             "badge";
 
         badge.textContent =
-            categorieIcoon(
-                taak.categorie
-            ) +
-            " " +
+            "📂 " +
             taak.categorie;
 
         meta.appendChild(
@@ -894,9 +1068,7 @@ function taakKaartMaken(taak) {
     if (taak.datum) {
 
         const badge =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
         badge.className =
             "badge datum";
@@ -919,6 +1091,10 @@ function taakKaartMaken(taak) {
     );
 
 
+    // ==================================
+    // SUBTAKEN OVERZICHT
+    // ==================================
+
     const subtaken =
         taak.subtaken || [];
 
@@ -933,19 +1109,19 @@ function taakKaartMaken(taak) {
 
 
         const mini =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         mini.className =
             "subtaken-mini";
 
-        mini.innerHTML =
-            "☑ <strong>" +
+
+        mini.textContent =
+            "☑ " +
             klaar +
             "/" +
             subtaken.length +
-            "</strong> subtaken";
+            " subtaken";
+
 
         inhoud.appendChild(
             mini
@@ -994,16 +1170,13 @@ function labelTekst(label) {
         return "🔴 Nu";
     }
 
-
     if (label === "later") {
         return "🟠 Later";
     }
 
-
     if (label === "bewaren") {
         return "🔵 Bewaren";
     }
-
 
     return label;
 
@@ -1031,17 +1204,22 @@ function taakVerwerkenOpenen(id) {
     bewerkId.value =
         taak.id;
 
+
     bewerkTitel.value =
         taak.titel;
+
 
     categorieSelect.value =
         taak.categorie || "";
 
+
     labelSelect.value =
         taak.label || "";
 
+
     datumSelect.value =
         taak.datum || "";
+
 
     notitieInput.value =
         taak.notitie || "";
@@ -1057,7 +1235,7 @@ function taakVerwerkenOpenen(id) {
                 knop.classList.toggle(
                     "geselecteerd",
                     knop.dataset.label ===
-                        taak.label
+                    taak.label
                 );
 
             }
@@ -1071,6 +1249,7 @@ function taakVerwerkenOpenen(id) {
 
     verwerkModal.hidden =
         false;
+
 
     document.body.style.overflow =
         "hidden";
@@ -1110,6 +1289,7 @@ function modalSluitenFunctie() {
     verwerkModal.hidden =
         true;
 
+
     document.body.style.overflow =
         "";
 
@@ -1121,9 +1301,7 @@ function modalSluitenFunctie() {
 // ======================================
 
 document
-    .querySelectorAll(
-        ".keuze-knop"
-    )
+    .querySelectorAll(".keuze-knop")
     .forEach(
         knop => {
 
@@ -1206,23 +1384,30 @@ verwerkForm.addEventListener(
         taak.titel =
             titel;
 
+
         taak.categorie =
             categorieSelect.value;
+
 
         taak.label =
             labelSelect.value;
 
+
         taak.datum =
             datumSelect.value;
+
 
         taak.notitie =
             notitieInput.value.trim();
 
+
         taak.subtaken =
             subtakenUitFormulierHalen();
 
+
         taak.verwerkt =
             true;
+
 
         taak.gewijzigd =
             new Date().toISOString();
@@ -1230,7 +1415,9 @@ verwerkForm.addEventListener(
 
         dataOpslaan();
 
+
         modalSluitenFunctie();
+
 
         lijstenVernieuwen();
 
@@ -1246,16 +1433,21 @@ subtaakToevoegenKnop.addEventListener(
     "click",
     () => {
 
+        const subtaak = {
+
+            id: maakId(),
+
+            titel: "",
+
+            afgerond: false
+
+        };
+
+
         const regel =
-            subtaakRegelMaken({
-
-                id: maakId(),
-
-                titel: "",
-
-                afgerond: false
-
-            });
+            subtaakRegelMaken(
+                subtaak
+            );
 
 
         subtakenLijst.appendChild(
@@ -1265,7 +1457,7 @@ subtaakToevoegenKnop.addEventListener(
 
         const input =
             regel.querySelector(
-                "input[type='text']"
+                ".subtaak-input"
             );
 
 
@@ -1309,68 +1501,127 @@ function subtakenWeergeven(
 // ======================================
 // SUBTAAK REGEL
 // ======================================
+// Iedere subtaak bestaat uit:
+// - checkbox
+// - tekstveld
+// - verwijderen-knop
+// ======================================
 
 function subtaakRegelMaken(
     subtaak
 ) {
 
     const regel =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     regel.className =
         "subtaak-regel";
 
-    regel.dataset.id =
-        subtaak.id;
 
+    regel.dataset.id =
+        subtaak.id ||
+        maakId();
+
+
+    // ==================================
+    // CHECKBOX
+    // ==================================
 
     const checkbox =
-        document.createElement(
-            "input"
-        );
+        document.createElement("input");
 
     checkbox.type =
         "checkbox";
 
-    checkbox.checked =
-        subtaak.afgerond;
+    checkbox.className =
+        "subtaak-checkbox";
 
+    checkbox.checked =
+        subtaak.afgerond === true;
+
+
+    // ==================================
+    // TEKSTVELD
+    // ==================================
 
     const input =
-        document.createElement(
-            "input"
-        );
+        document.createElement("input");
 
     input.type =
         "text";
 
+    input.className =
+        "subtaak-input";
+
     input.placeholder =
-        "Nieuwe subtaak...";
+        "Beschrijf de kleine opdracht...";
 
     input.value =
-        subtaak.titel;
+        subtaak.titel || "";
 
+
+    input.autocomplete =
+        "off";
+
+
+    // Tekst visueel afvinken
+    // wanneer de subtaak klaar is.
+
+    checkbox.addEventListener(
+        "change",
+        () => {
+
+            input.classList.toggle(
+                "afgerond",
+                checkbox.checked
+            );
+
+        }
+    );
+
+
+    if (checkbox.checked) {
+
+        input.classList.add(
+            "afgerond"
+        );
+
+    }
+
+
+    // ==================================
+    // VERWIJDEREN
+    // ==================================
 
     const verwijderen =
         document.createElement(
             "button"
         );
 
+
     verwijderen.type =
         "button";
 
+
     verwijderen.className =
         "subtaak-verwijder";
+
 
     verwijderen.textContent =
         "✕";
 
 
+    verwijderen.setAttribute(
+        "aria-label",
+        "Subtaak verwijderen"
+    );
+
+
     verwijderen.addEventListener(
         "click",
-        () => {
+        event => {
+
+            event.stopPropagation();
 
             regel.remove();
 
@@ -1378,13 +1629,19 @@ function subtaakRegelMaken(
     );
 
 
+    // ==================================
+    // OPBOUW
+    // ==================================
+
     regel.appendChild(
         checkbox
     );
 
+
     regel.appendChild(
         input
     );
+
 
     regel.appendChild(
         verwijderen
@@ -1397,7 +1654,7 @@ function subtaakRegelMaken(
 
 
 // ======================================
-// SUBTAKEN UIT FORMULIER
+// SUBTAKEN UIT FORMULIER HALEN
 // ======================================
 
 function subtakenUitFormulierHalen() {
@@ -1415,12 +1672,13 @@ function subtakenUitFormulierHalen() {
 
                 const input =
                     regel.querySelector(
-                        "input[type='text']"
+                        ".subtaak-input"
                     );
+
 
                 const checkbox =
                     regel.querySelector(
-                        "input[type='checkbox']"
+                        ".subtaak-checkbox"
                     );
 
 
@@ -1431,10 +1689,14 @@ function subtakenUitFormulierHalen() {
                         maakId(),
 
                     titel:
-                        input.value.trim(),
+                        input
+                            ? input.value.trim()
+                            : "",
 
                     afgerond:
-                        checkbox.checked
+                        checkbox
+                            ? checkbox.checked
+                            : false
 
                 };
 
@@ -1469,17 +1731,21 @@ function taakAfronden(id) {
     taak.afgerond =
         true;
 
+
     taak.verwerkt =
         true;
 
+
     taak.afgerondOp =
         new Date().toISOString();
+
 
     taak.gewijzigd =
         new Date().toISOString();
 
 
     dataOpslaan();
+
 
     lijstenVernieuwen();
 
@@ -1627,8 +1893,7 @@ function categorieenWeergeven() {
             localStorage.getItem(
                 OPSLAG_CATEGORIEEN
             )
-        ) ||
-        STANDAARD_CATEGORIEEN;
+        ) || STANDAARD_CATEGORIEEN;
 
 
     categorieen.forEach(
@@ -1639,26 +1904,25 @@ function categorieenWeergeven() {
                     taak =>
                         !taak.afgerond &&
                         taak.categorie ===
-                            categorie
+                        categorie
                 ).length;
 
 
             const kaart =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
+
 
             kaart.className =
                 "categorie-kaart";
 
 
             const icoon =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
+
 
             icoon.className =
                 "categorie-icoon";
+
 
             icoon.textContent =
                 categorieIcoon(
@@ -1667,24 +1931,24 @@ function categorieenWeergeven() {
 
 
             const naam =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
+
 
             naam.className =
                 "categorie-naam";
+
 
             naam.textContent =
                 categorie;
 
 
             const aantalElement =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
+
 
             aantalElement.className =
                 "categorie-aantal";
+
 
             aantalElement.textContent =
                 aantal +
@@ -1699,9 +1963,11 @@ function categorieenWeergeven() {
                 icoon
             );
 
+
             kaart.appendChild(
                 naam
             );
+
 
             kaart.appendChild(
                 aantalElement
@@ -1740,29 +2006,41 @@ function categorieIcoon(
 
     const iconen = {
 
-        "Sociaal": "👥",
+        "Sociaal":
+            "👥",
 
-        "Administratie": "📋",
+        "Administratie":
+            "📋",
 
-        "Klussen": "🔨",
+        "Klussen":
+            "🔨",
 
-        "Financiën": "💰",
+        "Financiën":
+            "💰",
 
-        "Huis": "🏠",
+        "Huis":
+            "🏠",
 
-        "Auto": "🚗",
+        "Auto":
+            "🚗",
 
-        "Boodschappen": "🛒",
+        "Boodschappen":
+            "🛒",
 
-        "Afspraken": "📅",
+        "Afspraken":
+            "📅",
 
-        "Ideeën": "💡",
+        "Ideeën":
+            "💡",
 
-        "Overig": "📦",
+        "Franciska (terwille)":
+            "❤️",
 
-        "Franciska (Terwille)": "❤️",
+        "ADHD/Autisme":
+            "🧠",
 
-        "ADHD / Autisme": "🧠"
+        "Overig":
+            "📦"
 
     };
 
@@ -1806,7 +2084,7 @@ function categorieFilteren(
                 knop.classList.toggle(
                     "actief",
                     knop.dataset.filter ===
-                        "alles"
+                    "alles"
                 );
 
             }
@@ -1885,6 +2163,7 @@ function gedachtenWeergeven() {
                     "article"
                 );
 
+
             kaart.className =
                 "gedachte-kaart";
 
@@ -1894,8 +2173,10 @@ function gedachtenWeergeven() {
                     "p"
                 );
 
+
             tekst.className =
                 "gedachte-tekst";
+
 
             tekst.textContent =
                 gedachte.tekst;
@@ -1906,8 +2187,10 @@ function gedachtenWeergeven() {
                     "div"
                 );
 
+
             datum.className =
                 "gedachte-datum";
+
 
             datum.textContent =
                 datumTijdMooi(
@@ -1919,6 +2202,7 @@ function gedachtenWeergeven() {
                 tekst
             );
 
+
             kaart.appendChild(
                 datum
             );
@@ -1929,6 +2213,7 @@ function gedachtenWeergeven() {
                 event => {
 
                     event.preventDefault();
+
 
                     gedachteVerwijderen(
                         gedachte.id
@@ -1975,6 +2260,7 @@ function gedachteVerwijderen(
 
 
     dataOpslaan();
+
 
     gedachtenWeergeven();
 
@@ -2046,8 +2332,10 @@ backupKnop.addEventListener(
                 "a"
             );
 
+
         link.href =
             url;
+
 
         link.download =
             "lucy-backup-" +
@@ -2126,7 +2414,9 @@ backupInput.addEventListener(
 
 
                     taken =
-                        backup.taken;
+                        takenNormaliseren(
+                            backup.taken
+                        );
 
 
                     gedachten =
@@ -2137,43 +2427,25 @@ backupInput.addEventListener(
                             : [];
 
 
-                    let backupCategorieen =
+                    if (
                         Array.isArray(
                             backup.categorieen
                         )
-                            ? backup.categorieen
-                            : [];
+                    ) {
+
+                        localStorage.setItem(
+                            OPSLAG_CATEGORIEEN,
+                            JSON.stringify(
+                                backup.categorieen
+                            )
+                        );
+
+                    }
 
 
-                    // Ook bij een oude backup
-                    // de nieuwe categorieën toevoegen.
+                    categorieenLaden();
 
-                    STANDAARD_CATEGORIEEN.forEach(
-                        categorie => {
-
-                            if (
-                                !backupCategorieen.includes(
-                                    categorie
-                                )
-                            ) {
-
-                                backupCategorieen.push(
-                                    categorie
-                                );
-
-                            }
-
-                        }
-                    );
-
-
-                    localStorage.setItem(
-                        OPSLAG_CATEGORIEEN,
-                        JSON.stringify(
-                            backupCategorieen
-                        )
-                    );
-
+                    categorieSelectVullen();
 
                     dataOpslaan();
 
@@ -2187,7 +2459,10 @@ backupInput.addEventListener(
 
                 } catch (fout) {
 
-                    console.error(fout);
+                    console.error(
+                        fout
+                    );
+
 
                     alert(
                         "Deze backup kon niet worden teruggezet."
@@ -2244,6 +2519,7 @@ allesWissenKnop.addEventListener(
             OPSLAG_TAKEN
         );
 
+
         localStorage.removeItem(
             OPSLAG_GEDACHTEN
         );
@@ -2252,10 +2528,6 @@ allesWissenKnop.addEventListener(
         taken = [];
 
         gedachten = [];
-
-
-        // Categorieën bewust NIET verwijderen.
-        // De standaardcategorieën blijven behouden.
 
 
         lijstenVernieuwen();
@@ -2323,12 +2595,8 @@ function datumMooiWeergeven(
         datum.split("-");
 
 
-    if (
-        delen.length !== 3
-    ) {
-
+    if (delen.length !== 3) {
         return datum;
-
     }
 
 
@@ -2417,9 +2685,7 @@ function serviceWorkerRegistreren() {
 function paginaInstellen() {
 
     document
-        .querySelectorAll(
-            ".pagina"
-        )
+        .querySelectorAll(".pagina")
         .forEach(
             pagina => {
 
