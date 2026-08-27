@@ -1,6 +1,11 @@
 /* ======================================
    LUCY
-   MOBILE FIRST
+   Alles uit je hoofd.
+   ====================================== */
+
+
+/* ======================================
+   BASIS
    ====================================== */
 
 * {
@@ -8,7 +13,7 @@
 }
 
 html {
-    min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -22,15 +27,20 @@ body {
 
     background:
         radial-gradient(
-            circle at top,
-            #35213c 0%,
-            #1b1620 42%,
-            #100d13 100%
-        );
+            circle at top left,
+            rgba(104, 67, 145, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(38, 91, 130, 0.18),
+            transparent 35%
+        ),
+        #17121c;
 
-    color: #f4edf7;
+    color: #f2edf7;
 
-    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
 }
 
 
@@ -40,11 +50,9 @@ body {
 
 .app {
     width: 100%;
-    max-width: 700px;
     min-height: 100vh;
-    margin: 0 auto;
 
-    padding-bottom: 90px;
+    padding-bottom: 82px;
 }
 
 
@@ -53,44 +61,46 @@ body {
    ====================================== */
 
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding:
-        calc(18px + env(safe-area-inset-top))
-        18px
-        18px;
-
-    background: rgba(18, 13, 22, 0.88);
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 50;
 
-    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        max(16px, env(safe-area-inset-top))
+        18px
+        16px;
+
+    background:
+        rgba(23, 18, 28, 0.94);
+
+    border-bottom:
+        1px solid rgba(168, 111, 220, 0.18);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .app-logo {
     font-size: 28px;
     font-weight: 900;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
 
-    color: #ffffff;
+    color: #d69cff;
 
     text-shadow:
-        0 0 8px #9d4edd,
-        0 0 20px rgba(157,78,221,0.7);
+        0 0 8px rgba(214, 156, 255, 0.55),
+        0 0 18px rgba(130, 80, 180, 0.35);
 }
 
 .app-subtitle {
     margin-top: 2px;
 
     font-size: 12px;
-    color: #bdaec5;
-    letter-spacing: 0.5px;
+    color: #aaa0b4;
 }
 
 
@@ -102,31 +112,74 @@ body {
     width: 44px;
     height: 44px;
 
-    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(190, 120, 255, 0.35);
     border-radius: 12px;
 
-    background: #251b2b;
+    background: rgba(75, 47, 92, 0.35);
 
     color: white;
-
-    font-size: 19px;
+    font-size: 20px;
 
     cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.icon-button:hover {
+    transform: translateY(-2px);
+
+    background: rgba(105, 63, 135, 0.55);
+
+    box-shadow:
+        0 0 14px rgba(190, 120, 255, 0.25);
+}
+
+.icon-button:active {
+    transform: scale(0.94);
 }
 
 
 /* ======================================
-   PAGINA
+   PAGINA'S
    ====================================== */
 
 .pagina {
     display: none;
+
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
 
     padding: 22px 16px 30px;
 }
 
 .pagina.actief {
     display: block;
+
+    animation:
+        paginaIn 0.22s ease;
+}
+
+@keyframes paginaIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
 
@@ -141,26 +194,23 @@ body {
 .welkom-blok h1 {
     margin: 0 0 8px;
 
-    font-size: 25px;
+    font-size: clamp(24px, 6vw, 34px);
     line-height: 1.15;
+
+    color: #ffffff;
 }
 
 .welkom-blok p {
     margin: 0;
 
-    color: #bdaec5;
-
-    line-height: 1.5;
+    color: #aaa1b1;
+    line-height: 1.55;
 }
 
 
 /* ======================================
-   SNEL TOEVOEGEN
+   FORMULIEREN
    ====================================== */
-
-.snel-toevoegen {
-    margin-bottom: 20px;
-}
 
 textarea,
 input,
@@ -170,129 +220,175 @@ select {
     font-family: inherit;
     font-size: 16px;
 
-    color: #ffffff;
+    color: #f7f1fb;
 
-    background: #211923;
+    background: #211a27;
 
-    border: 1px solid #45344d;
-    border-radius: 14px;
+    border: 1px solid #44344d;
+    border-radius: 12px;
 
     outline: none;
 
     transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+textarea,
+input {
+    padding: 13px 14px;
 }
 
 textarea {
     resize: vertical;
-
-    min-height: 90px;
-
-    padding: 14px;
+    line-height: 1.5;
 }
 
-input,
 select {
-    min-height: 50px;
-    padding: 12px 14px;
+    min-height: 48px;
+    padding: 0 12px;
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: #756b7c;
 }
 
 textarea:focus,
 input:focus,
 select:focus {
-    border-color: #9d4edd;
+    border-color: #b46aff;
+
+    background: #261d2d;
 
     box-shadow:
-        0 0 0 3px rgba(157,78,221,0.15),
-        0 0 15px rgba(157,78,221,0.15);
-}
-
-textarea::placeholder,
-input::placeholder {
-    color: #806e87;
+        0 0 0 3px rgba(180, 106, 255, 0.12),
+        0 0 15px rgba(180, 106, 255, 0.12);
 }
 
 
 /* ======================================
-   BUTTONS
+   SNEL TOEVOEGEN
+   ====================================== */
+
+.snel-toevoegen {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.snel-toevoegen textarea {
+    min-height: 72px;
+}
+
+
+/* ======================================
+   KNOPPEN
    ====================================== */
 
 button {
     font-family: inherit;
 }
 
+.primary-button,
+.secondary-button,
+.danger-button {
+    min-height: 48px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
 .primary-button {
-    width: 100%;
-
-    min-height: 50px;
-
-    margin-top: 10px;
-
-    border: 0;
-    border-radius: 14px;
+    border: 1px solid #b86cff;
 
     background:
         linear-gradient(
             135deg,
-            #9d4edd,
-            #6f35a8
+            #7136a3,
+            #47216e
         );
-
-    color: #ffffff;
-
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 0 12px rgba(157,78,221,0.35);
-}
-
-.primary-button:active {
-    transform: scale(0.98);
-}
-
-.secondary-button {
-    width: 100%;
-
-    min-height: 48px;
-
-    margin-top: 10px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 1px solid #54435c;
-    border-radius: 13px;
-
-    background: #251b2b;
 
     color: white;
 
-    font-weight: 800;
+    box-shadow:
+        0 0 12px rgba(171, 92, 255, 0.2);
+}
 
-    cursor: pointer;
+.primary-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 18px rgba(171, 92, 255, 0.4);
+}
+
+.secondary-button {
+    border: 1px solid #3e7fb0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #214e70,
+            #17354d
+        );
+
+    color: #e9f6ff;
+}
+
+.secondary-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 16px rgba(63, 146, 207, 0.3);
 }
 
 .danger-button {
-    min-height: 48px;
+    border: 1px solid #e44b62;
 
-    padding: 0 15px;
+    background:
+        linear-gradient(
+            135deg,
+            #782638,
+            #481522
+        );
 
-    border: 1px solid #773b49;
-    border-radius: 13px;
+    color: #fff;
 
-    background: #321a23;
+    box-shadow:
+        0 0 10px rgba(228, 75, 98, 0.12);
+}
 
-    color: #ff8fa3;
+.danger-button:hover {
+    transform: translateY(-2px);
 
-    font-weight: 800;
+    box-shadow:
+        0 0 18px rgba(228, 75, 98, 0.3);
+}
 
-    cursor: pointer;
+.primary-button:active,
+.secondary-button:active,
+.danger-button:active {
+    transform: scale(0.97);
 }
 
 
@@ -303,7 +399,8 @@ button {
 .mini-overzicht {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 8px;
 
@@ -311,41 +408,52 @@ button {
 }
 
 .stat-card {
-    padding: 13px 8px;
+    min-height: 82px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 12px;
+
+    border:
+        1px solid rgba(154, 105, 180, 0.22);
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(54, 38, 61, 0.88),
+            rgba(32, 25, 38, 0.95)
+        );
 
     text-align: center;
-
-    background: #211923;
-
-    border: 1px solid #3d2d44;
-    border-radius: 13px;
 }
 
 .stat-card span {
-    display: block;
-
-    font-size: 23px;
+    font-size: 25px;
     font-weight: 900;
 
-    color: #c98cff;
+    color: #d49aff;
 }
 
 .stat-card small {
-    display: block;
-
     margin-top: 3px;
 
-    color: #a996b0;
-
+    color: #a9a0ad;
     font-size: 11px;
 }
 
 .stat-card.belangrijk span {
-    color: #ff6b81;
+    color: #ff667b;
+
+    text-shadow:
+        0 0 10px rgba(255, 72, 95, 0.35);
 }
 
 .stat-card.vandaag span {
-    color: #65b7ff;
+    color: #62b9ff;
 }
 
 
@@ -357,54 +465,65 @@ button {
     margin-bottom: 12px;
 }
 
-.zoek-container input {
-    min-height: 46px;
-}
-
 
 /* ======================================
    FILTERS
    ====================================== */
 
 .filter-balk {
-    display: flex;
+    display: grid;
 
-    gap: 7px;
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    overflow-x: auto;
+    gap: 6px;
 
-    padding-bottom: 4px;
+    margin-bottom: 24px;
 }
 
 .filter-knop {
-    flex: 0 0 auto;
+    min-height: 42px;
 
-    min-height: 38px;
+    border: 1px solid #3e3345;
+    border-radius: 10px;
 
-    padding: 0 13px;
+    background: #211a27;
 
-    border: 1px solid #44354b;
-    border-radius: 20px;
+    color: #aaa0b0;
 
-    background: #201822;
-
-    color: #a995ae;
-
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
 
     cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.filter-knop:hover {
+    transform: translateY(-1px);
+
+    border-color: #72517f;
+    color: white;
 }
 
 .filter-knop.actief {
-    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #62348a,
+            #40245a
+        );
 
-    border-color: #9d4edd;
+    border-color: #ae67df;
 
-    background: #3a2450;
+    color: white;
 
     box-shadow:
-        0 0 10px rgba(157,78,221,0.18);
+        0 0 12px rgba(174, 103, 223, 0.18);
 }
 
 
@@ -414,100 +533,131 @@ button {
 
 .sectie-titel {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    margin: 24px 2px 10px;
+    margin-bottom: 12px;
 }
 
 .sectie-titel h2 {
     margin: 0;
 
-    font-size: 15px;
-    letter-spacing: 0.7px;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    color: #cdbdd4;
 }
 
-.sectie-titel span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.sectie-titel > span {
+    min-width: 30px;
 
-    min-width: 28px;
-    height: 28px;
+    padding: 4px 9px;
 
-    border-radius: 50%;
+    border-radius: 20px;
 
-    background: #30213a;
+    background: #33253a;
 
-    color: #c98cff;
+    color: #d99aff;
 
     font-size: 12px;
-    font-weight: 900;
+    font-weight: 800;
+
+    text-align: center;
 }
 
 
 /* ======================================
-   TAKEN
+   TAAK LIJST
    ====================================== */
 
 .taken-lijst {
     display: flex;
     flex-direction: column;
 
-    gap: 9px;
+    gap: 10px;
 }
 
+
+/* ======================================
+   TAAK KAART
+   ====================================== */
+
 .taak-kaart {
-    padding: 15px;
+    padding: 14px;
 
-    background: #211923;
+    border:
+        1px solid rgba(139, 98, 157, 0.25);
 
-    border: 1px solid #3c2c43;
     border-radius: 15px;
 
-    box-shadow:
-        0 4px 12px rgba(0,0,0,0.15);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(47, 34, 53, 0.95),
+            rgba(29, 23, 34, 0.98)
+        );
 
     cursor: pointer;
 
     transition:
-        transform 0.15s,
-        border-color 0.15s;
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
-.taak-kaart:active {
-    transform: scale(0.985);
+.taak-kaart:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(183, 107, 232, 0.55);
+
+    box-shadow:
+        0 7px 22px rgba(0, 0, 0, 0.22),
+        0 0 14px rgba(174, 90, 220, 0.08);
 }
 
 .taak-boven {
     display: flex;
     align-items: flex-start;
 
-    gap: 10px;
+    gap: 12px;
 }
 
 .taak-check {
-    width: 24px;
-    height: 24px;
+    flex: 0 0 auto;
 
-    flex: 0 0 24px;
+    width: 34px;
+    height: 34px;
 
-    border: 2px solid #66536d;
-    border-radius: 7px;
+    margin-top: 1px;
 
-    background: transparent;
+    border: 1px solid #67536f;
+    border-radius: 9px;
 
-    color: white;
+    background: #241c2a;
+
+    color: #927da0;
+
+    font-size: 17px;
+    font-weight: 900;
 
     cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
 }
 
-.taak-check.klaar {
-    border-color: #58c88a;
+.taak-check:hover {
+    border-color: #b46cff;
 
-    background: #276444;
+    background: #3a2744;
 
-    font-size: 14px;
+    color: #d69cff;
+
+    transform: scale(1.05);
 }
 
 .taak-inhoud {
@@ -516,19 +666,14 @@ button {
 }
 
 .taak-titel {
-    margin: 0;
+    margin: 0 0 8px;
+
+    color: #f5eef8;
 
     font-size: 16px;
-    font-weight: 800;
-
     line-height: 1.35;
 
-    overflow-wrap: anywhere;
-}
-
-.taak-klaar .taak-titel {
-    color: #776d7a;
-    text-decoration: line-through;
+    word-break: break-word;
 }
 
 .taak-meta {
@@ -536,9 +681,12 @@ button {
     flex-wrap: wrap;
 
     gap: 5px;
-
-    margin-top: 9px;
 }
+
+
+/* ======================================
+   BADGES
+   ====================================== */
 
 .badge {
     display: inline-flex;
@@ -546,68 +694,79 @@ button {
 
     min-height: 25px;
 
-    padding: 3px 8px;
+    padding: 4px 8px;
 
-    border-radius: 20px;
+    border:
+        1px solid rgba(164, 124, 179, 0.25);
 
-    background: #30253a;
+    border-radius: 7px;
 
-    color: #c5b7cc;
+    background: rgba(66, 47, 73, 0.7);
+
+    color: #cfc1d5;
 
     font-size: 11px;
     font-weight: 700;
 }
 
 .badge.nu {
-    background: #45202b;
-    color: #ff8297;
+    border-color: rgba(255, 82, 102, 0.4);
+
+    background: rgba(117, 30, 47, 0.25);
+
+    color: #ff8494;
 }
 
 .badge.later {
-    background: #48351d;
-    color: #ffc66d;
+    border-color: rgba(255, 157, 67, 0.4);
+
+    background: rgba(124, 70, 25, 0.22);
+
+    color: #ffb16d;
 }
 
 .badge.bewaren {
-    background: #202e46;
-    color: #70baff;
+    border-color: rgba(70, 161, 238, 0.4);
+
+    background: rgba(31, 83, 125, 0.24);
+
+    color: #7bc5ff;
 }
 
 .badge.datum {
-    background: #202e2e;
-    color: #7ee0dc;
-}
-
-.subtaken-mini {
-    margin-top: 10px;
-
-    font-size: 12px;
-
-    color: #9f8fa5;
-}
-
-.subtaken-mini strong {
-    color: #c8b8cf;
+    color: #a9d8ff;
 }
 
 
 /* ======================================
-   LEEG
+   SUBTAKEN MINI
+   ====================================== */
+
+.subtaken-mini {
+    margin-top: 9px;
+
+    color: #928797;
+
+    font-size: 11px;
+}
+
+.subtaken-mini strong {
+    color: #cba0df;
+}
+
+
+/* ======================================
+   LEGE LIJST
    ====================================== */
 
 .lege-melding {
     display: none;
 
-    margin-top: 25px;
-
-    padding: 30px 18px;
+    padding: 35px 18px;
 
     text-align: center;
 
-    border: 1px dashed #44354b;
-    border-radius: 16px;
-
-    background: rgba(30,23,34,0.5);
+    color: #928997;
 }
 
 .lege-melding.zichtbaar {
@@ -615,21 +774,22 @@ button {
 }
 
 .lege-icoon {
-    font-size: 34px;
+    margin-bottom: 8px;
 
-    margin-bottom: 10px;
+    font-size: 38px;
+    opacity: 0.75;
 }
 
 .lege-melding h3 {
     margin: 0 0 6px;
+
+    color: #d4c8d8;
 
     font-size: 17px;
 }
 
 .lege-melding p {
     margin: 0;
-
-    color: #95859b;
 
     font-size: 13px;
     line-height: 1.5;
@@ -642,31 +802,41 @@ button {
 
 .pagina-kop {
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 15px;
 
     margin-bottom: 22px;
 }
 
-.pagina-kop h1 {
-    margin: 5px 0 0;
-
-    font-size: 25px;
-}
-
 .kleine-label {
-    color: #9677a3;
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #917c9d;
 
     font-size: 10px;
-    font-weight: 900;
+    font-weight: 800;
 
     letter-spacing: 1.5px;
 }
 
-#datumVandaag {
-    color: #9f8fa5;
+.pagina-kop h1 {
+    margin: 0;
 
-    font-size: 12px;
+    color: #ffffff;
+
+    font-size: 28px;
+}
+
+#datumVandaag {
+    color: #938897;
+
+    font-size: 11px;
+
+    text-align: right;
 }
 
 
@@ -677,39 +847,72 @@ button {
 .categorie-lijst {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        repeat(2, 1fr);
 
-    gap: 9px;
+    gap: 10px;
 }
 
 .categorie-kaart {
+    min-height: 115px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     padding: 16px;
 
-    border: 1px solid #3d2d44;
+    border:
+        1px solid rgba(151, 102, 172, 0.25);
+
     border-radius: 15px;
 
-    background: #211923;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(50, 36, 56, 0.95),
+            rgba(31, 24, 37, 0.98)
+        );
 
     cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.categorie-kaart:hover {
+    transform: translateY(-3px);
+
+    border-color: #9d62ba;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.22),
+        0 0 14px rgba(166, 95, 206, 0.1);
 }
 
 .categorie-icoon {
+    margin-bottom: 7px;
+
     font-size: 25px;
 }
 
 .categorie-naam {
-    margin-top: 9px;
+    color: #eee5f0;
 
     font-size: 14px;
     font-weight: 800;
+
+    word-break: break-word;
 }
 
 .categorie-aantal {
     margin-top: 4px;
 
-    color: #a694ad;
+    color: #918593;
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
 
@@ -718,32 +921,38 @@ button {
    ====================================== */
 
 .gedachte-uitleg {
-    padding: 15px;
+    margin-bottom: 18px;
 
-    margin-bottom: 16px;
+    padding: 14px;
 
-    border-left: 3px solid #9d4edd;
+    border-left:
+        3px solid #8e58aa;
 
-    background: #211923;
+    border-radius: 0 10px 10px 0;
 
-    border-radius: 0 12px 12px 0;
+    background: rgba(65, 46, 73, 0.35);
 }
 
 .gedachte-uitleg p {
-    margin: 0 0 8px;
+    margin: 0;
 
-    color: #b8a9bf;
+    color: #a89eaa;
 
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
-.gedachte-uitleg p:last-child {
-    margin-bottom: 0;
+.gedachte-uitleg p + p {
+    margin-top: 8px;
 }
 
 .gedachte-form {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
 }
 
 .gedachten-lijst {
@@ -756,27 +965,31 @@ button {
 .gedachte-kaart {
     padding: 15px;
 
-    background: #211923;
+    border:
+        1px solid rgba(147, 98, 168, 0.25);
 
-    border: 1px solid #3d2d44;
-    border-radius: 15px;
+    border-radius: 14px;
+
+    background: #211a27;
 }
 
 .gedachte-tekst {
     margin: 0;
 
-    white-space: pre-wrap;
+    color: #e6dfe8;
 
-    font-size: 15px;
     line-height: 1.55;
+
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .gedachte-datum {
-    margin-top: 10px;
+    margin-top: 12px;
 
-    color: #897990;
+    color: #817584;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 
@@ -789,105 +1002,143 @@ button {
 
     padding: 18px;
 
-    border: 1px solid #3d2d44;
-    border-radius: 16px;
+    border:
+        1px solid rgba(145, 103, 159, 0.25);
 
-    background: #211923;
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(49, 37, 55, 0.95),
+            rgba(30, 24, 36, 0.98)
+        );
 }
 
 .instellingen-kaart h2 {
-    margin: 0 0 7px;
+    margin: 0 0 8px;
+
+    color: #eee5f1;
 
     font-size: 17px;
 }
 
 .instellingen-kaart p {
-    margin: 0;
+    margin: 0 0 15px;
 
-    color: #a594ab;
+    color: #958a99;
 
     font-size: 13px;
     line-height: 1.5;
 }
 
+.instellingen-kaart .secondary-button,
+.instellingen-kaart .danger-button {
+    width: 100%;
+
+    margin-top: 8px;
+}
+
+.bestand-knop {
+    cursor: pointer;
+}
+
 .instellingen-kaart.gevaar {
-    border-color: #57303b;
+    border-color:
+        rgba(214, 64, 82, 0.25);
+}
+
+.instellingen-kaart.gevaar h2 {
+    color: #ff8291;
 }
 
 .over-lucy {
-    padding: 30px 0;
+    padding: 25px 10px;
 
     text-align: center;
 
-    color: #806f87;
+    color: #817584;
 }
 
 .over-lucy strong {
-    color: #ffffff;
+    display: block;
 
-    letter-spacing: 4px;
+    color: #c98df0;
+
+    font-size: 22px;
+    letter-spacing: 3px;
 }
 
 .over-lucy p {
-    margin: 7px 0;
+    margin: 5px 0 8px;
 
-    font-size: 13px;
+    font-size: 12px;
+}
+
+.over-lucy small {
+    font-size: 10px;
 }
 
 
 /* ======================================
-   BOTTOM NAV
+   BOTTOM NAVIGATIE
    ====================================== */
 
 .bottom-nav {
     position: fixed;
-
     left: 0;
     right: 0;
     bottom: 0;
 
-    z-index: 30;
+    z-index: 100;
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    max-width: 700px;
-
-    margin: 0 auto;
+    height: 70px;
 
     padding:
+        5px
         8px
-        8px
-        calc(8px + env(safe-area-inset-bottom));
+        max(5px, env(safe-area-inset-bottom));
 
-    background: rgba(17,12,20,0.94);
+    background:
+        rgba(24, 18, 29, 0.96);
 
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top:
+        1px solid rgba(157, 101, 184, 0.22);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .nav-knop {
-    min-height: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
 
     border: 0;
 
     background: transparent;
 
-    color: #796a81;
+    color: #786d7e;
 
     cursor: pointer;
 
-    border-radius: 12px;
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
 }
 
 .nav-knop span {
-    display: block;
+    font-size: 21px;
 
-    font-size: 20px;
-
-    margin-bottom: 3px;
+    filter: grayscale(0.6);
 }
 
 .nav-knop small {
@@ -895,10 +1146,21 @@ button {
     font-weight: 700;
 }
 
-.nav-knop.actief {
-    color: #d69cff;
+.nav-knop:hover {
+    color: #cda0e8;
+}
 
-    background: rgba(157,78,221,0.10);
+.nav-knop.actief {
+    color: #d39af7;
+
+    transform: translateY(-2px);
+}
+
+.nav-knop.actief span {
+    filter: none;
+
+    text-shadow:
+        0 0 10px rgba(204, 133, 246, 0.35);
 }
 
 
@@ -908,18 +1170,21 @@ button {
 
 .modal-overlay {
     position: fixed;
-
     inset: 0;
 
-    z-index: 100;
+    z-index: 500;
 
     display: flex;
     align-items: flex-end;
     justify-content: center;
 
-    background: rgba(0,0,0,0.72);
-
     padding: 0;
+
+    background:
+        rgba(5, 3, 7, 0.78);
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .modal-overlay[hidden] {
@@ -929,6 +1194,7 @@ button {
 .modal {
     width: 100%;
     max-width: 700px;
+
     max-height: 94vh;
 
     overflow-y: auto;
@@ -936,82 +1202,127 @@ button {
     padding:
         20px
         16px
-        calc(25px + env(safe-area-inset-bottom));
+        max(22px, env(safe-area-inset-bottom));
 
-    background: #17121c;
+    border-radius:
+        22px
+        22px
+        0
+        0;
 
-    border-top: 1px solid #4b3854;
-    border-radius: 22px 22px 0 0;
+    background:
+        linear-gradient(
+            160deg,
+            #2a2030,
+            #1c1720
+        );
+
+    border:
+        1px solid rgba(174, 104, 214, 0.35);
 
     box-shadow:
-        0 -10px 40px rgba(0,0,0,0.4);
+        0 -10px 40px rgba(0, 0, 0, 0.45);
+
+    animation:
+        modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    justify-content: space-between;
 
-    margin-bottom: 20px;
+    gap: 15px;
+
+    margin-bottom: 22px;
 }
 
 .modal-header h2 {
-    margin: 4px 0 0;
-
-    font-size: 22px;
-}
-
-.modal-sluit-knop {
-    width: 42px;
-    height: 42px;
-
-    border: 1px solid #44354b;
-    border-radius: 12px;
-
-    background: #251b2b;
+    margin: 0;
 
     color: white;
 
-    font-size: 18px;
-
-    cursor: pointer;
+    font-size: 23px;
 }
 
-#verwerkForm > label {
-    display: block;
+.modal-sluit-knop {
+    width: 40px;
+    height: 40px;
 
-    margin:
-        17px
-        0
-        7px;
+    border: 1px solid #4b394f;
+    border-radius: 10px;
 
-    color: #c9bbcF;
+    background: #261e2b;
+
+    color: #b9aabb;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.modal-sluit-knop:hover {
+    background: #3a293f;
+    color: white;
+}
+
+
+/* ======================================
+   MODAL FORMULIER
+   ====================================== */
+
+#verwerkForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+#verwerkForm label {
+    margin-top: 8px;
+
+    color: #b8aabb;
 
     font-size: 12px;
     font-weight: 800;
 }
 
-#verwerkForm > textarea:first-of-type {
-    min-height: 80px;
-}
-
 
 /* ======================================
-   KEUZE LABELS
+   KEUZE GRID
    ====================================== */
 
 .keuze-grid {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 7px;
+
+    margin-top: 2px;
 }
 
 .keuze-knop {
-    min-height: 82px;
-
-    padding: 8px;
+    min-height: 78px;
 
     display: flex;
     flex-direction: column;
@@ -1020,39 +1331,54 @@ button {
 
     gap: 3px;
 
-    border: 1px solid #403148;
-    border-radius: 13px;
+    padding: 8px;
 
-    background: #211923;
+    border: 1px solid #44354a;
+    border-radius: 11px;
 
-    color: #ffffff;
+    background: #211a27;
+
+    color: #b8acbd;
 
     cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
-.keuze-knop > strong {
-    font-size: 13px;
+.keuze-knop:hover {
+    transform: translateY(-2px);
+
+    border-color: #81618c;
 }
 
-.keuze-knop > small {
-    color: #8f7d96;
+.keuze-knop strong {
+    font-size: 12px;
+}
+
+.keuze-knop small {
+    color: #766b7a;
 
     font-size: 9px;
 }
 
-.keuze-knop.geselecteerd[data-label="nu"] {
-    border-color: #ff637c;
-    background: #3d2029;
-}
+.keuze-knop.geselecteerd {
+    border-color: #b36ce4;
 
-.keuze-knop.geselecteerd[data-label="later"] {
-    border-color: #e4a84d;
-    background: #3c301e;
-}
+    background:
+        linear-gradient(
+            145deg,
+            #493053,
+            #302037
+        );
 
-.keuze-knop.geselecteerd[data-label="bewaren"] {
-    border-color: #5faeff;
-    background: #202d43;
+    color: white;
+
+    box-shadow:
+        0 0 13px rgba(180, 105, 230, 0.18);
 }
 
 
@@ -1062,10 +1388,10 @@ button {
 
 .subtaken-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    margin-top: 17px;
+    margin-top: 8px;
 }
 
 .subtaken-header label {
@@ -1073,21 +1399,32 @@ button {
 }
 
 .kleine-knop {
-    min-height: 35px;
+    min-height: 34px;
 
-    padding: 0 10px;
+    padding: 7px 10px;
 
-    border: 1px solid #4b3954;
-    border-radius: 10px;
+    border:
+        1px solid #755183;
 
-    background: #2a1e31;
+    border-radius: 8px;
 
-    color: #d2a0f1;
+    background: #2c2031;
+
+    color: #d39bf1;
 
     font-size: 11px;
     font-weight: 800;
 
     cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.kleine-knop:hover {
+    background: #3c2944;
+    transform: translateY(-1px);
 }
 
 .subtaken-lijst {
@@ -1096,36 +1433,104 @@ button {
 
     gap: 7px;
 
-    margin-top: 8px;
+    margin-top: 2px;
 }
 
 .subtaak-regel {
-    display: flex;
+    display: grid;
+
+    grid-template-columns:
+        30px minmax(0, 1fr) 34px;
+
     align-items: center;
 
-    gap: 8px;
-}
+    gap: 7px;
 
-.subtaak-regel input[type="text"] {
-    flex: 1;
+    padding: 7px;
 
-    min-height: 43px;
+    border:
+        1px solid #3c3041;
 
-    border-radius: 11px;
-}
-
-.subtaak-verwijder {
-    width: 40px;
-    height: 40px;
-
-    border: 0;
     border-radius: 10px;
 
-    background: #301b23;
+    background: #211a27;
+}
 
-    color: #ff8b9f;
+
+/* Checkbox */
+
+.subtaak-regel input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+
+    margin: 0;
+
+    accent-color: #ad68d7;
 
     cursor: pointer;
+}
+
+
+/* Tekstveld van subtaak */
+
+.subtaak-regel input[type="text"] {
+    width: 100%;
+    min-width: 0;
+
+    min-height: 40px;
+
+    padding: 9px 10px;
+
+    border:
+        1px solid #403343;
+
+    border-radius: 8px;
+
+    background: #19151d;
+
+    color: #eee5f1;
+
+    font-size: 14px;
+}
+
+.subtaak-regel input[type="text"]:focus {
+    border-color: #a866c7;
+
+    box-shadow:
+        0 0 0 2px rgba(168, 102, 199, 0.1);
+}
+
+
+/* Verwijder subtaak */
+
+.subtaak-verwijder {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(220, 72, 91, 0.35);
+
+    border-radius: 8px;
+
+    background: rgba(100, 29, 42, 0.3);
+
+    color: #e87988;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.subtaak-verwijder:hover {
+    background: rgba(150, 39, 56, 0.5);
+
+    transform: scale(1.05);
 }
 
 
@@ -1134,21 +1539,50 @@ button {
    ====================================== */
 
 .modal-acties {
-    display: flex;
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 8px;
 
-    margin-top: 25px;
+    margin-top: 18px;
 }
 
-.modal-acties .primary-button {
-    flex: 1;
-
-    margin-top: 0;
+.modal-acties button {
+    width: 100%;
 }
 
-.modal-acties .danger-button {
-    flex: 0 0 auto;
+
+/* ======================================
+   SCROLLBAR
+   ====================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #17121c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #49334f;
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #694878;
+}
+
+
+/* ======================================
+   SELECT / DATE
+   ====================================== */
+
+input[type="date"] {
+    min-height: 48px;
 }
 
 
@@ -1158,62 +1592,140 @@ button {
 
 @media (min-width: 700px) {
 
-    body {
-        padding: 20px;
-    }
-
     .app {
-        min-height: calc(100vh - 40px);
-
-        border:
-            1px solid rgba(255,255,255,0.07);
-
-        border-radius: 22px;
-
-        overflow: hidden;
-
-        background: rgba(15,11,18,0.55);
+        padding-bottom: 20px;
     }
 
     .app-header {
-        border-radius: 22px 22px 0 0;
+        position: relative;
+
+        max-width: 850px;
+
+        margin: 0 auto;
+
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .pagina {
+        padding-top: 32px;
     }
 
     .bottom-nav {
-        bottom: 20px;
+        position: sticky;
+
+        max-width: 650px;
+
+        margin: 0 auto 15px;
 
         border:
-            1px solid rgba(255,255,255,0.08);
+            1px solid rgba(157, 101, 184, 0.22);
 
-        border-radius: 18px;
+        border-radius: 16px;
+
+        bottom: 10px;
+    }
+
+    .modal-overlay {
+        align-items: center;
+
+        padding: 20px;
     }
 
     .modal {
-        border-radius: 22px;
+        max-height: 90vh;
 
-        margin-bottom: 20px;
+        border-radius: 20px;
     }
+
+    .snel-toevoegen {
+        display: grid;
+
+        grid-template-columns:
+            1fr 180px;
+
+        align-items: stretch;
+    }
+
+    .snel-toevoegen .primary-button {
+        height: 100%;
+    }
+
 }
 
 
 /* ======================================
-   ANIMATIES
+   KLEINE TELEFOONS
    ====================================== */
 
-@keyframes binnenkomen {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
+@media (max-width: 380px) {
+
+    .pagina {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .mini-overzicht {
+        gap: 5px;
     }
+
+    .stat-card {
+        padding: 8px 4px;
+    }
+
+    .stat-card span {
+        font-size: 21px;
+    }
+
+    .filter-knop {
+        font-size: 10px;
+    }
+
+    .categorie-lijst {
+        gap: 7px;
+    }
+
+    .categorie-kaart {
+        padding: 12px;
+    }
+
+    .keuze-knop small {
+        display: none;
+    }
+
 }
 
-.taak-kaart,
-.gedachte-kaart,
-.categorie-kaart {
-    animation: binnenkomen 0.18s ease-out;
+
+/* ======================================
+   TOEGANKELIJKHEID
+   ====================================== */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline:
+        2px solid #c586ee;
+
+    outline-offset: 2px;
+}
+
+
+/* ======================================
+   REDUCE MOTION
+   ====================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
 }
