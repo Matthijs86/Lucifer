@@ -1,0 +1,1219 @@
+/* ======================================
+   LUCY
+   MOBILE FIRST
+   ====================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #35213c 0%,
+            #1b1620 42%,
+            #100d13 100%
+        );
+
+    color: #f4edf7;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ======================================
+   APP
+   ====================================== */
+
+.app {
+    width: 100%;
+    max-width: 700px;
+    min-height: 100vh;
+    margin: 0 auto;
+
+    padding-bottom: 90px;
+}
+
+
+/* ======================================
+   HEADER
+   ====================================== */
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        18px
+        18px;
+
+    background: rgba(18, 13, 22, 0.88);
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    backdrop-filter: blur(15px);
+}
+
+.app-logo {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 5px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px #9d4edd,
+        0 0 20px rgba(157,78,221,0.7);
+}
+
+.app-subtitle {
+    margin-top: 2px;
+
+    font-size: 12px;
+    color: #bdaec5;
+    letter-spacing: 0.5px;
+}
+
+
+/* ======================================
+   ICON BUTTON
+   ====================================== */
+
+.icon-button {
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+
+    background: #251b2b;
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+}
+
+
+/* ======================================
+   PAGINA
+   ====================================== */
+
+.pagina {
+    display: none;
+
+    padding: 22px 16px 30px;
+}
+
+.pagina.actief {
+    display: block;
+}
+
+
+/* ======================================
+   WELKOM
+   ====================================== */
+
+.welkom-blok {
+    margin-bottom: 20px;
+}
+
+.welkom-blok h1 {
+    margin: 0 0 8px;
+
+    font-size: 25px;
+    line-height: 1.15;
+}
+
+.welkom-blok p {
+    margin: 0;
+
+    color: #bdaec5;
+
+    line-height: 1.5;
+}
+
+
+/* ======================================
+   SNEL TOEVOEGEN
+   ====================================== */
+
+.snel-toevoegen {
+    margin-bottom: 20px;
+}
+
+textarea,
+input,
+select {
+    width: 100%;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    color: #ffffff;
+
+    background: #211923;
+
+    border: 1px solid #45344d;
+    border-radius: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+textarea {
+    resize: vertical;
+
+    min-height: 90px;
+
+    padding: 14px;
+}
+
+input,
+select {
+    min-height: 50px;
+    padding: 12px 14px;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: #9d4edd;
+
+    box-shadow:
+        0 0 0 3px rgba(157,78,221,0.15),
+        0 0 15px rgba(157,78,221,0.15);
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: #806e87;
+}
+
+
+/* ======================================
+   BUTTONS
+   ====================================== */
+
+button {
+    font-family: inherit;
+}
+
+.primary-button {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 10px;
+
+    border: 0;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9d4edd,
+            #6f35a8
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 12px rgba(157,78,221,0.35);
+}
+
+.primary-button:active {
+    transform: scale(0.98);
+}
+
+.secondary-button {
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #54435c;
+    border-radius: 13px;
+
+    background: #251b2b;
+
+    color: white;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.danger-button {
+    min-height: 48px;
+
+    padding: 0 15px;
+
+    border: 1px solid #773b49;
+    border-radius: 13px;
+
+    background: #321a23;
+
+    color: #ff8fa3;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* ======================================
+   MINI OVERZICHT
+   ====================================== */
+
+.mini-overzicht {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.stat-card {
+    padding: 13px 8px;
+
+    text-align: center;
+
+    background: #211923;
+
+    border: 1px solid #3d2d44;
+    border-radius: 13px;
+}
+
+.stat-card span {
+    display: block;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    color: #c98cff;
+}
+
+.stat-card small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #a996b0;
+
+    font-size: 11px;
+}
+
+.stat-card.belangrijk span {
+    color: #ff6b81;
+}
+
+.stat-card.vandaag span {
+    color: #65b7ff;
+}
+
+
+/* ======================================
+   ZOEKEN
+   ====================================== */
+
+.zoek-container {
+    margin-bottom: 12px;
+}
+
+.zoek-container input {
+    min-height: 46px;
+}
+
+
+/* ======================================
+   FILTERS
+   ====================================== */
+
+.filter-balk {
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    padding-bottom: 4px;
+}
+
+.filter-knop {
+    flex: 0 0 auto;
+
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    border: 1px solid #44354b;
+    border-radius: 20px;
+
+    background: #201822;
+
+    color: #a995ae;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.filter-knop.actief {
+    color: #ffffff;
+
+    border-color: #9d4edd;
+
+    background: #3a2450;
+
+    box-shadow:
+        0 0 10px rgba(157,78,221,0.18);
+}
+
+
+/* ======================================
+   SECTIE TITEL
+   ====================================== */
+
+.sectie-titel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 24px 2px 10px;
+}
+
+.sectie-titel h2 {
+    margin: 0;
+
+    font-size: 15px;
+    letter-spacing: 0.7px;
+}
+
+.sectie-titel span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #30213a;
+
+    color: #c98cff;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* ======================================
+   TAKEN
+   ====================================== */
+
+.taken-lijst {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.taak-kaart {
+    padding: 15px;
+
+    background: #211923;
+
+    border: 1px solid #3c2c43;
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.15);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        border-color 0.15s;
+}
+
+.taak-kaart:active {
+    transform: scale(0.985);
+}
+
+.taak-boven {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.taak-check {
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
+
+    border: 2px solid #66536d;
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.taak-check.klaar {
+    border-color: #58c88a;
+
+    background: #276444;
+
+    font-size: 14px;
+}
+
+.taak-inhoud {
+    min-width: 0;
+    flex: 1;
+}
+
+.taak-titel {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.taak-klaar .taak-titel {
+    color: #776d7a;
+    text-decoration: line-through;
+}
+
+.taak-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    margin-top: 9px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 25px;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
+    background: #30253a;
+
+    color: #c5b7cc;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.badge.nu {
+    background: #45202b;
+    color: #ff8297;
+}
+
+.badge.later {
+    background: #48351d;
+    color: #ffc66d;
+}
+
+.badge.bewaren {
+    background: #202e46;
+    color: #70baff;
+}
+
+.badge.datum {
+    background: #202e2e;
+    color: #7ee0dc;
+}
+
+.subtaken-mini {
+    margin-top: 10px;
+
+    font-size: 12px;
+
+    color: #9f8fa5;
+}
+
+.subtaken-mini strong {
+    color: #c8b8cf;
+}
+
+
+/* ======================================
+   LEEG
+   ====================================== */
+
+.lege-melding {
+    display: none;
+
+    margin-top: 25px;
+
+    padding: 30px 18px;
+
+    text-align: center;
+
+    border: 1px dashed #44354b;
+    border-radius: 16px;
+
+    background: rgba(30,23,34,0.5);
+}
+
+.lege-melding.zichtbaar {
+    display: block;
+}
+
+.lege-icoon {
+    font-size: 34px;
+
+    margin-bottom: 10px;
+}
+
+.lege-melding h3 {
+    margin: 0 0 6px;
+
+    font-size: 17px;
+}
+
+.lege-melding p {
+    margin: 0;
+
+    color: #95859b;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ======================================
+   PAGINA KOP
+   ====================================== */
+
+.pagina-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 22px;
+}
+
+.pagina-kop h1 {
+    margin: 5px 0 0;
+
+    font-size: 25px;
+}
+
+.kleine-label {
+    color: #9677a3;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+#datumVandaag {
+    color: #9f8fa5;
+
+    font-size: 12px;
+}
+
+
+/* ======================================
+   CATEGORIEËN
+   ====================================== */
+
+.categorie-lijst {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+.categorie-kaart {
+    padding: 16px;
+
+    border: 1px solid #3d2d44;
+    border-radius: 15px;
+
+    background: #211923;
+
+    cursor: pointer;
+}
+
+.categorie-icoon {
+    font-size: 25px;
+}
+
+.categorie-naam {
+    margin-top: 9px;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.categorie-aantal {
+    margin-top: 4px;
+
+    color: #a694ad;
+
+    font-size: 12px;
+}
+
+
+/* ======================================
+   GEDACHTEN
+   ====================================== */
+
+.gedachte-uitleg {
+    padding: 15px;
+
+    margin-bottom: 16px;
+
+    border-left: 3px solid #9d4edd;
+
+    background: #211923;
+
+    border-radius: 0 12px 12px 0;
+}
+
+.gedachte-uitleg p {
+    margin: 0 0 8px;
+
+    color: #b8a9bf;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.gedachte-uitleg p:last-child {
+    margin-bottom: 0;
+}
+
+.gedachte-form {
+    margin-bottom: 20px;
+}
+
+.gedachten-lijst {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.gedachte-kaart {
+    padding: 15px;
+
+    background: #211923;
+
+    border: 1px solid #3d2d44;
+    border-radius: 15px;
+}
+
+.gedachte-tekst {
+    margin: 0;
+
+    white-space: pre-wrap;
+
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.gedachte-datum {
+    margin-top: 10px;
+
+    color: #897990;
+
+    font-size: 11px;
+}
+
+
+/* ======================================
+   INSTELLINGEN
+   ====================================== */
+
+.instellingen-kaart {
+    margin-bottom: 15px;
+
+    padding: 18px;
+
+    border: 1px solid #3d2d44;
+    border-radius: 16px;
+
+    background: #211923;
+}
+
+.instellingen-kaart h2 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+}
+
+.instellingen-kaart p {
+    margin: 0;
+
+    color: #a594ab;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.instellingen-kaart.gevaar {
+    border-color: #57303b;
+}
+
+.over-lucy {
+    padding: 30px 0;
+
+    text-align: center;
+
+    color: #806f87;
+}
+
+.over-lucy strong {
+    color: #ffffff;
+
+    letter-spacing: 4px;
+}
+
+.over-lucy p {
+    margin: 7px 0;
+
+    font-size: 13px;
+}
+
+
+/* ======================================
+   BOTTOM NAV
+   ====================================== */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 30;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding:
+        8px
+        8px
+        calc(8px + env(safe-area-inset-bottom));
+
+    background: rgba(17,12,20,0.94);
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(18px);
+}
+
+.nav-knop {
+    min-height: 58px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #796a81;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+}
+
+.nav-knop span {
+    display: block;
+
+    font-size: 20px;
+
+    margin-bottom: 3px;
+}
+
+.nav-knop small {
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.nav-knop.actief {
+    color: #d69cff;
+
+    background: rgba(157,78,221,0.10);
+}
+
+
+/* ======================================
+   MODAL
+   ====================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.72);
+
+    padding: 0;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal {
+    width: 100%;
+    max-width: 700px;
+    max-height: 94vh;
+
+    overflow-y: auto;
+
+    padding:
+        20px
+        16px
+        calc(25px + env(safe-area-inset-bottom));
+
+    background: #17121c;
+
+    border-top: 1px solid #4b3854;
+    border-radius: 22px 22px 0 0;
+
+    box-shadow:
+        0 -10px 40px rgba(0,0,0,0.4);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 4px 0 0;
+
+    font-size: 22px;
+}
+
+.modal-sluit-knop {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #44354b;
+    border-radius: 12px;
+
+    background: #251b2b;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+#verwerkForm > label {
+    display: block;
+
+    margin:
+        17px
+        0
+        7px;
+
+    color: #c9bbcF;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+#verwerkForm > textarea:first-of-type {
+    min-height: 80px;
+}
+
+
+/* ======================================
+   KEUZE LABELS
+   ====================================== */
+
+.keuze-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 7px;
+}
+
+.keuze-knop {
+    min-height: 82px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    border: 1px solid #403148;
+    border-radius: 13px;
+
+    background: #211923;
+
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+.keuze-knop > strong {
+    font-size: 13px;
+}
+
+.keuze-knop > small {
+    color: #8f7d96;
+
+    font-size: 9px;
+}
+
+.keuze-knop.geselecteerd[data-label="nu"] {
+    border-color: #ff637c;
+    background: #3d2029;
+}
+
+.keuze-knop.geselecteerd[data-label="later"] {
+    border-color: #e4a84d;
+    background: #3c301e;
+}
+
+.keuze-knop.geselecteerd[data-label="bewaren"] {
+    border-color: #5faeff;
+    background: #202d43;
+}
+
+
+/* ======================================
+   SUBTAKEN
+   ====================================== */
+
+.subtaken-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 17px;
+}
+
+.subtaken-header label {
+    margin: 0 !important;
+}
+
+.kleine-knop {
+    min-height: 35px;
+
+    padding: 0 10px;
+
+    border: 1px solid #4b3954;
+    border-radius: 10px;
+
+    background: #2a1e31;
+
+    color: #d2a0f1;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.subtaken-lijst {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 8px;
+}
+
+.subtaak-regel {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.subtaak-regel input[type="text"] {
+    flex: 1;
+
+    min-height: 43px;
+
+    border-radius: 11px;
+}
+
+.subtaak-verwijder {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #301b23;
+
+    color: #ff8b9f;
+
+    cursor: pointer;
+}
+
+
+/* ======================================
+   MODAL ACTIES
+   ====================================== */
+
+.modal-acties {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 25px;
+}
+
+.modal-acties .primary-button {
+    flex: 1;
+
+    margin-top: 0;
+}
+
+.modal-acties .danger-button {
+    flex: 0 0 auto;
+}
+
+
+/* ======================================
+   DESKTOP / TABLET
+   ====================================== */
+
+@media (min-width: 700px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .app {
+        min-height: calc(100vh - 40px);
+
+        border:
+            1px solid rgba(255,255,255,0.07);
+
+        border-radius: 22px;
+
+        overflow: hidden;
+
+        background: rgba(15,11,18,0.55);
+    }
+
+    .app-header {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .bottom-nav {
+        bottom: 20px;
+
+        border:
+            1px solid rgba(255,255,255,0.08);
+
+        border-radius: 18px;
+    }
+
+    .modal {
+        border-radius: 22px;
+
+        margin-bottom: 20px;
+    }
+}
+
+
+/* ======================================
+   ANIMATIES
+   ====================================== */
+
+@keyframes binnenkomen {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.taak-kaart,
+.gedachte-kaart,
+.categorie-kaart {
+    animation: binnenkomen 0.18s ease-out;
+}

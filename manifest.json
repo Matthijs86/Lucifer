@@ -1,0 +1,30 @@
+{
+    "name": "Lucy - Alles uit je hoofd",
+    "short_name": "Lucy",
+    "description": "Lucy helpt je alles uit je hoofd te halen en overzicht te creëren.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#100d13",
+    "theme_color": "#17121c",
+    "lang": "nl",
+    "categories": [
+        "productivity",
+        "lifestyle"
+    ],
+    "icons": [
+        {
+            "src": "icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

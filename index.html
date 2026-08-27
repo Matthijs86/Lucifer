@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#17121c"
+    >
+
+    <meta
+        name="description"
+        content="Lucy - Alles uit je hoofd, naar overzicht."
+    >
+
+    <title>Lucy</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ======================================
+         APP
+    ======================================= -->
+
+    <div class="app">
+
+        <!-- ==================================
+             HEADER
+        =================================== -->
+
+        <header class="app-header">
+
+            <div>
+                <div class="app-logo">LUCY</div>
+                <div class="app-subtitle">
+                    Alles uit je hoofd.
+                </div>
+            </div>
+
+            <button
+                class="icon-button"
+                id="instellingenKnop"
+                aria-label="Instellingen"
+                title="Instellingen"
+            >
+                ⚙️
+            </button>
+
+        </header>
+
+
+        <!-- ==================================
+             HOOFDINHOUD
+        =================================== -->
+
+        <main id="appContent">
+
+
+            <!-- ==================================
+                 HOOFD
+            =================================== -->
+
+            <section
+                class="pagina actief"
+                id="paginaHoofd"
+            >
+
+                <div class="welkom-blok">
+
+                    <h1>Wat speelt er in je hoofd?</h1>
+
+                    <p>
+                        Zet het hier neer. Je hoeft het nu nog niet
+                        te ordenen.
+                    </p>
+
+                </div>
+
+
+                <!-- SNEL TOEVOEGEN -->
+
+                <form
+                    id="snelToevoegenForm"
+                    class="snel-toevoegen"
+                >
+
+                    <textarea
+                        id="snelInput"
+                        rows="2"
+                        placeholder="Schrijf iets op..."
+                        autocomplete="off"
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        ＋ TOEVOEGEN
+                    </button>
+
+                </form>
+
+
+                <!-- OVERZICHT -->
+
+                <div class="mini-overzicht">
+
+                    <div class="stat-card">
+                        <span id="aantalOnverwerkt">0</span>
+                        <small>🧠 In hoofd</small>
+                    </div>
+
+                    <div class="stat-card belangrijk">
+                        <span id="aantalBelangrijk">0</span>
+                        <small>🔴 Nu</small>
+                    </div>
+
+                    <div class="stat-card vandaag">
+                        <span id="aantalVandaag">0</span>
+                        <small>📅 Vandaag</small>
+                    </div>
+
+                </div>
+
+
+                <!-- ZOEKEN -->
+
+                <div class="zoek-container">
+
+                    <input
+                        type="search"
+                        id="zoekInput"
+                        placeholder="🔍 Zoeken..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <!-- FILTERS -->
+
+                <div class="filter-balk">
+
+                    <button
+                        class="filter-knop actief"
+                        data-filter="alles"
+                    >
+                        Alles
+                    </button>
+
+                    <button
+                        class="filter-knop"
+                        data-filter="nu"
+                    >
+                        🔴 Nu
+                    </button>
+
+                    <button
+                        class="filter-knop"
+                        data-filter="later"
+                    >
+                        🟠 Later
+                    </button>
+
+                    <button
+                        class="filter-knop"
+                        data-filter="bewaren"
+                    >
+                        🔵 Bewaren
+                    </button>
+
+                </div>
+
+
+                <!-- HOOFDLIJST -->
+
+                <div class="sectie-titel">
+
+                    <h2>📥 IN MIJN HOOFD</h2>
+
+                    <span id="lijstAantal">0</span>
+
+                </div>
+
+
+                <div
+                    id="hoofdLijst"
+                    class="taken-lijst"
+                ></div>
+
+
+                <div
+                    id="legeHoofdLijst"
+                    class="lege-melding"
+                >
+                    <div class="lege-icoon">🧠</div>
+
+                    <h3>Je hoofd is leeg</h3>
+
+                    <p>
+                        Mooi. Of misschien heb je gewoon nog niets
+                        hoeven opschrijven.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================
+                 VANDAAG
+            =================================== -->
+
+            <section
+                class="pagina"
+                id="paginaVandaag"
+            >
+
+                <div class="pagina-kop">
+
+                    <div>
+                        <span class="kleine-label">OVERZICHT</span>
+                        <h1>📅 Vandaag</h1>
+                    </div>
+
+                    <span id="datumVandaag"></span>
+
+                </div>
+
+
+                <div
+                    id="vandaagLijst"
+                    class="taken-lijst"
+                ></div>
+
+
+                <div
+                    id="legeVandaag"
+                    class="lege-melding"
+                >
+                    <div class="lege-icoon">🌿</div>
+
+                    <h3>Niets gepland voor vandaag</h3>
+
+                    <p>
+                        Je hebt vandaag geen geplande taken.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==================================
+                 CATEGORIEËN
+            =================================== -->
+
+            <section
+                class="pagina"
+                id="paginaCategorieen"
+            >
+
+                <div class="pagina-kop">
+
+                    <div>
+                        <span class="kleine-label">OVERZICHT</span>
+                        <h1>🗂️ Categorieën</h1>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="categorieLijst"
+                    class="categorie-lijst"
+                ></div>
+
+            </section>
+
+
+            <!-- ==================================
+                 GEDACHTEN
+            =================================== -->
+
+            <section
+                class="pagina"
+                id="paginaGedachten"
+            >
+
+                <div class="pagina-kop">
+
+                    <div>
+                        <span class="kleine-label">LOS VAN TAKEN</span>
+                        <h1>💭 Gedachten</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="gedachte-uitleg">
+
+                    <p>
+                        Niet alles wat in je hoofd zit hoeft een taak
+                        te worden.
+                    </p>
+
+                    <p>
+                        Bewaar hier gedachten die je later nog eens
+                        wilt teruglezen.
+                    </p>
+
+                </div>
+
+
+                <form
+                    id="gedachteForm"
+                    class="gedachte-form"
+                >
+
+                    <textarea
+                        id="gedachteInput"
+                        rows="5"
+                        placeholder="Schrijf je gedachte op..."
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        💭 GEDACHTE BEWAREN
+                    </button>
+
+                </form>
+
+
+                <div
+                    id="gedachtenLijst"
+                    class="gedachten-lijst"
+                ></div>
+
+            </section>
+
+
+            <!-- ==================================
+                 INSTELLINGEN
+            =================================== -->
+
+            <section
+                class="pagina"
+                id="paginaInstellingen"
+            >
+
+                <div class="pagina-kop">
+
+                    <div>
+                        <span class="kleine-label">LUCY</span>
+                        <h1>⚙️ Instellingen</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="instellingen-kaart">
+
+                    <h2>💾 Gegevens</h2>
+
+                    <p>
+                        Je gegevens worden lokaal op dit apparaat
+                        opgeslagen.
+                    </p>
+
+                    <button
+                        id="backupKnop"
+                        class="secondary-button"
+                    >
+                        💾 BACKUP MAKEN
+                    </button>
+
+                    <label
+                        for="backupInput"
+                        class="secondary-button bestand-knop"
+                    >
+                        📥 BACKUP TERUGZETTEN
+                    </label>
+
+                    <input
+                        type="file"
+                        id="backupInput"
+                        accept=".json,application/json"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div class="instellingen-kaart gevaar">
+
+                    <h2>🗑️ Gegevens wissen</h2>
+
+                    <p>
+                        Hiermee worden alle taken en gedachten van
+                        dit apparaat verwijderd.
+                    </p>
+
+                    <button
+                        id="allesWissenKnop"
+                        class="danger-button"
+                    >
+                        ALLES WISSEN
+                    </button>
+
+                </div>
+
+
+                <div class="over-lucy">
+
+                    <strong>LUCY</strong>
+
+                    <p>
+                        Alles uit je hoofd.
+                    </p>
+
+                    <small>
+                        Lucy V1.0
+                    </small>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ======================================
+             BOTTOM NAVIGATIE
+        ======================================= -->
+
+        <nav class="bottom-nav">
+
+            <button
+                class="nav-knop actief"
+                data-pagina="paginaHoofd"
+            >
+                <span>🧠</span>
+                <small>Hoofd</small>
+            </button>
+
+            <button
+                class="nav-knop"
+                data-pagina="paginaVandaag"
+            >
+                <span>📅</span>
+                <small>Vandaag</small>
+            </button>
+
+            <button
+                class="nav-knop"
+                data-pagina="paginaCategorieen"
+            >
+                <span>🗂️</span>
+                <small>Categorieën</small>
+            </button>
+
+            <button
+                class="nav-knop"
+                data-pagina="paginaGedachten"
+            >
+                <span>💭</span>
+                <small>Gedachten</small>
+            </button>
+
+        </nav>
+
+    </div>
+
+
+    <!-- ======================================
+         VERWERK MODAL
+    ======================================= -->
+
+    <div
+        id="verwerkModal"
+        class="modal-overlay"
+        hidden
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="kleine-label">VERWERKEN</span>
+                    <h2 id="modalTitel">
+                        Taak
+                    </h2>
+                </div>
+
+                <button
+                    id="modalSluiten"
+                    class="modal-sluit-knop"
+                    aria-label="Sluiten"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <form id="verwerkForm">
+
+                <input
+                    type="hidden"
+                    id="bewerkId"
+                >
+
+
+                <label>
+                    Wat wil je hiermee?
+                </label>
+
+                <textarea
+                    id="bewerkTitel"
+                    rows="3"
+                ></textarea>
+
+
+                <label>
+                    Categorie
+                </label>
+
+                <select id="categorieSelect">
+
+                    <option value="">
+                        Geen categorie
+                    </option>
+
+                    <option value="Sociaal">
+                        👥 Sociaal
+                    </option>
+
+                    <option value="Administratie">
+                        📋 Administratie
+                    </option>
+
+                    <option value="Klussen">
+                        🔨 Klussen
+                    </option>
+
+                    <option value="Financiën">
+                        💰 Financiën
+                    </option>
+
+                    <option value="Huis">
+                        🏠 Huis
+                    </option>
+
+                    <option value="Auto">
+                        🚗 Auto
+                    </option>
+
+                    <option value="Boodschappen">
+                        🛒 Boodschappen
+                    </option>
+
+                    <option value="Afspraken">
+                        📅 Afspraken
+                    </option>
+
+                    <option value="Ideeën">
+                        💡 Ideeën
+                    </option>
+
+                    <option value="Overig">
+                        📦 Overig
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Aandacht
+                </label>
+
+                <div class="keuze-grid">
+
+                    <button
+                        type="button"
+                        class="keuze-knop"
+                        data-label="nu"
+                    >
+                        🔴
+                        <strong>Nu</strong>
+                        <small>Meteen oppakken</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="keuze-knop"
+                        data-label="later"
+                    >
+                        🟠
+                        <strong>Later</strong>
+                        <small>Aandacht nodig</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="keuze-knop"
+                        data-label="bewaren"
+                    >
+                        🔵
+                        <strong>Bewaren</strong>
+                        <small>Voor later</small>
+                    </button>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    id="labelSelect"
+                    value=""
+                >
+
+
+                <label>
+                    Planning
+                </label>
+
+                <input
+                    type="date"
+                    id="datumSelect"
+                >
+
+
+                <label>
+                    Notitie
+                </label>
+
+                <textarea
+                    id="notitieInput"
+                    rows="4"
+                    placeholder="Extra informatie..."
+                ></textarea>
+
+
+                <div class="subtaken-header">
+
+                    <label>
+                        Subtaken
+                    </label>
+
+                    <button
+                        type="button"
+                        id="subtaakToevoegenKnop"
+                        class="kleine-knop"
+                    >
+                        ＋ Subtaak
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="subtakenLijst"
+                    class="subtaken-lijst"
+                ></div>
+
+
+                <div class="modal-acties">
+
+                    <button
+                        type="button"
+                        id="verwijderTaakKnop"
+                        class="danger-button"
+                    >
+                        🗑️ Verwijderen
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        💾 OPSLAAN
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         SCRIPT
+    ======================================= -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
