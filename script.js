@@ -72,9 +72,6 @@ const verwerkLijst =
 const legeVerwerkLijst =
     document.getElementById("legeVerwerkLijst");
 
-const verwerkKnop =
-    document.getElementById("verwerkKnop");
-
 const verwerkModal =
     document.getElementById("verwerkModal");
 
@@ -83,9 +80,6 @@ const modalSluiten =
 
 const verwerkKeuzeScherm =
     document.getElementById("verwerkKeuzeScherm");
-
-const taakScherm =
-    document.getElementById("taakScherm");
 
 const taakForm =
     document.getElementById("taakForm");
@@ -131,9 +125,6 @@ const verwijderInboxKnop =
 
 const verwerkItemTekst =
     document.getElementById("verwerkItemTekst");
-
-const bewerkId =
-    document.getElementById("bewerkId");
 
 const taakAnnulerenKnop =
     document.getElementById("taakAnnulerenKnop");
@@ -191,50 +182,39 @@ const allesWissenKnop =
 // INITIALISEREN
 // ======================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        dataLaden();
+    dataLaden();
 
-        categorieenLaden();
+    categorieenLaden();
 
-        categorieSelectVullen();
+    categorieSelectVullen();
 
-        elementenControleren();
+    elementenControleren();
 
-        paginaOpenen("paginaHoofd");
+    paginaOpenen("paginaHoofd");
 
-        if (verwerkModal) {
+    modalVolledigSluiten();
 
-            verwerkModal.hidden = true;
+    inboxWeergeven();
 
-            verwerkModal.classList.remove("open");
+    verwerkLijstWeergeven();
 
-        }
+    vandaagWeergeven();
 
-        document.body.style.overflow = "";
+    ideeenWeergeven();
 
-        inboxWeergeven();
+    categorieenWeergeven();
 
-        verwerkLijstWeergeven();
+    serviceWorkerRegistreren();
 
-        vandaagWeergeven();
-
-        ideeenWeergeven();
-
-        categorieenWeergeven();
-
-        serviceWorkerRegistreren();
-
-        if (snelInput) {
-
+    if (snelInput) {
+        setTimeout(() => {
             snelInput.focus();
-
-        }
-
+        }, 100);
     }
-);
+
+});
 
 
 // ======================================
@@ -249,26 +229,26 @@ function elementenControleren() {
         ["snelInput", snelInput],
         ["verwerkModal", verwerkModal],
         ["modalSluiten", modalSluiten],
+        ["verwerkKeuzeScherm", verwerkKeuzeScherm],
+        ["taakForm", taakForm],
+        ["ideeScherm", ideeScherm],
         ["maakTaakKnop", maakTaakKnop],
         ["maakIdeeKnop", maakIdeeKnop],
         ["verwijderInboxKnop", verwijderInboxKnop]
 
     ];
 
+    belangrijkeElementen.forEach(([naam, element]) => {
 
-    belangrijkeElementen.forEach(
-        ([naam, element]) => {
+        if (!element) {
 
-            if (!element) {
-
-                console.warn(
-                    `Lucy: element #${naam} ontbreekt in index.html`
-                );
-
-            }
+            console.warn(
+                `Lucy: element #${naam} ontbreekt in index.html`
+            );
 
         }
-    );
+
+    });
 
 }
 
@@ -282,27 +262,19 @@ function dataLaden() {
     try {
 
         const opgeslagenInbox =
-            localStorage.getItem(
-                OPSLAG_INBOX
-            );
+            localStorage.getItem(OPSLAG_INBOX);
 
         const opgeslagenTaken =
-            localStorage.getItem(
-                OPSLAG_TAKEN
-            );
+            localStorage.getItem(OPSLAG_TAKEN);
 
         const opgeslagenIdeeen =
-            localStorage.getItem(
-                OPSLAG_IDEEEN
-            );
+            localStorage.getItem(OPSLAG_IDEEEN);
 
 
         if (opgeslagenInbox) {
 
             const data =
-                JSON.parse(
-                    opgeslagenInbox
-                );
+                JSON.parse(opgeslagenInbox);
 
             if (Array.isArray(data)) {
 
@@ -317,9 +289,7 @@ function dataLaden() {
         if (opgeslagenTaken) {
 
             const data =
-                JSON.parse(
-                    opgeslagenTaken
-                );
+                JSON.parse(opgeslagenTaken);
 
             if (Array.isArray(data)) {
 
@@ -334,9 +304,7 @@ function dataLaden() {
         if (opgeslagenIdeeen) {
 
             const data =
-                JSON.parse(
-                    opgeslagenIdeeen
-                );
+                JSON.parse(opgeslagenIdeeen);
 
             if (Array.isArray(data)) {
 
@@ -369,28 +337,26 @@ function dataLaden() {
 
 function inboxNormaliseren(data) {
 
-    return data.map(
-        item => {
+    return data.map(item => {
 
-            return {
+        return {
 
-                id:
-                    item.id ||
-                    maakId(),
+            id:
+                item.id ||
+                maakId(),
 
-                tekst:
-                    item.tekst ||
-                    item.titel ||
-                    "",
+            tekst:
+                item.tekst ||
+                item.titel ||
+                "",
 
-                aangemaakt:
-                    item.aangemaakt ||
-                    new Date().toISOString()
+            aangemaakt:
+                item.aangemaakt ||
+                new Date().toISOString()
 
-            };
+        };
 
-        }
-    );
+    }).filter(item => item.tekst.trim() !== "");
 
 }
 
@@ -401,51 +367,49 @@ function inboxNormaliseren(data) {
 
 function takenNormaliseren(data) {
 
-    return data.map(
-        taak => {
+    return data.map(taak => {
 
-            return {
+        return {
 
-                id:
-                    taak.id ||
-                    maakId(),
+            id:
+                taak.id ||
+                maakId(),
 
-                titel:
-                    taak.titel ||
-                    "",
+            titel:
+                taak.titel ||
+                "",
 
-                categorie:
-                    taak.categorie ||
-                    "",
+            categorie:
+                taak.categorie ||
+                "",
 
-                datum:
-                    taak.datum ||
-                    "",
+            datum:
+                taak.datum ||
+                "",
 
-                notitie:
-                    taak.notitie ||
-                    "",
+            notitie:
+                taak.notitie ||
+                "",
 
-                subtaken:
-                    subtakenNormaliseren(
-                        taak.subtaken
-                    ),
+            subtaken:
+                subtakenNormaliseren(
+                    taak.subtaken
+                ),
 
-                afgerond:
-                    taak.afgerond === true,
+            afgerond:
+                taak.afgerond === true,
 
-                aangemaakt:
-                    taak.aangemaakt ||
-                    new Date().toISOString(),
+            aangemaakt:
+                taak.aangemaakt ||
+                new Date().toISOString(),
 
-                gewijzigd:
-                    taak.gewijzigd ||
-                    new Date().toISOString()
+            gewijzigd:
+                taak.gewijzigd ||
+                new Date().toISOString()
 
-            };
+        };
 
-        }
-    );
+    }).filter(taak => taak.titel.trim() !== "");
 
 }
 
@@ -456,28 +420,26 @@ function takenNormaliseren(data) {
 
 function ideeenNormaliseren(data) {
 
-    return data.map(
-        idee => {
+    return data.map(idee => {
 
-            return {
+        return {
 
-                id:
-                    idee.id ||
-                    maakId(),
+            id:
+                idee.id ||
+                maakId(),
 
-                tekst:
-                    idee.tekst ||
-                    idee.titel ||
-                    "",
+            tekst:
+                idee.tekst ||
+                idee.titel ||
+                "",
 
-                aangemaakt:
-                    idee.aangemaakt ||
-                    new Date().toISOString()
+            aangemaakt:
+                idee.aangemaakt ||
+                new Date().toISOString()
 
-            };
+        };
 
-        }
-    );
+    }).filter(idee => idee.tekst.trim() !== "");
 
 }
 
@@ -492,49 +454,43 @@ function subtakenNormaliseren(subtaken) {
         return [];
     }
 
-
     return subtaken
-        .map(
-            subtaak => {
+        .map(subtaak => {
 
-                if (
-                    typeof subtaak ===
-                    "string"
-                ) {
-
-                    return {
-
-                        id: maakId(),
-
-                        titel: subtaak,
-
-                        afgerond: false
-
-                    };
-
-                }
-
+            if (typeof subtaak === "string") {
 
                 return {
 
-                    id:
-                        subtaak.id ||
-                        maakId(),
+                    id: maakId(),
 
-                    titel:
-                        subtaak.titel ||
-                        "",
+                    titel: subtaak,
 
-                    afgerond:
-                        subtaak.afgerond === true
+                    afgerond: false
 
                 };
 
             }
-        )
+
+            return {
+
+                id:
+                    subtaak.id ||
+                    maakId(),
+
+                titel:
+                    subtaak.titel ||
+                    subtaak.tekst ||
+                    "",
+
+                afgerond:
+                    subtaak.afgerond === true
+
+            };
+
+        })
         .filter(
             subtaak =>
-                subtaak.titel !== ""
+                subtaak.titel.trim() !== ""
         );
 
 }
@@ -546,20 +502,31 @@ function subtakenNormaliseren(subtaken) {
 
 function dataOpslaan() {
 
-    localStorage.setItem(
-        OPSLAG_INBOX,
-        JSON.stringify(inbox)
-    );
+    try {
 
-    localStorage.setItem(
-        OPSLAG_TAKEN,
-        JSON.stringify(taken)
-    );
+        localStorage.setItem(
+            OPSLAG_INBOX,
+            JSON.stringify(inbox)
+        );
 
-    localStorage.setItem(
-        OPSLAG_IDEEEN,
-        JSON.stringify(ideeen)
-    );
+        localStorage.setItem(
+            OPSLAG_TAKEN,
+            JSON.stringify(taken)
+        );
+
+        localStorage.setItem(
+            OPSLAG_IDEEEN,
+            JSON.stringify(ideeen)
+        );
+
+    } catch (fout) {
+
+        console.error(
+            "Lucy kon de gegevens niet opslaan:",
+            fout
+        );
+
+    }
 
 }
 
@@ -587,48 +554,42 @@ function maakId() {
 
 document
     .querySelectorAll(".nav-knop")
-    .forEach(
-        knop => {
+    .forEach(knop => {
 
-            knop.addEventListener(
-                "click",
-                event => {
+        knop.addEventListener(
+            "click",
+            event => {
 
-                    event.preventDefault();
+                event.preventDefault();
 
-                    const pagina =
-                        knop.dataset.pagina;
+                const pagina =
+                    knop.dataset.pagina;
 
-                    paginaOpenen(
-                        pagina
-                    );
+                if (pagina) {
+
+                    paginaOpenen(pagina);
 
                 }
-            );
 
-        }
-    );
+            }
+        );
+
+    });
 
 
 function paginaOpenen(paginaId) {
 
     document
         .querySelectorAll(".pagina")
-        .forEach(
-            pagina => {
+        .forEach(pagina => {
 
-                pagina.classList.remove(
-                    "actief"
-                );
+            pagina.classList.remove("actief");
 
-            }
-        );
+        });
 
 
     const gewenstePagina =
-        document.getElementById(
-            paginaId
-        );
+        document.getElementById(paginaId);
 
 
     if (!gewenstePagina) {
@@ -636,63 +597,35 @@ function paginaOpenen(paginaId) {
     }
 
 
-    gewenstePagina.classList.add(
-        "actief"
-    );
+    gewenstePagina.classList.add("actief");
 
 
     document
         .querySelectorAll(".nav-knop")
-        .forEach(
-            knop => {
+        .forEach(knop => {
 
-                knop.classList.toggle(
-                    "actief",
-                    knop.dataset.pagina ===
-                    paginaId
-                );
+            knop.classList.toggle(
+                "actief",
+                knop.dataset.pagina === paginaId
+            );
 
-            }
-        );
+        });
 
 
-    if (
-        paginaId ===
-        "paginaVerwerken"
-    ) {
-
+    if (paginaId === "paginaVerwerken") {
         verwerkLijstWeergeven();
-
     }
 
-
-    if (
-        paginaId ===
-        "paginaVandaag"
-    ) {
-
+    if (paginaId === "paginaVandaag") {
         vandaagWeergeven();
-
     }
 
-
-    if (
-        paginaId ===
-        "paginaIdeeen"
-    ) {
-
+    if (paginaId === "paginaIdeeen") {
         ideeenWeergeven();
-
     }
 
-
-    if (
-        paginaId ===
-        "paginaCategorieen"
-    ) {
-
+    if (paginaId === "paginaCategorieen") {
         categorieenWeergeven();
-
     }
 
 
@@ -712,7 +645,9 @@ if (instellingenKnop) {
 
     instellingenKnop.addEventListener(
         "click",
-        () => {
+        event => {
+
+            event.preventDefault();
 
             paginaOpenen(
                 "paginaInstellingen"
@@ -727,9 +662,6 @@ if (instellingenKnop) {
 // ======================================
 // SNEL TOEVOEGEN
 // ======================================
-// Alles wat hier wordt ingevoerd komt
-// zonder nadenken in de inbox.
-// ======================================
 
 if (snelToevoegenForm) {
 
@@ -741,12 +673,16 @@ if (snelToevoegenForm) {
 
 
             const tekst =
-                snelInput.value.trim();
+                snelInput
+                    ? snelInput.value.trim()
+                    : "";
 
 
             if (!tekst) {
 
-                snelInput.focus();
+                if (snelInput) {
+                    snelInput.focus();
+                }
 
                 return;
 
@@ -767,13 +703,17 @@ if (snelToevoegenForm) {
 
             dataOpslaan();
 
-            snelInput.value = "";
+            if (snelInput) {
+                snelInput.value = "";
+            }
 
             inboxWeergeven();
 
             verwerkLijstWeergeven();
 
-            snelInput.focus();
+            if (snelInput) {
+                snelInput.focus();
+            }
 
         }
     );
@@ -803,94 +743,76 @@ function inboxWeergeven() {
     }
 
 
-    inbox.forEach(
-        item => {
+    inbox.forEach(item => {
 
-            const kaart =
-                document.createElement(
-                    "article"
-                );
+        const kaart =
+            document.createElement("article");
 
-            kaart.className =
-                "inbox-kaart";
+        kaart.className =
+            "inbox-kaart";
 
 
-            const tekst =
-                document.createElement(
-                    "div"
-                );
+        const tekst =
+            document.createElement("div");
 
-            tekst.className =
-                "inbox-tekst";
+        tekst.className =
+            "inbox-tekst";
 
-            tekst.textContent =
-                item.tekst;
+        tekst.textContent =
+            item.tekst;
 
 
-            const datum =
-                document.createElement(
-                    "small"
-                );
+        const datum =
+            document.createElement("small");
 
-            datum.className =
-                "inbox-datum";
+        datum.className =
+            "inbox-datum";
 
-            datum.textContent =
-                datumTijdMooi(
-                    item.aangemaakt
-                );
-
-
-            const knop =
-                document.createElement(
-                    "button"
-                );
-
-            knop.type =
-                "button";
-
-            knop.className =
-                "inbox-verwerk-knop";
-
-            knop.textContent =
-                "⚡ Verwerken";
-
-
-            knop.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-                    verwerkingOpenen(
-                        item.id
-                    );
-
-                }
+        datum.textContent =
+            datumTijdMooi(
+                item.aangemaakt
             );
 
 
-            kaart.appendChild(
-                tekst
-            );
+        const knop =
+            document.createElement("button");
 
-            kaart.appendChild(
-                datum
-            );
+        knop.type =
+            "button";
 
-            kaart.appendChild(
-                knop
-            );
+        knop.className =
+            "inbox-verwerk-knop";
+
+        knop.textContent =
+            "⚡ Verwerken";
 
 
-            inboxLijst.appendChild(
-                kaart
-            );
+        knop.addEventListener(
+            "click",
+            event => {
 
-        }
-    );
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                verwerkingOpenen(
+                    item.id
+                );
+
+            }
+        );
+
+
+        kaart.appendChild(tekst);
+
+        kaart.appendChild(datum);
+
+        kaart.appendChild(knop);
+
+
+        inboxLijst.appendChild(kaart);
+
+    });
 
 }
 
@@ -917,94 +839,76 @@ function verwerkLijstWeergeven() {
     }
 
 
-    inbox.forEach(
-        item => {
+    inbox.forEach(item => {
 
-            const kaart =
-                document.createElement(
-                    "article"
-                );
+        const kaart =
+            document.createElement("article");
 
-            kaart.className =
-                "inbox-kaart";
+        kaart.className =
+            "inbox-kaart";
 
 
-            const tekst =
-                document.createElement(
-                    "div"
-                );
+        const tekst =
+            document.createElement("div");
 
-            tekst.className =
-                "inbox-tekst";
+        tekst.className =
+            "inbox-tekst";
 
-            tekst.textContent =
-                item.tekst;
+        tekst.textContent =
+            item.tekst;
 
 
-            const datum =
-                document.createElement(
-                    "small"
-                );
+        const datum =
+            document.createElement("small");
 
-            datum.className =
-                "inbox-datum";
+        datum.className =
+            "inbox-datum";
 
-            datum.textContent =
-                datumTijdMooi(
-                    item.aangemaakt
-                );
-
-
-            const knop =
-                document.createElement(
-                    "button"
-                );
-
-            knop.type =
-                "button";
-
-            knop.className =
-                "inbox-verwerk-knop";
-
-            knop.textContent =
-                "⚡ Verwerken";
-
-
-            knop.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-                    verwerkingOpenen(
-                        item.id
-                    );
-
-                }
+        datum.textContent =
+            datumTijdMooi(
+                item.aangemaakt
             );
 
 
-            kaart.appendChild(
-                tekst
-            );
+        const knop =
+            document.createElement("button");
 
-            kaart.appendChild(
-                datum
-            );
+        knop.type =
+            "button";
 
-            kaart.appendChild(
-                knop
-            );
+        knop.className =
+            "inbox-verwerk-knop";
+
+        knop.textContent =
+            "⚡ Verwerken";
 
 
-            verwerkLijst.appendChild(
-                kaart
-            );
+        knop.addEventListener(
+            "click",
+            event => {
 
-        }
-    );
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                verwerkingOpenen(
+                    item.id
+                );
+
+            }
+        );
+
+
+        kaart.appendChild(tekst);
+
+        kaart.appendChild(datum);
+
+        kaart.appendChild(knop);
+
+
+        verwerkLijst.appendChild(kaart);
+
+    });
 
 }
 
@@ -1018,7 +922,8 @@ function verwerkingOpenen(id) {
     const item =
         inbox.find(
             inboxItem =>
-                inboxItem.id === id
+                String(inboxItem.id) ===
+                String(id)
         );
 
 
@@ -1028,7 +933,7 @@ function verwerkingOpenen(id) {
 
 
     huidigInboxId =
-        id;
+        item.id;
 
 
     if (verwerkItemTekst) {
@@ -1055,23 +960,41 @@ function verwerkingOpenen(id) {
     }
 
 
+    if (taakCategorie) {
+        taakCategorie.value = "";
+    }
+
+
+    if (taakDatum) {
+        taakDatum.value = "";
+    }
+
+
+    if (taakNotitie) {
+        taakNotitie.value = "";
+    }
+
+
+    subtakenFormulierLeegmaken();
+
+
     keuzeSchermTonen();
 
 
     if (verwerkModal) {
 
-        verwerkModal.hidden =
-            false;
+        verwerkModal.hidden = false;
 
-        verwerkModal.classList.add(
-            "open"
+        verwerkModal.classList.add("open");
+
+        document.body.classList.add(
+            "modal-open"
         );
 
+        document.body.style.overflow =
+            "hidden";
+
     }
-
-
-    document.body.style.overflow =
-        "hidden";
 
 }
 
@@ -1140,7 +1063,13 @@ function taakSchermTonen() {
 
     if (taakTitel) {
 
-        taakTitel.focus();
+        setTimeout(() => {
+
+            taakTitel.focus();
+
+            taakTitel.select();
+
+        }, 50);
 
     }
 
@@ -1179,7 +1108,13 @@ function ideeSchermTonen() {
 
     if (ideeTitel) {
 
-        ideeTitel.focus();
+        setTimeout(() => {
+
+            ideeTitel.focus();
+
+            ideeTitel.select();
+
+        }, 50);
 
     }
 
@@ -1187,10 +1122,10 @@ function ideeSchermTonen() {
 
 
 // ======================================
-// MODAL SLUITEN
+// MODAL VOLLEDIG SLUITEN
 // ======================================
 
-function modalSluitenFunctie() {
+function modalVolledigSluiten() {
 
     if (verwerkModal) {
 
@@ -1204,6 +1139,11 @@ function modalSluitenFunctie() {
     }
 
 
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
     document.body.style.overflow =
         "";
 
@@ -1214,10 +1154,17 @@ function modalSluitenFunctie() {
 
     keuzeSchermTonen();
 
+}
 
-    // Belangrijk:
-    // na sluiten altijd terug naar
-    // het rustige LUCY-hoofdscherm.
+
+// ======================================
+// MODAL SLUITEN
+// ======================================
+
+function modalSluitenFunctie() {
+
+    modalVolledigSluiten();
+
 
     paginaOpenen(
         "paginaHoofd"
@@ -1226,37 +1173,13 @@ function modalSluitenFunctie() {
 
     if (snelInput) {
 
-        setTimeout(
-            () => {
+        setTimeout(() => {
 
-                snelInput.focus();
+            snelInput.focus();
 
-            },
-            100
-        );
+        }, 100);
 
     }
-
-}
-
-
-// ======================================
-// MODAL INITIEEL SLUITEN
-// ======================================
-
-function verwerkModalSluitenZonderTerugkeer() {
-
-    if (!verwerkModal) {
-        return;
-    }
-
-
-    verwerkModal.hidden =
-        true;
-
-    verwerkModal.classList.remove(
-        "open"
-    );
 
 }
 
@@ -1321,6 +1244,8 @@ document.addEventListener(
             verwerkModal &&
             !verwerkModal.hidden
         ) {
+
+            event.preventDefault();
 
             modalSluitenFunctie();
 
@@ -1397,8 +1322,8 @@ if (verwijderInboxKnop) {
             inbox =
                 inbox.filter(
                     item =>
-                        item.id !==
-                        huidigInboxId
+                        String(item.id) !==
+                        String(huidigInboxId)
                 );
 
 
@@ -1496,12 +1421,13 @@ if (taakForm) {
             inbox =
                 inbox.filter(
                     item =>
-                        item.id !==
-                        huidigInboxId
+                        String(item.id) !==
+                        String(huidigInboxId)
                 );
 
 
             dataOpslaan();
+
 
             inboxWeergeven();
 
@@ -1510,6 +1436,7 @@ if (taakForm) {
             vandaagWeergeven();
 
             categorieenWeergeven();
+
 
             modalSluitenFunctie();
 
@@ -1615,18 +1542,20 @@ if (ideeOpslaan) {
             inbox =
                 inbox.filter(
                     item =>
-                        item.id !==
-                        huidigInboxId
+                        String(item.id) !==
+                        String(huidigInboxId)
                 );
 
 
             dataOpslaan();
+
 
             inboxWeergeven();
 
             verwerkLijstWeergeven();
 
             ideeenWeergeven();
+
 
             modalSluitenFunctie();
 
@@ -1651,85 +1580,108 @@ if (subtaakToevoegen) {
             event.stopPropagation();
 
 
-            if (!taakSubtaken) {
-                return;
-            }
-
-
-            const regel =
-                document.createElement(
-                    "div"
-                );
-
-            regel.className =
-                "subtaak-regel";
-
-
-            const input =
-                document.createElement(
-                    "input"
-                );
-
-            input.type =
-                "text";
-
-            input.className =
-                "subtaak-input";
-
-            input.placeholder =
-                "Kleine opdracht...";
-
-            input.autocomplete =
-                "off";
-
-
-            const verwijderen =
-                document.createElement(
-                    "button"
-                );
-
-            verwijderen.type =
-                "button";
-
-            verwijderen.className =
-                "subtaak-verwijder";
-
-            verwijderen.textContent =
-                "✕";
-
-
-            verwijderen.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-                    regel.remove();
-
-                }
-            );
-
-
-            regel.appendChild(
-                input
-            );
-
-            regel.appendChild(
-                verwijderen
-            );
-
-
-            taakSubtaken.appendChild(
-                regel
-            );
-
-
-            input.focus();
+            subtaakRegelToevoegen();
 
         }
     );
+
+}
+
+
+// ======================================
+// SUBTAAK REGEL TOEVOEGEN
+// ======================================
+
+function subtaakRegelToevoegen(
+    tekst = ""
+) {
+
+    if (!taakSubtaken) {
+        return;
+    }
+
+
+    const regel =
+        document.createElement("div");
+
+    regel.className =
+        "subtaak-regel";
+
+
+    const input =
+        document.createElement("input");
+
+    input.type =
+        "text";
+
+    input.className =
+        "subtaak-input";
+
+    input.placeholder =
+        "Kleine opdracht...";
+
+    input.autocomplete =
+        "off";
+
+    input.value =
+        tekst;
+
+
+    const verwijderen =
+        document.createElement("button");
+
+    verwijderen.type =
+        "button";
+
+    verwijderen.className =
+        "subtaak-verwijder";
+
+    verwijderen.textContent =
+        "✕";
+
+    verwijderen.setAttribute(
+        "aria-label",
+        "Subtaak verwijderen"
+    );
+
+
+    verwijderen.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            regel.remove();
+
+        }
+    );
+
+
+    regel.appendChild(input);
+
+    regel.appendChild(verwijderen);
+
+    taakSubtaken.appendChild(regel);
+
+
+    input.focus();
+
+}
+
+
+// ======================================
+// SUBTAKEN FORMULIER LEEGMAKEN
+// ======================================
+
+function subtakenFormulierLeegmaken() {
+
+    if (!taakSubtaken) {
+        return;
+    }
+
+    taakSubtaken.innerHTML = "";
 
 }
 
@@ -1752,30 +1704,28 @@ function subtakenUitFormulier() {
 
 
     return Array.from(regels)
-        .map(
-            regel => {
+        .map(regel => {
 
-                const input =
-                    regel.querySelector(
-                        ".subtaak-input"
-                    );
+            const input =
+                regel.querySelector(
+                    ".subtaak-input"
+                );
 
 
-                return {
+            return {
 
-                    id: maakId(),
+                id: maakId(),
 
-                    titel:
-                        input
-                            ? input.value.trim()
-                            : "",
+                titel:
+                    input
+                        ? input.value.trim()
+                        : "",
 
-                    afgerond: false
+                afgerond: false
 
-                };
+            };
 
-            }
-        )
+        })
         .filter(
             subtaak =>
                 subtaak.titel !== ""
@@ -1860,7 +1810,7 @@ function categorieenLaden() {
 
 
 // ======================================
-// CATEGORIE SELECT
+// CATEGORIE SELECT VULLEN
 // ======================================
 
 function categorieSelectVullen() {
@@ -1875,9 +1825,7 @@ function categorieSelectVullen() {
 
 
     const leeg =
-        document.createElement(
-            "option"
-        );
+        document.createElement("option");
 
     leeg.value =
         "";
@@ -1907,9 +1855,7 @@ function categorieSelectVullen() {
 
     } catch (fout) {
 
-        console.warn(
-            fout
-        );
+        console.warn(fout);
 
     }
 
@@ -1947,9 +1893,7 @@ function categorieSelectVullen() {
 // CATEGORIE ICONEN
 // ======================================
 
-function categorieIcoon(
-    categorie
-) {
+function categorieIcoon(categorie) {
 
     const iconen = {
 
@@ -2040,8 +1984,7 @@ function vandaagWeergeven() {
         taken.filter(
             taak =>
                 !taak.afgerond &&
-                taak.datum ===
-                vandaag
+                taak.datum === vandaag
         );
 
 
@@ -2057,18 +2000,14 @@ function vandaagWeergeven() {
         taak => {
 
             const kaart =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             kaart.className =
                 "taak-kaart";
 
 
             const titel =
-                document.createElement(
-                    "h3"
-                );
+                document.createElement("h3");
 
             titel.textContent =
                 taak.titel;
@@ -2082,9 +2021,7 @@ function vandaagWeergeven() {
             if (taak.categorie) {
 
                 const categorie =
-                    document.createElement(
-                        "small"
-                    );
+                    document.createElement("small");
 
                 categorie.textContent =
                     categorieIcoon(
@@ -2095,6 +2032,42 @@ function vandaagWeergeven() {
 
                 kaart.appendChild(
                     categorie
+                );
+
+            }
+
+
+            if (
+                Array.isArray(taak.subtaken) &&
+                taak.subtaken.length > 0
+            ) {
+
+                const subtaken =
+                    document.createElement("ul");
+
+                subtaken.className =
+                    "taak-subtaken";
+
+
+                taak.subtaken.forEach(
+                    subtaak => {
+
+                        const regel =
+                            document.createElement("li");
+
+                        regel.textContent =
+                            subtaak.titel;
+
+                        subtaken.appendChild(
+                            regel
+                        );
+
+                    }
+                );
+
+
+                kaart.appendChild(
+                    subtaken
                 );
 
             }
@@ -2137,18 +2110,14 @@ function ideeenWeergeven() {
         idee => {
 
             const kaart =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             kaart.className =
                 "idee-kaart";
 
 
             const tekst =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             tekst.className =
                 "idee-tekst";
@@ -2158,9 +2127,7 @@ function ideeenWeergeven() {
 
 
             const datum =
-                document.createElement(
-                    "small"
-                );
+                document.createElement("small");
 
             datum.className =
                 "idee-datum";
@@ -2266,9 +2233,7 @@ function categorieenWeergeven() {
 
     } catch (fout) {
 
-        console.warn(
-            fout
-        );
+        console.warn(fout);
 
     }
 
@@ -2280,24 +2245,19 @@ function categorieenWeergeven() {
                 taken.filter(
                     taak =>
                         !taak.afgerond &&
-                        taak.categorie ===
-                        categorie
+                        taak.categorie === categorie
                 ).length;
 
 
             const kaart =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             kaart.className =
                 "categorie-kaart";
 
 
             const icoon =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             icoon.className =
                 "categorie-icoon";
@@ -2309,9 +2269,7 @@ function categorieenWeergeven() {
 
 
             const naam =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             naam.className =
                 "categorie-naam";
@@ -2321,9 +2279,7 @@ function categorieenWeergeven() {
 
 
             const aantalElement =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             aantalElement.className =
                 "categorie-aantal";
@@ -2337,17 +2293,11 @@ function categorieenWeergeven() {
                 );
 
 
-            kaart.appendChild(
-                icoon
-            );
+            kaart.appendChild(icoon);
 
-            kaart.appendChild(
-                naam
-            );
+            kaart.appendChild(naam);
 
-            kaart.appendChild(
-                aantalElement
-            );
+            kaart.appendChild(aantalElement);
 
 
             categorieLijst.appendChild(
@@ -2364,9 +2314,7 @@ function categorieenWeergeven() {
 // DATUM
 // ======================================
 
-function datumNaarString(
-    datum
-) {
+function datumNaarString(datum) {
 
     const jaar =
         datum.getFullYear();
@@ -2374,18 +2322,12 @@ function datumNaarString(
     const maand =
         String(
             datum.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
+        ).padStart(2, "0");
 
     const dag =
         String(
             datum.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
+        ).padStart(2, "0");
 
 
     return (
@@ -2403,9 +2345,7 @@ function datumNaarString(
 // DATUM / TIJD MOOI
 // ======================================
 
-function datumTijdMooi(
-    datum
-) {
+function datumTijdMooi(datum) {
 
     if (!datum) {
         return "";
@@ -2451,13 +2391,34 @@ if (backupKnop) {
         "click",
         () => {
 
+            let categorieen =
+                STANDAARD_CATEGORIEEN;
+
+
+            try {
+
+                categorieen =
+                    JSON.parse(
+                        localStorage.getItem(
+                            OPSLAG_CATEGORIEEN
+                        )
+                    ) ||
+                    STANDAARD_CATEGORIEEN;
+
+            } catch (fout) {
+
+                console.warn(fout);
+
+            }
+
+
             const backup = {
 
                 app:
                     "Lucy",
 
                 versie:
-                    "2.0",
+                    "3.0",
 
                 datum:
                     new Date().toISOString(),
@@ -2472,12 +2433,7 @@ if (backupKnop) {
                     ideeen,
 
                 categorieen:
-                    JSON.parse(
-                        localStorage.getItem(
-                            OPSLAG_CATEGORIEEN
-                        )
-                    ) ||
-                    STANDAARD_CATEGORIEEN
+                    categorieen
 
             };
 
@@ -2507,9 +2463,7 @@ if (backupKnop) {
 
 
             const link =
-                document.createElement(
-                    "a"
-                );
+                document.createElement("a");
 
 
             link.href =
@@ -2524,11 +2478,24 @@ if (backupKnop) {
                 ".json";
 
 
+            document.body.appendChild(
+                link
+            );
+
             link.click();
 
+            link.remove();
 
-            URL.revokeObjectURL(
-                url
+
+            setTimeout(
+                () => {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                },
+                100
             );
 
         }
@@ -2644,6 +2611,7 @@ if (backupInput) {
 
                         dataOpslaan();
 
+
                         inboxWeergeven();
 
                         verwerkLijstWeergeven();
@@ -2654,6 +2622,8 @@ if (backupInput) {
 
                         categorieenWeergeven();
 
+
+                        modalVolledigSluiten();
 
                         paginaOpenen(
                             "paginaHoofd"
@@ -2747,6 +2717,9 @@ if (allesWissenKnop) {
             ideeen = [];
 
 
+            modalVolledigSluiten();
+
+
             inboxWeergeven();
 
             verwerkLijstWeergeven();
@@ -2821,7 +2794,6 @@ function serviceWorkerRegistreren() {
     );
 
 }
-
 
 
 
