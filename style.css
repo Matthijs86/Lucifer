@@ -2180,3 +2180,14 @@ select:focus {
 .modal-overlay[hidden] {
     display: none !important;
 }
+/* ======================================
+   VERBORGEN ELEMENTEN
+   ====================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
