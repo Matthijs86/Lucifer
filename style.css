@@ -1536,108 +1536,439 @@ select:focus {
 }
 
 
+```css
 /* ======================================
-   BOTTOM NAV
+   BOTTOM NAVIGATIE
+   5 gelijke blokken
 ====================================== */
 
 .bottom-nav {
-
     position: fixed;
-
     left: 0;
-
     right: 0;
-
     bottom: 0;
-
     z-index: 500;
 
     display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
-    grid-template-columns:
-        repeat(
-            5,
-            1fr
-        );
+    width: 100%;
+    max-width: 100vw;
 
     padding:
         8px
-        7px
+        6px
         calc(
             8px +
-            env(
-                safe-area-inset-bottom
-            )
+            env(safe-area-inset-bottom)
         );
 
-    border-top:
-        1px solid #33283a;
+    border-top: 1px solid #33283a;
 
     background:
         rgba(
             18,
             14,
             22,
-            0.96
+            0.97
         );
 
-    backdrop-filter:
-        blur(12px);
+    backdrop-filter: blur(12px);
 
+    overflow: hidden;
 }
 
 
-.nav-knop {
+/* ======================================
+   NAVIGATIE KNOP
+====================================== */
 
+.nav-knop {
     min-width: 0;
+    width: 100%;
 
     border: 0;
+    border-radius: 10px;
 
     background: transparent;
 
     color: #776a7e;
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
+    justify-content: center;
 
     gap: 3px;
 
-    padding: 6px 2px;
+    padding: 7px 2px;
 
+    overflow: hidden;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
 }
 
+
+/* Icoon */
 
 .nav-knop span {
+    display: block;
+
+    width: 100%;
 
     font-size: 20px;
+    line-height: 1;
 
+    text-align: center;
 }
 
 
+/* Tekst */
+
 .nav-knop small {
+    display: block;
+
+    width: 100%;
 
     font-size: 9px;
 
+    line-height: 1.2;
+
     white-space: nowrap;
 
+    text-align: center;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+
+/* ======================================
+   ACTIEVE KNOP
+====================================== */
 
 .nav-knop.actief {
-
     color: #c889ff;
 
+    background:
+        rgba(
+            155,
+            77,
+            255,
+            0.08
+        );
+
+    box-shadow:
+        inset 0 -2px 0 #a855f7;
 }
 
+
+/* ======================================
+   HOVER
+====================================== */
 
 .nav-knop:hover {
+    color: #e2c7ff;
 
-    color: #d5b0ff;
+    background:
+        rgba(
+            185,
+            103,
+            255,
+            0.10
+        );
+
+    box-shadow:
+        0 0 14px
+        rgba(
+            185,
+            103,
+            255,
+            0.18
+        );
+
+    transform: translateY(-1px);
+}
+
+
+/* ======================================
+   TOUCH / KLIK
+====================================== */
+
+.nav-knop:active {
+    transform: scale(0.96);
+}
+
+
+/* ======================================
+   VERWERKEN-KNOP
+====================================== */
+
+.verwerk-knop {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px 16px;
+
+    border: 1px solid #71459b;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2c2135,
+            #352442
+        );
+
+    color: #d8aaff;
+
+    font-weight: 900;
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px
+        rgba(
+            155,
+            77,
+            255,
+            0.10
+        );
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease;
+}
+
+
+/* Verwerken hover */
+
+.verwerk-knop:hover {
+    transform: translateY(-2px);
+
+    border-color: #c06cff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #382347,
+            #49275b
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 8px #b967ff,
+        0 0 20px
+        rgba(
+            185,
+            103,
+            255,
+            0.35
+        );
+}
+
+
+/* Verwerken indrukken */
+
+.verwerk-knop:active {
+    transform: translateY(0) scale(0.98);
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            185,
+            103,
+            255,
+            0.25
+        );
+}
+
+
+/* ======================================
+   VERWERKEN:
+   TAAK / IDEE / WEGGOOIEN
+====================================== */
+
+.verwerk-keuze {
+    position: relative;
+
+    min-height: 125px;
+
+    padding: 14px 10px;
+
+    border: 1px solid #46374d;
+    border-radius: 12px;
+
+    background: #241c29;
+
+    color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+/* Algemeen hover */
+
+.verwerk-keuze:hover {
+    transform: translateY(-3px);
+
+    background: #2b2032;
+
+    box-shadow:
+        0 0 8px
+        rgba(
+            185,
+            103,
+            255,
+            0.20
+        );
+}
+
+
+/* ======================================
+   TAAK
+====================================== */
+
+.verwerk-keuze.taak-keuze:hover {
+    border-color: #5be59a;
+
+    box-shadow:
+        0 0 8px #5be59a,
+        0 0 20px
+        rgba(
+            91,
+            229,
+            154,
+            0.25
+        );
+}
+
+
+/* ======================================
+   IDEE
+====================================== */
+
+.verwerk-keuze.idee-keuze:hover {
+    border-color: #ffd35a;
+
+    box-shadow:
+        0 0 8px #ffd35a,
+        0 0 20px
+        rgba(
+            255,
+            211,
+            90,
+            0.25
+        );
+}
+
+
+/* ======================================
+   WEGGOOIEN
+====================================== */
+
+.verwerk-keuze.weg-keuze:hover {
+    border-color: #ff6b7d;
+
+    box-shadow:
+        0 0 8px #ff6b7d,
+        0 0 20px
+        rgba(
+            255,
+            107,
+            125,
+            0.25
+        );
+}
+
+
+/* Icoon */
+
+.verwerk-keuze .keuze-icoon {
+    font-size: 28px;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
+}
+
+
+.verwerk-keuze:hover .keuze-icoon {
+    transform: scale(1.12);
+}
+
+
+/* ======================================
+   MOBIEL
+====================================== */
+
+@media (max-width: 600px) {
+
+    .bottom-nav {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .nav-knop {
+        padding:
+            7px
+            1px;
+    }
+
+    .nav-knop span {
+        font-size: 19px;
+    }
+
+    .nav-knop small {
+        font-size: 8px;
+    }
 
 }
+
+
+/* ======================================
+   HEEL KLEINE TELEFOONS
+====================================== */
+
+@media (max-width: 380px) {
+
+    .nav-knop span {
+        font-size: 18px;
+    }
+
+    .nav-knop small {
+        font-size: 7px;
+    }
+
+}
+```
 
 
 /* ======================================
