@@ -205,7 +205,15 @@ document.addEventListener(
 
         paginaOpenen("paginaHoofd");
 
-        verwerkModalSluitenZonderTerugkeer();
+        if (verwerkModal) {
+
+            verwerkModal.hidden = true;
+
+            verwerkModal.classList.remove("open");
+
+        }
+
+        document.body.style.overflow = "";
 
         inboxWeergeven();
 
@@ -220,7 +228,9 @@ document.addEventListener(
         serviceWorkerRegistreren();
 
         if (snelInput) {
+
             snelInput.focus();
+
         }
 
     }
