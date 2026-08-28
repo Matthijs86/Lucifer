@@ -13,16 +13,12 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
 
-
 body {
-
     margin: 0;
-
     min-height: 100vh;
 
     background:
@@ -39,7 +35,6 @@ body {
         Arial,
         Helvetica,
         sans-serif;
-
 }
 
 
@@ -50,45 +45,52 @@ select {
     font: inherit;
 }
 
-
 button {
     cursor: pointer;
 }
 
 
+/* ======================================
+   FORMULIER ELEMENTEN
+====================================== */
+
 textarea,
 input,
 select {
-
     width: 100%;
 
     border: 1px solid #493951;
-
     border-radius: 12px;
 
     background: #211a27;
-
     color: #f5eff8;
 
     outline: none;
-
 }
 
 
 textarea:focus,
 input:focus,
 select:focus {
-
     border-color: #b967ff;
 
     box-shadow:
-        0 0 0 2px rgba(
+        0 0 0 2px
+        rgba(
             185,
             103,
             255,
             0.12
         );
+}
 
+
+/* ======================================
+   VERBORGEN ELEMENTEN
+====================================== */
+
+[hidden] {
+    display: none !important;
 }
 
 
@@ -97,13 +99,10 @@ select:focus {
 ====================================== */
 
 .app {
-
     width: 100%;
-
     min-height: 100vh;
 
     padding-bottom: 85px;
-
 }
 
 
@@ -112,81 +111,70 @@ select:focus {
 ====================================== */
 
 .app-header {
-
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     padding:
         18px
         18px
         12px;
-
 }
-
 
 .header-logo {
     min-width: 0;
 }
 
-
 .app-logo {
-
     font-size: 30px;
-
     font-weight: 900;
-
     letter-spacing: 5px;
 
     color: #ffffff;
-
 }
 
-
 .app-subtitle {
-
     margin-top: 2px;
 
     font-size: 12px;
 
     color: #a99aae;
-
 }
 
 
 .icon-button {
-
     width: 44px;
-
     height: 44px;
 
     border: 1px solid #493951;
-
     border-radius: 12px;
 
     background: #211a27;
-
     color: #ffffff;
 
     font-size: 20px;
 
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .icon-button:hover {
-
     border-color: #b967ff;
 
     box-shadow:
-        0 0 12px rgba(
+        0 0 12px
+        rgba(
             185,
             103,
             255,
             0.25
         );
 
+    transform: translateY(-1px);
 }
 
 
@@ -195,11 +183,9 @@ select:focus {
 ====================================== */
 
 .pagina {
-
     display: none;
 
     width: 100%;
-
     max-width: 760px;
 
     margin: 0 auto;
@@ -208,9 +194,7 @@ select:focus {
         20px
         18px
         35px;
-
 }
-
 
 .pagina.actief {
     display: block;
@@ -218,11 +202,10 @@ select:focus {
 
 
 /* ======================================
-   LUCY HOOFDSCHERM
+   HOOFDSCHERM LUCY
 ====================================== */
 
 #paginaHoofd {
-
     min-height:
         calc(
             100vh - 150px
@@ -231,11 +214,8 @@ select:focus {
     display: none;
 
     align-items: center;
-
     justify-content: center;
-
 }
-
 
 #paginaHoofd.actief {
     display: flex;
@@ -243,54 +223,47 @@ select:focus {
 
 
 .lucy-invoer {
-
     width: 100%;
-
     max-width: 650px;
 
     text-align: center;
-
 }
 
 
 .lucy-titel {
-
-    font-size: clamp(
-        46px,
-        12vw,
-        80px
-    );
+    font-size:
+        clamp(
+            46px,
+            12vw,
+            80px
+        );
 
     line-height: 1;
 
     font-weight: 900;
 
-    letter-spacing:
-        9px;
+    letter-spacing: 9px;
 
     color: #ffffff;
 
     text-shadow:
-        0 0 18px rgba(
+        0 0 18px
+        rgba(
             185,
             103,
             255,
             0.3
         );
-
 }
 
 
 .lucy-ondertitel {
-
     margin-top: 10px;
-
     margin-bottom: 38px;
 
     font-size: 15px;
 
     color: #a99aae;
-
 }
 
 
@@ -300,7 +273,6 @@ select:focus {
 
 
 #snelInput {
-
     min-height: 145px;
 
     padding: 20px;
@@ -308,11 +280,9 @@ select:focus {
     resize: vertical;
 
     font-size: 18px;
-
     line-height: 1.5;
 
     background: #211a27;
-
 }
 
 
@@ -321,10 +291,27 @@ select:focus {
 }
 
 
+.lucy-hulptekst {
+    max-width: 430px;
+
+    margin:
+        25px
+        auto
+        0;
+
+    color: #706577;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* ======================================
+   PRIMARY BUTTON
+====================================== */
+
 .primary-button {
-
     border: 0;
-
     border-radius: 12px;
 
     padding:
@@ -345,33 +332,40 @@ select:focus {
     letter-spacing: 0.5px;
 
     box-shadow:
-        0 0 16px rgba(
+        0 0 16px
+        rgba(
             155,
             77,
             255,
-            0.2
+            0.20
         );
 
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
 
 .primary-button:hover {
-
     transform: translateY(-1px);
 
     box-shadow:
-        0 0 22px rgba(
+        0 0 22px
+        rgba(
             155,
             77,
             255,
             0.35
         );
+}
 
+
+.primary-button:active {
+    transform: scale(0.98);
 }
 
 
 .primary-button.groot {
-
     width: 100%;
 
     margin-top: 14px;
@@ -379,25 +373,6 @@ select:focus {
     padding: 17px;
 
     font-size: 16px;
-
-}
-
-
-.lucy-hulptekst {
-
-    max-width: 430px;
-
-    margin:
-        25px
-        auto
-        0;
-
-    color: #706577;
-
-    font-size: 13px;
-
-    line-height: 1.6;
-
 }
 
 
@@ -406,22 +381,18 @@ select:focus {
 ====================================== */
 
 .pagina-kop {
-
     display: flex;
 
     align-items: flex-end;
-
     justify-content: space-between;
 
     gap: 15px;
 
     margin-bottom: 25px;
-
 }
 
 
 .kleine-label {
-
     display: block;
 
     margin-bottom: 6px;
@@ -429,33 +400,26 @@ select:focus {
     color: #9b83a8;
 
     font-size: 11px;
-
     font-weight: 800;
 
     letter-spacing: 2px;
-
 }
 
 
 .pagina-kop h1 {
-
     margin: 0;
 
     font-size: 28px;
-
     line-height: 1.15;
-
 }
 
 
 #datumVandaag {
-
     color: #8e8293;
 
     font-size: 12px;
 
     text-align: right;
-
 }
 
 
@@ -465,7 +429,6 @@ select:focus {
 
 .verwerken-intro,
 .pagina-uitleg {
-
     margin-bottom: 22px;
 
     padding: 16px;
@@ -473,21 +436,24 @@ select:focus {
     border-left:
         3px solid #76508d;
 
-    background: rgba(
-        38,
-        29,
-        45,
-        0.55
-    );
+    background:
+        rgba(
+            38,
+            29,
+            45,
+            0.55
+        );
 
-    border-radius: 0 10px 10px 0;
-
+    border-radius:
+        0
+        10px
+        10px
+        0;
 }
 
 
 .verwerken-intro p,
 .pagina-uitleg p {
-
     margin:
         0
         0
@@ -496,7 +462,6 @@ select:focus {
     color: #aaa0b0;
 
     line-height: 1.5;
-
 }
 
 
@@ -507,49 +472,39 @@ select:focus {
 
 
 /* ======================================
-   VERWERKEN
+   VERWERKEN LIJST
 ====================================== */
 
 .verwerk-lijst {
-
     display: flex;
 
     flex-direction: column;
 
     gap: 12px;
-
 }
 
 
 .verwerk-kaart {
-
     padding: 17px;
 
-    border:
-        1px solid #44364c;
-
+    border: 1px solid #44364c;
     border-radius: 14px;
 
     background: #211a27;
-
 }
 
 
 .verwerk-kaart-tekst {
-
     margin-bottom: 8px;
 
     color: #f4edf7;
 
     font-size: 17px;
-
     line-height: 1.45;
-
 }
 
 
 .verwerk-kaart small {
-
     display: block;
 
     margin-bottom: 14px;
@@ -557,1166 +512,25 @@ select:focus {
     color: #746979;
 
     font-size: 11px;
-
 }
 
 
-.verwerk-knop {
+/* ======================================
+   VERWERKEN KNOP
+====================================== */
 
+.verwerk-knop {
     width: 100%;
 
-    padding: 11px;
+    margin-top: 10px;
+
+    padding:
+        13px
+        16px;
 
     border:
         1px solid #71459b;
 
-    border-radius: 9px;
-
-    background: #2c2135;
-
-    color: #d6a9ff;
-
-    font-weight: 800;
-
-}
-
-
-.verwerk-knop:hover {
-
-    background: #352641;
-
-    border-color: #b967ff;
-
-}
-
-
-/* ======================================
-   MODAL
-====================================== */
-
-.modal-overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 15px;
-
-    background: rgba(
-        5,
-        3,
-        7,
-        0.82
-    );
-
-    backdrop-filter:
-        blur(6px);
-
-}
-
-
-.modal {
-
-    width: 100%;
-
-    max-width: 600px;
-
-    max-height: 92vh;
-
-    overflow-y: auto;
-
-    padding: 20px;
-
-    border:
-        1px solid #4e3d58;
-
-    border-radius: 18px;
-
-    background: #1b151f;
-
-    box-shadow:
-        0 20px 70px rgba(
-            0,
-            0,
-            0,
-            0.5
-        );
-
-}
-
-
-.modal-header {
-
-    display: flex;
-
-    align-items: flex-start;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 20px;
-
-}
-
-
-.modal-header h2 {
-
-    margin: 0;
-
-    font-size: 22px;
-
-}
-
-
-.modal-sluit-knop {
-
-    width: 40px;
-
-    height: 40px;
-
-    border:
-        1px solid #4b3b52;
-
-    border-radius: 10px;
-
-    background: #261e2b;
-
-    color: #ffffff;
-
-}
-
-
-.verwerk-item {
-
-    margin-bottom: 20px;
-
-    padding: 18px;
-
-    border-radius: 12px;
-
-    background: #261e2b;
-
-}
-
-
-.verwerk-item-tekst {
-
-    margin: 0;
-
-    font-size: 18px;
-
-    line-height: 1.55;
-
-}
-
-
-.verwerk-keuzes {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
-    gap: 10px;
-
-}
-
-
-.verwerk-keuze {
-
-    min-height: 125px;
-
-    padding: 14px 10px;
-
-    border:
-        1px solid #46374d;
-
-    border-radius: 12px;
-
-    background: #241c29;
-
-    color: #ffffff;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    text-align: center;
-
-}
-
-
-.verwerk-keuze:hover {
-
-    border-color: #a85fff;
-
-}
-
-
-.verwerk-keuze .keuze-icoon {
-
-    font-size: 27px;
-
-}
-
-
-.verwerk-keuze strong {
-    font-size: 15px;
-}
-
-
-.verwerk-keuze small {
-
-    color: #96899b;
-
-    line-height: 1.3;
-
-}
-
-
-.taak-keuze:hover {
-    border-color: #5bcf91;
-}
-
-
-.idee-keuze:hover {
-    border-color: #f0c15b;
-}
-
-
-.weg-keuze:hover {
-    border-color: #ef6d6d;
-}
-
-
-/* ======================================
-   FORMULIEREN
-====================================== */
-
-.taak-form {
-
-    margin-top: 20px;
-
-}
-
-
-.taak-form label {
-
-    display: block;
-
-    margin:
-        17px
-        0
-        7px;
-
-    color: #bcb0c1;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-}
-
-
-.taak-form textarea,
-.taak-form input,
-.taak-form select {
-
-    padding: 13px;
-
-}
-
-
-.keuze-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
-    gap: 8px;
-
-}
-
-
-.keuze-knop {
-
-    min-height: 85px;
-
-    padding: 10px;
-
-    border:
-        1px solid #44364c;
-
-    border-radius: 10px;
-
-    background: #241c29;
-
-    color: #ffffff;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 3px;
-
-}
-
-
-.keuze-knop strong {
-    font-size: 13px;
-}
-
-
-.keuze-knop small {
-
-    color: #8f8295;
-
-    font-size: 10px;
-
-}
-
-
-.keuze-knop.geselecteerd {
-
-    border-color: #b967ff;
-
-    background: #34223f;
-
-    box-shadow:
-        0 0 10px rgba(
-            185,
-            103,
-            255,
-            0.18
-        );
-
-}
-
-
-.subtaken-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-top: 17px;
-
-}
-
-
-.subtaken-header label {
-    margin: 0;
-}
-
-
-.kleine-knop {
-
-    padding:
-        8px
-        10px;
-
-    border:
-        1px solid #5c4670;
-
-    border-radius: 8px;
-
-    background: #292030;
-
-    color: #c99bff;
-
-}
-
-
-.subtaken-lijst {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    margin-top: 9px;
-
-}
-
-
-.subtaak-regel {
-
-    display: grid;
-
-    grid-template-columns:
-        25px
-        1fr
-        35px;
-
-    align-items: center;
-
-    gap: 7px;
-
-}
-
-
-.subtaak-input {
-
-    padding: 10px !important;
-
-}
-
-
-.subtaak-input.afgerond {
-
-    text-decoration:
-        line-through;
-
-    opacity: 0.5;
-
-}
-
-
-.subtaak-verwijder {
-
-    width: 32px;
-
-    height: 32px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: #30212d;
-
-    color: #e77d93;
-
-}
-
-
-.modal-acties {
-
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 22px;
-
-}
-
-
-.modal-acties > * {
-    flex: 1;
-}
-
-
-/* ======================================
-   KNOPPEN
-====================================== */
-
-.secondary-button {
-
-    display: block;
-
-    width: 100%;
-
-    margin-top: 10px;
-
-    padding: 13px;
-
-    border:
-        1px solid #55455d;
-
-    border-radius: 10px;
-
-    background: #281f2d;
-
-    color: #d9cce0;
-
-    text-align: center;
-
-    font-weight: 700;
-
-}
-
-
-.secondary-button:hover {
-
-    border-color: #8f68a5;
-
-}
-
-
-.danger-button {
-
-    width: 100%;
-
-    padding: 13px;
-
-    border:
-        1px solid #8e3e50;
-
-    border-radius: 10px;
-
-    background: #321d26;
-
-    color: #ff8ca4;
-
-    font-weight: 800;
-
-}
-
-
-.danger-button:hover {
-
-    background: #41202c;
-
-}
-
-
-/* ======================================
-   TAKEN
-====================================== */
-
-.taken-lijst {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-}
-
-
-.taak-kaart {
-
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 13px;
-
-    padding: 15px;
-
-    border:
-        1px solid #44364c;
-
-    border-radius: 13px;
-
-    background: #211a27;
-
-}
-
-
-.taak-kaart:hover {
-
-    border-color: #684b78;
-
-}
-
-
-.taak-check {
-
-    flex: 0 0 auto;
-
-    width: 35px;
-
-    height: 35px;
-
-    border:
-        2px solid #6c5875;
-
-    border-radius: 50%;
-
-    background: transparent;
-
-    color: transparent;
-
-}
-
-
-.taak-check:hover {
-
-    border-color: #69d49a;
-
-    color: #69d49a;
-
-}
-
-
-.taak-inhoud {
-    min-width: 0;
-}
-
-
-.taak-inhoud h3 {
-
-    margin:
-        1px
-        0
-        8px;
-
-    font-size: 16px;
-
-    line-height: 1.4;
-
-}
-
-
-.taak-meta {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 5px;
-
-}
-
-
-.badge {
-
-    display: inline-block;
-
-    padding:
-        4px
-        7px;
-
-    border-radius: 6px;
-
-    background: #2c2331;
-
-    color: #a99baa;
-
-    font-size: 10px;
-
-}
-
-
-.badge.nu {
-    color: #ff7e8e;
-}
-
-
-.badge.later {
-    color: #f4ad61;
-}
-
-
-.badge.bewaren {
-    color: #76bfff;
-}
-
-
-.subtaken-mini {
-
-    display: block;
-
-    margin-top: 8px;
-
-    color: #88798d;
-
-    font-size: 11px;
-
-}
-
-
-/* ======================================
-   IDEEËN
-====================================== */
-
-.ideeën-lijst {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-}
-
-
-.idee-kaart {
-
-    position: relative;
-
-    padding: 17px;
-
-    padding-right: 50px;
-
-    border:
-        1px solid #4a3c30;
-
-    border-radius: 13px;
-
-    background: #251f20;
-
-}
-
-
-.idee-kaart p {
-
-    margin:
-        0
-        0
-        9px;
-
-    color: #f2e9dd;
-
-    line-height: 1.5;
-
-}
-
-
-.idee-kaart small {
-
-    color: #8c7c70;
-
-    font-size: 10px;
-
-}
-
-
-.kleine-verwijder-knop {
-
-    position: absolute;
-
-    top: 13px;
-
-    right: 13px;
-
-    width: 32px;
-
-    height: 32px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: #32272a;
-
-    color: #d88989;
-
-}
-
-
-/* ======================================
-   CATEGORIEËN
-====================================== */
-
-.categorie-lijst {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
-
-    gap: 10px;
-
-}
-
-
-.categorie-kaart {
-
-    padding: 15px;
-
-    border:
-        1px solid #44364c;
-
-    border-radius: 12px;
-
-    background: #211a27;
-
-}
-
-
-.categorie-icoon {
-
-    font-size: 25px;
-
-    margin-bottom: 8px;
-
-}
-
-
-.categorie-naam {
-
-    font-weight: 800;
-
-    font-size: 14px;
-
-}
-
-
-.categorie-aantal {
-
-    margin-top: 5px;
-
-    color: #837587;
-
-    font-size: 11px;
-
-}
-
-
-/* ======================================
-   INSTELLINGEN
-====================================== */
-
-.instellingen-kaart {
-
-    margin-bottom: 15px;
-
-    padding: 18px;
-
-    border:
-        1px solid #44364c;
-
-    border-radius: 14px;
-
-    background: #211a27;
-
-}
-
-
-.instellingen-kaart h2 {
-
-    margin:
-        0
-        0
-        8px;
-
-    font-size: 18px;
-
-}
-
-
-.instellingen-kaart p {
-
-    margin:
-        0
-        0
-        15px;
-
-    color: #988c9c;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-
-}
-
-
-.instellingen-kaart.gevaar {
-
-    border-color: #53303a;
-
-}
-
-
-.over-lucy {
-
-    padding:
-        30px
-        10px;
-
-    text-align: center;
-
-    color: #766979;
-
-}
-
-
-.over-lucy strong {
-
-    color: #bca9c4;
-
-    letter-spacing: 4px;
-
-}
-
-
-.over-lucy p {
-
-    margin:
-        7px
-        0;
-
-}
-
-
-.over-lucy small {
-    font-size: 10px;
-}
-
-
-/* ======================================
-   LEGE MELDING
-====================================== */
-
-.lege-melding {
-
-    display: none;
-
-    padding:
-        45px
-        20px;
-
-    text-align: center;
-
-    color: #776a7d;
-
-}
-
-
-.lege-melding.zichtbaar {
-    display: block;
-}
-
-
-.lege-icoon {
-
-    margin-bottom: 10px;
-
-    font-size: 36px;
-
-}
-
-
-.lege-melding h3 {
-
-    margin:
-        0
-        0
-        8px;
-
-    color: #a99cac;
-
-    font-size: 17px;
-
-}
-
-
-.lege-melding p {
-
-    margin: 0;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-
-}
-
-
-```css
-/* ======================================
-   BOTTOM NAVIGATIE
-   5 gelijke blokken
-====================================== */
-
-.bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 500;
-
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-
-    width: 100%;
-    max-width: 100vw;
-
-    padding:
-        8px
-        6px
-        calc(
-            8px +
-            env(safe-area-inset-bottom)
-        );
-
-    border-top: 1px solid #33283a;
-
-    background:
-        rgba(
-            18,
-            14,
-            22,
-            0.97
-        );
-
-    backdrop-filter: blur(12px);
-
-    overflow: hidden;
-}
-
-
-/* ======================================
-   NAVIGATIE KNOP
-====================================== */
-
-.nav-knop {
-    min-width: 0;
-    width: 100%;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: #776a7e;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 3px;
-
-    padding: 7px 2px;
-
-    overflow: hidden;
-
-    transition:
-        color 0.18s ease,
-        background 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease;
-}
-
-
-/* Icoon */
-
-.nav-knop span {
-    display: block;
-
-    width: 100%;
-
-    font-size: 20px;
-    line-height: 1;
-
-    text-align: center;
-}
-
-
-/* Tekst */
-
-.nav-knop small {
-    display: block;
-
-    width: 100%;
-
-    font-size: 9px;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    text-align: center;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-/* ======================================
-   ACTIEVE KNOP
-====================================== */
-
-.nav-knop.actief {
-    color: #c889ff;
-
-    background:
-        rgba(
-            155,
-            77,
-            255,
-            0.08
-        );
-
-    box-shadow:
-        inset 0 -2px 0 #a855f7;
-}
-
-
-/* ======================================
-   HOVER
-====================================== */
-
-.nav-knop:hover {
-    color: #e2c7ff;
-
-    background:
-        rgba(
-            185,
-            103,
-            255,
-            0.10
-        );
-
-    box-shadow:
-        0 0 14px
-        rgba(
-            185,
-            103,
-            255,
-            0.18
-        );
-
-    transform: translateY(-1px);
-}
-
-
-/* ======================================
-   TOUCH / KLIK
-====================================== */
-
-.nav-knop:active {
-    transform: scale(0.96);
-}
-
-
-/* ======================================
-   VERWERKEN-KNOP
-====================================== */
-
-.verwerk-knop {
-    width: 100%;
-
-    margin-top: 10px;
-
-    padding: 13px 16px;
-
-    border: 1px solid #71459b;
     border-radius: 10px;
 
     background:
@@ -1729,9 +543,8 @@ select:focus {
     color: #d8aaff;
 
     font-weight: 900;
-    letter-spacing: 0.4px;
 
-    cursor: pointer;
+    letter-spacing: 0.4px;
 
     box-shadow:
         0 0 8px
@@ -1750,8 +563,6 @@ select:focus {
         color 0.18s ease;
 }
 
-
-/* Verwerken hover */
 
 .verwerk-knop:hover {
     transform: translateY(-2px);
@@ -1779,35 +590,199 @@ select:focus {
 }
 
 
-/* Verwerken indrukken */
-
 .verwerk-knop:active {
-    transform: translateY(0) scale(0.98);
+    transform: scale(0.98);
+}
+
+
+/* ======================================
+   MODAL
+====================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    background:
+        rgba(
+            5,
+            3,
+            7,
+            0.82
+        );
+
+    backdrop-filter:
+        blur(6px);
+}
+
+
+/*
+   BELANGRIJK:
+   hidden moet altijd winnen van display:flex.
+*/
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
+
+
+.modal {
+    width: 100%;
+    max-width: 600px;
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    border:
+        1px solid #4e3d58;
+
+    border-radius: 18px;
+
+    background: #1b151f;
 
     box-shadow:
-        0 0 10px
+        0 20px 70px
         rgba(
-            185,
-            103,
+            0,
+            0,
+            0,
+            0.5
+        );
+}
+
+
+/* ======================================
+   MODAL HEADER
+====================================== */
+
+.modal-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.modal-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+}
+
+
+.modal-sluit-knop {
+    flex:
+        0
+        0
+        auto;
+
+    width: 40px;
+    height: 40px;
+
+    border:
+        1px solid #4b3b52;
+
+    border-radius: 10px;
+
+    background: #261e2b;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.modal-sluit-knop:hover {
+    border-color: #ff6b7d;
+
+    background: #35202a;
+
+    box-shadow:
+        0 0 12px
+        rgba(
             255,
+            107,
+            125,
             0.25
         );
 }
 
 
 /* ======================================
-   VERWERKEN:
+   ITEM DAT VERWERKT WORDT
+====================================== */
+
+.verwerk-item {
+    margin-bottom: 20px;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    background: #261e2b;
+}
+
+
+.verwerk-item-tekst {
+    margin: 0;
+
+    font-size: 18px;
+
+    line-height: 1.55;
+}
+
+
+/* ======================================
    TAAK / IDEE / WEGGOOIEN
 ====================================== */
+
+.verwerk-keuzes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 10px;
+}
+
 
 .verwerk-keuze {
     position: relative;
 
     min-height: 125px;
 
-    padding: 14px 10px;
+    padding:
+        14px
+        10px;
 
-    border: 1px solid #46374d;
+    border:
+        1px solid #46374d;
+
     border-radius: 12px;
 
     background: #241c29;
@@ -1815,6 +790,7 @@ select:focus {
     color: #ffffff;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
@@ -1834,8 +810,6 @@ select:focus {
 }
 
 
-/* Algemeen hover */
-
 .verwerk-keuze:hover {
     transform: translateY(-3px);
 
@@ -1852,9 +826,38 @@ select:focus {
 }
 
 
-/* ======================================
-   TAAK
-====================================== */
+.verwerk-keuze:active {
+    transform: scale(0.98);
+}
+
+
+.verwerk-keuze .keuze-icoon {
+    font-size: 28px;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
+}
+
+
+.verwerk-keuze:hover .keuze-icoon {
+    transform: scale(1.12);
+}
+
+
+.verwerk-keuze strong {
+    font-size: 15px;
+}
+
+
+.verwerk-keuze small {
+    color: #96899b;
+
+    line-height: 1.3;
+}
+
+
+/* TAAK */
 
 .verwerk-keuze.taak-keuze:hover {
     border-color: #5be59a;
@@ -1871,9 +874,7 @@ select:focus {
 }
 
 
-/* ======================================
-   IDEE
-====================================== */
+/* IDEE */
 
 .verwerk-keuze.idee-keuze:hover {
     border-color: #ffd35a;
@@ -1890,9 +891,7 @@ select:focus {
 }
 
 
-/* ======================================
-   WEGGOOIEN
-====================================== */
+/* WEGGOOIEN */
 
 .verwerk-keuze.weg-keuze:hover {
     border-color: #ff6b7d;
@@ -1909,19 +908,997 @@ select:focus {
 }
 
 
-/* Icoon */
+/* ======================================
+   TAAKFORMULIER
+====================================== */
 
-.verwerk-keuze .keuze-icoon {
-    font-size: 28px;
-
-    transition:
-        transform 0.18s ease,
-        filter 0.18s ease;
+.taak-form {
+    margin-top: 20px;
 }
 
 
-.verwerk-keuze:hover .keuze-icoon {
-    transform: scale(1.12);
+.taak-form label,
+.taak-form .form-label {
+    display: block;
+
+    margin:
+        17px
+        0
+        7px;
+
+    color: #bcb0c1;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/*
+   Eerste label/form-label niet te veel ruimte
+*/
+
+.taak-form > .form-label:first-of-type {
+    margin-top: 17px;
+}
+
+
+.taak-form textarea,
+.taak-form input,
+.taak-form select {
+    padding: 13px;
+}
+
+
+/* ======================================
+   AANDACHT KEUZES
+====================================== */
+
+.keuze-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 8px;
+}
+
+
+.keuze-knop {
+    min-height: 85px;
+
+    padding: 10px;
+
+    border:
+        1px solid #44364c;
+
+    border-radius: 10px;
+
+    background: #241c29;
+
+    color: #ffffff;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.keuze-knop:hover {
+    border-color: #9f63d4;
+
+    background: #2b2032;
+
+    transform: translateY(-1px);
+}
+
+
+.keuze-knop strong {
+    font-size: 13px;
+}
+
+
+.keuze-knop small {
+    color: #8f8295;
+
+    font-size: 10px;
+}
+
+
+.keuze-knop.geselecteerd {
+    border-color: #b967ff;
+
+    background: #34223f;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            185,
+            103,
+            255,
+            0.18
+        );
+}
+
+
+/* ======================================
+   SUBTAKEN
+====================================== */
+
+.subtaken-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 17px;
+}
+
+
+.subtaken-header .form-label {
+    margin: 0;
+}
+
+
+.kleine-knop {
+    flex:
+        0
+        0
+        auto;
+
+    padding:
+        8px
+        10px;
+
+    border:
+        1px solid #5c4670;
+
+    border-radius: 8px;
+
+    background: #292030;
+
+    color: #c99bff;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+
+.kleine-knop:hover {
+    border-color: #b967ff;
+
+    background: #34223f;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            185,
+            103,
+            255,
+            0.18
+        );
+}
+
+
+.subtaken-lijst {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 9px;
+}
+
+
+.subtaak-regel {
+    display: grid;
+
+    grid-template-columns:
+        25px
+        1fr
+        35px;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.subtaak-input {
+    padding: 10px !important;
+}
+
+
+.subtaak-input.afgerond {
+    text-decoration:
+        line-through;
+
+    opacity: 0.5;
+}
+
+
+.subtaak-verwijder {
+    width: 32px;
+    height: 32px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #30212d;
+
+    color: #e77d93;
+
+    transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.subtaak-verwijder:hover {
+    background: #41202c;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            255,
+            107,
+            125,
+            0.20
+        );
+}
+
+
+/* ======================================
+   MODAL ACTIES
+====================================== */
+
+.modal-acties {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+
+.modal-acties > * {
+    flex: 1;
+}
+
+
+/* ======================================
+   SECONDARY BUTTON
+====================================== */
+
+.secondary-button {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px;
+
+    border:
+        1px solid #55455d;
+
+    border-radius: 10px;
+
+    background: #281f2d;
+
+    color: #d9cce0;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.secondary-button:hover {
+    border-color: #a56bc2;
+
+    background: #32243a;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            185,
+            103,
+            255,
+            0.15
+        );
+}
+
+
+/* ======================================
+   DANGER BUTTON
+====================================== */
+
+.danger-button {
+    width: 100%;
+
+    padding: 13px;
+
+    border:
+        1px solid #8e3e50;
+
+    border-radius: 10px;
+
+    background: #321d26;
+
+    color: #ff8ca4;
+
+    font-weight: 800;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.danger-button:hover {
+    background: #41202c;
+
+    border-color: #ff6b7d;
+
+    box-shadow:
+        0 0 12px
+        rgba(
+            255,
+            107,
+            125,
+            0.20
+        );
+}
+
+
+/* ======================================
+   TAKEN
+====================================== */
+
+.taken-lijst {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.taak-kaart {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding: 15px;
+
+    border:
+        1px solid #44364c;
+
+    border-radius: 13px;
+
+    background: #211a27;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.taak-kaart:hover {
+    border-color: #684b78;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            185,
+            103,
+            255,
+            0.08
+        );
+}
+
+
+.taak-check {
+    flex:
+        0
+        0
+        auto;
+
+    width: 35px;
+    height: 35px;
+
+    border:
+        2px solid #6c5875;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: transparent;
+
+    transition:
+        border-color 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.taak-check:hover {
+    border-color: #69d49a;
+
+    color: #69d49a;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            105,
+            212,
+            154,
+            0.20
+        );
+}
+
+
+.taak-inhoud {
+    min-width: 0;
+}
+
+
+.taak-inhoud h3 {
+    margin:
+        1px
+        0
+        8px;
+
+    font-size: 16px;
+
+    line-height: 1.4;
+}
+
+
+.taak-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+
+.badge {
+    display: inline-block;
+
+    padding:
+        4px
+        7px;
+
+    border-radius: 6px;
+
+    background: #2c2331;
+
+    color: #a99baa;
+
+    font-size: 10px;
+}
+
+
+.badge.nu {
+    color: #ff7e8e;
+}
+
+
+.badge.later {
+    color: #f4ad61;
+}
+
+
+.badge.bewaren {
+    color: #76bfff;
+}
+
+
+.subtaken-mini {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #88798d;
+
+    font-size: 11px;
+}
+
+
+/* ======================================
+   IDEEËN
+====================================== */
+
+.ideeën-lijst {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.idee-kaart {
+    position: relative;
+
+    padding: 17px 50px 17px 17px;
+
+    border:
+        1px solid #4a3c30;
+
+    border-radius: 13px;
+
+    background: #251f20;
+}
+
+
+.idee-kaart p {
+    margin:
+        0
+        0
+        9px;
+
+    color: #f2e9dd;
+
+    line-height: 1.5;
+}
+
+
+.idee-kaart small {
+    color: #8c7c70;
+
+    font-size: 10px;
+}
+
+
+.kleine-verwijder-knop {
+    position: absolute;
+
+    top: 13px;
+    right: 13px;
+
+    width: 32px;
+    height: 32px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #32272a;
+
+    color: #d88989;
+
+    transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.kleine-verwijder-knop:hover {
+    background: #41202c;
+
+    box-shadow:
+        0 0 10px
+        rgba(
+            255,
+            107,
+            125,
+            0.20
+        );
+}
+
+
+/* ======================================
+   CATEGORIEËN
+====================================== */
+
+.categorie-lijst {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+
+.categorie-kaart {
+    min-width: 0;
+
+    padding: 15px;
+
+    border:
+        1px solid #44364c;
+
+    border-radius: 12px;
+
+    background: #211a27;
+
+    overflow: hidden;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.categorie-kaart:hover {
+    border-color: #79528e;
+
+    box-shadow:
+        0 0 12px
+        rgba(
+            185,
+            103,
+            255,
+            0.12
+        );
+
+    transform: translateY(-1px);
+}
+
+
+.categorie-icoon {
+    font-size: 25px;
+
+    margin-bottom: 8px;
+}
+
+
+.categorie-naam {
+    font-weight: 800;
+
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+
+.categorie-aantal {
+    margin-top: 5px;
+
+    color: #837587;
+
+    font-size: 11px;
+}
+
+
+/* ======================================
+   INSTELLINGEN
+====================================== */
+
+.instelingen-kaart {
+    width: 100%;
+}
+
+
+.instellingen-kaart {
+    margin-bottom: 15px;
+
+    padding: 18px;
+
+    border:
+        1px solid #44364c;
+
+    border-radius: 14px;
+
+    background: #211a27;
+}
+
+
+.instellingen-kaart h2 {
+    margin:
+        0
+        0
+        8px;
+
+    font-size: 18px;
+}
+
+
+.instellingen-kaart p {
+    margin:
+        0
+        0
+        15px;
+
+    color: #988c9c;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+.instellingen-kaart.gevaar {
+    border-color: #53303a;
+}
+
+
+.over-lucy {
+    padding:
+        30px
+        10px;
+
+    text-align: center;
+
+    color: #766979;
+}
+
+
+.over-lucy strong {
+    color: #bca9c4;
+
+    letter-spacing: 4px;
+}
+
+
+.over-lucy p {
+    margin:
+        7px
+        0;
+}
+
+
+.over-lucy small {
+    font-size: 10px;
+}
+
+
+/* ======================================
+   LEGE MELDING
+====================================== */
+
+.lege-melding {
+    display: none;
+
+    padding:
+        45px
+        20px;
+
+    text-align: center;
+
+    color: #776a7d;
+}
+
+
+.lege-melding.zichtbaar {
+    display: block;
+}
+
+
+.lege-icoon {
+    margin-bottom: 10px;
+
+    font-size: 36px;
+}
+
+
+.lege-melding h3 {
+    margin:
+        0
+        0
+        8px;
+
+    color: #a99cac;
+
+    font-size: 17px;
+}
+
+
+.lege-melding p {
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* ======================================
+   BOTTOM NAVIGATIE
+====================================== */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 500;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0, 1fr)
+        );
+
+    width: 100%;
+    max-width: 100vw;
+
+    padding:
+        8px
+        6px
+        calc(
+            8px +
+            env(
+                safe-area-inset-bottom
+            )
+        );
+
+    border-top:
+        1px solid #33283a;
+
+    background:
+        rgba(
+            18,
+            14,
+            22,
+            0.97
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    overflow: hidden;
+}
+
+
+.nav-knop {
+    min-width: 0;
+
+    width: 100%;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #776a7e;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    padding:
+        7px
+        2px;
+
+    overflow: hidden;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.nav-knop span {
+    display: block;
+
+    width: 100%;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    text-align: center;
+}
+
+
+.nav-knop small {
+    display: block;
+
+    width: 100%;
+
+    font-size: 9px;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.nav-knop.actief {
+    color: #c889ff;
+
+    background:
+        rgba(
+            155,
+            77,
+            255,
+            0.08
+        );
+
+    box-shadow:
+        inset
+        0
+        -2px
+        0
+        #a855f7;
+}
+
+
+.nav-knop:hover {
+    color: #e2c7ff;
+
+    background:
+        rgba(
+            185,
+            103,
+            255,
+            0.10
+        );
+
+    box-shadow:
+        0 0 14px
+        rgba(
+            185,
+            103,
+            255,
+            0.18
+        );
+
+    transform:
+        translateY(-1px);
+}
+
+
+.nav-knop:active {
+    transform: scale(0.96);
 }
 
 
@@ -1931,107 +1908,45 @@ select:focus {
 
 @media (max-width: 600px) {
 
-    .bottom-nav {
-        padding-left: 4px;
-        padding-right: 4px;
-    }
-
-    .nav-knop {
-        padding:
-            7px
-            1px;
-    }
-
-    .nav-knop span {
-        font-size: 19px;
-    }
-
-    .nav-knop small {
-        font-size: 8px;
-    }
-
-}
-
-
-/* ======================================
-   HEEL KLEINE TELEFOONS
-====================================== */
-
-@media (max-width: 380px) {
-
-    .nav-knop span {
-        font-size: 18px;
-    }
-
-    .nav-knop small {
-        font-size: 7px;
-    }
-
-}
-```
-
-
-/* ======================================
-   MOBIEL
-====================================== */
-
-@media (
-    max-width: 600px
-) {
-
     .app-header {
-
         padding:
             15px
             15px
             8px;
-
     }
 
 
     .pagina {
-
         padding:
             18px
             15px
             30px;
-
     }
 
 
     .lucy-titel {
-
         letter-spacing: 7px;
-
     }
 
 
     .lucy-ondertitel {
-
         margin-bottom: 30px;
-
     }
 
 
     #snelInput {
-
         min-height: 155px;
 
         font-size: 17px;
-
     }
 
 
     .verwerk-keuzes {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: 1fr;
     }
 
 
     .verwerk-keuze {
-
         min-height: 80px;
 
         flex-direction: row;
@@ -2041,153 +1956,97 @@ select:focus {
         justify-content: flex-start;
 
         padding: 13px;
-
     }
 
 
     .verwerk-keuze .keuze-icoon {
-
         width: 38px;
 
         text-align: center;
-
     }
 
 
     .verwerk-keuze small {
-
         margin-left: auto;
 
         max-width: 130px;
 
         text-align: right;
-
     }
 
 
     .keuze-grid {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: 1fr;
     }
 
 
     .keuze-knop {
-
         min-height: 65px;
 
         flex-direction: row;
 
         justify-content: flex-start;
 
-        padding: 10px 13px;
-
+        padding:
+            10px
+            13px;
     }
 
 
     .keuze-knop small {
-
         margin-left: auto;
-
     }
 
 
     .modal {
-
         padding: 16px;
-
     }
 
 
     .modal-acties {
-
         flex-direction: column;
-
     }
 
 
     .categorie-lijst {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: 1fr;
     }
 
 }
 
 
 /* ======================================
-   KLEINERE TELEFOONS
+   KLEINE TELEFOONS
 ====================================== */
 
-@media (
-    max-width: 380px
-) {
+@media (max-width: 380px) {
 
     .app-logo {
-
         font-size: 26px;
+    }
 
+
+    .lucy-titel {
+        font-size: 46px;
+
+        letter-spacing: 6px;
     }
 
 
     .nav-knop span {
-
         font-size: 18px;
-
     }
 
 
     .nav-knop small {
-
         font-size: 8px;
+    }
 
+
+    .pagina {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
 }
-/* ======================================
-   BELANGRIJK
-   Verborgen elementen MOETEN verborgen blijven
-====================================== */
 
-[hidden] {
-    display: none !important;
-}
-
-
-/* ======================================
-   PAGINA'S
-====================================== */
-
-.pagina {
-    display: none;
-}
-
-.pagina.actief {
-    display: block;
-}
-
-
-/* ======================================
-   MODAL
-====================================== */
-
-.modal-overlay {
-    display: flex;
-}
-
-.modal-overlay[hidden] {
-    display: none !important;
-}
-/* ======================================
-   VERBORGEN ELEMENTEN
-   ====================================== */
-
-[hidden] {
-    display: none !important;
-}
-
-.modal-overlay[hidden] {
-    display: none !important;
-}
