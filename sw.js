@@ -2,7 +2,7 @@
 // LUCY - SERVICE WORKER
 // ======================================
 
-const CACHE_NAME = "lucy-v26";
+const CACHE_NAME = "lucy-v27";
 
 const APP_BESTANDEN = [
     "./",
