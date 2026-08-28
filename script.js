@@ -7,7 +7,6 @@ let inbox = [];
 let taken = [];
 let ideeen = [];
 let categorieen = [];
-
 let huidigInboxId = null;
 let actieveCategorie = null;
 
@@ -19,7 +18,6 @@ const legeVerwerkLijst = document.getElementById("legeVerwerkLijst");
 
 const verwerkModal = document.getElementById("verwerkModal");
 const modalSluiten = document.getElementById("modalSluiten");
-
 const verwerkKeuzeScherm = document.getElementById("verwerkKeuzeScherm");
 const verwerkItemTekst = document.getElementById("verwerkItemTekst");
 
@@ -29,7 +27,6 @@ const taakCategorie = document.getElementById("categorieSelect");
 const taakDatum = document.getElementById("datumSelect");
 const taakNotitie = document.getElementById("notitieInput");
 const taakSubtaken = document.getElementById("subtakenLijst");
-
 const subtaakToevoegen = document.getElementById("subtaakToevoegenKnop");
 const taakAnnulerenKnop = document.getElementById("taakAnnulerenKnop");
 
@@ -65,11 +62,9 @@ const allesWissenKnop = document.getElementById("allesWissenKnop");
 document.addEventListener("DOMContentLoaded", () => {
     dataLaden();
     categorieenLaden();
-    categorieSelectVullen();
-
+    categorieSuggestiesVullen();
     paginaOpenen("paginaHoofd");
-
-    verwerkModalSluiten();
+    verwerkModalSluitenZonderNavigatie();
 
     verwerkLijstWeergeven();
     vandaagWeergeven();
@@ -79,11 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
     serviceWorkerRegistreren();
 
     if (snelInput) {
-        setTimeout(() => snelInput.focus(), 100);
+        snelInput.focus();
     }
 });
 
-function lokaleDataLaden(sleutel, standaard = []) {
+function dataLaden() {
+    inbox = inboxNormaliseren(lokaleDataLaden(OPSLAG_INBOX, []));
+    taken = takenNormaliseren(lokaleDataLaden(OPSLAG_TAKEN, []));
+    ideeen = ideeenNormaliseren(lokaleDataLaden(OPSLAG_IDEEEN, []));
+}
+
+function lokaleDataLaden(sleutel, standaard) {
     try {
         const opgeslagen = localStorage.getItem(sleutel);
 
@@ -93,34 +94,9 @@ function lokaleDataLaden(sleutel, standaard = []) {
 
         return JSON.parse(opgeslagen);
     } catch (fout) {
-        console.error("Lucy kon data niet laden:", fout);
+        console.error("Lucy kon gegevens niet laden:", fout);
         return standaard;
     }
-}
-
-function dataLaden() {
-    inbox = inboxNormaliseren(
-        lokaleDataLaden(OPSLAG_INBOX, [])
-    );
-
-    taken = takenNormaliseren(
-        lokaleDataLaden(OPSLAG_TAKEN, [])
-    );
-
-    ideeen = ideeenNormaliseren(
-        lokaleDataLaden(OPSLAG_IDEEEN, [])
-    );
-}
-
-function dataOpslaan() {
-    localStorage.setItem(OPSLAG_INBOX, JSON.stringify(inbox));
-    localStorage.setItem(OPSLAG_TAKEN, JSON.stringify(taken));
-    localStorage.setItem(OPSLAG_IDEEEN, JSON.stringify(ideeen));
-    localStorage.setItem(OPSLAG_CATEGORIEEN, JSON.stringify(categorieen));
-}
-
-function maakId() {
-    return Date.now() + "-" + Math.random().toString(36).substring(2, 9);
 }
 
 function inboxNormaliseren(data) {
@@ -131,10 +107,10 @@ function inboxNormaliseren(data) {
     return data
         .map(item => ({
             id: item.id || maakId(),
-            tekst: item.tekst || item.titel || "",
+            tekst: String(item.tekst || item.titel || "").trim(),
             aangemaakt: item.aangemaakt || new Date().toISOString()
         }))
-        .filter(item => item.tekst.trim() !== "");
+        .filter(item => item.tekst !== "");
 }
 
 function takenNormaliseren(data) {
@@ -145,16 +121,16 @@ function takenNormaliseren(data) {
     return data
         .map(taak => ({
             id: taak.id || maakId(),
-            titel: taak.titel || "",
-            categorie: taak.categorie || "",
+            titel: String(taak.titel || "").trim(),
+            categorie: String(taak.categorie || "").trim(),
             datum: taak.datum || "",
-            notitie: taak.notitie || "",
+            notitie: String(taak.notitie || "").trim(),
             subtaken: subtakenNormaliseren(taak.subtaken),
             afgerond: taak.afgerond === true,
             aangemaakt: taak.aangemaakt || new Date().toISOString(),
             gewijzigd: taak.gewijzigd || new Date().toISOString()
         }))
-        .filter(taak => taak.titel.trim() !== "");
+        .filter(taak => taak.titel !== "");
 }
 
 function ideeenNormaliseren(data) {
@@ -165,11 +141,11 @@ function ideeenNormaliseren(data) {
     return data
         .map(idee => ({
             id: idee.id || maakId(),
-            tekst: idee.tekst || idee.titel || "",
-            categorie: idee.categorie || "",
+            tekst: String(idee.tekst || idee.titel || "").trim(),
+            categorie: String(idee.categorie || "").trim(),
             aangemaakt: idee.aangemaakt || new Date().toISOString()
         }))
-        .filter(idee => idee.tekst.trim() !== "");
+        .filter(idee => idee.tekst !== "");
 }
 
 function subtakenNormaliseren(subtaken) {
@@ -189,11 +165,22 @@ function subtakenNormaliseren(subtaken) {
 
             return {
                 id: subtaak.id || maakId(),
-                titel: subtaak.titel || "",
+                titel: String(subtaak.titel || "").trim(),
                 afgerond: subtaak.afgerond === true
             };
         })
-        .filter(subtaak => subtaak.titel.trim() !== "");
+        .filter(subtaak => subtaak.titel !== "");
+}
+
+function dataOpslaan() {
+    localStorage.setItem(OPSLAG_INBOX, JSON.stringify(inbox));
+    localStorage.setItem(OPSLAG_TAKEN, JSON.stringify(taken));
+    localStorage.setItem(OPSLAG_IDEEEN, JSON.stringify(ideeen));
+    localStorage.setItem(OPSLAG_CATEGORIEEN, JSON.stringify(categorieen));
+}
+
+function maakId() {
+    return Date.now() + "-" + Math.random().toString(36).substring(2, 9);
 }
 
 document.querySelectorAll(".nav-knop").forEach(knop => {
@@ -250,6 +237,7 @@ function paginaOpenen(paginaId) {
     }
 
     if (paginaId === "paginaCategorieen") {
+        actieveCategorie = null;
         categorieenWeergeven();
     }
 
@@ -272,7 +260,7 @@ if (snelToevoegenForm) {
 
         inbox.unshift({
             id: maakId(),
-            tekst,
+            tekst: tekst,
             aangemaakt: new Date().toISOString()
         });
 
@@ -333,7 +321,7 @@ function maakInboxKaart(item) {
 }
 
 function verwerkingOpenen(id) {
-    const item = inbox.find(item => item.id === id);
+    const item = inbox.find(inboxItem => inboxItem.id === id);
 
     if (!item) {
         return;
@@ -415,16 +403,10 @@ function ideeSchermTonen() {
 }
 
 function verwerkModalSluiten() {
-    if (!verwerkModal) {
-        return;
+    if (verwerkModal) {
+        verwerkModal.hidden = true;
+        verwerkModal.classList.remove("open");
     }
-
-    verwerkModal.hidden = true;
-    verwerkModal.classList.remove("open");
-}
-
-function modalSluitenFunctie() {
-    verwerkModalSluiten();
 
     document.body.style.overflow = "";
 
@@ -439,30 +421,37 @@ function modalSluitenFunctie() {
     if (ideeTitel) {
         ideeTitel.value = "";
     }
+}
 
-    if (taakSubtaken) {
-        taakSubtaken.innerHTML = "";
+function verwerkModalSluitenZonderNavigatie() {
+    if (!verwerkModal) {
+        return;
     }
 
-    paginaOpenen("paginaHoofd");
-
-    if (snelInput) {
-        setTimeout(() => snelInput.focus(), 100);
-    }
+    verwerkModal.hidden = true;
+    verwerkModal.classList.remove("open");
 }
 
 if (modalSluiten) {
     modalSluiten.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
-        modalSluitenFunctie();
+
+        verwerkModalSluiten();
+
+        paginaOpenen("paginaHoofd");
+
+        if (snelInput) {
+            setTimeout(() => snelInput.focus(), 100);
+        }
     });
 }
 
 if (verwerkModal) {
     verwerkModal.addEventListener("click", event => {
         if (event.target === verwerkModal) {
-            modalSluitenFunctie();
+            verwerkModalSluiten();
+            paginaOpenen("paginaHoofd");
         }
     });
 }
@@ -473,14 +462,14 @@ document.addEventListener("keydown", event => {
         verwerkModal &&
         !verwerkModal.hidden
     ) {
-        modalSluitenFunctie();
+        verwerkModalSluiten();
+        paginaOpenen("paginaHoofd");
     }
 });
 
 if (maakTaakKnop) {
     maakTaakKnop.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
         taakSchermTonen();
     });
 }
@@ -488,7 +477,6 @@ if (maakTaakKnop) {
 if (maakIdeeKnop) {
     maakIdeeKnop.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
         ideeSchermTonen();
     });
 }
@@ -496,7 +484,6 @@ if (maakIdeeKnop) {
 if (verwijderInboxKnop) {
     verwijderInboxKnop.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
 
         if (!huidigInboxId) {
             return;
@@ -505,30 +492,28 @@ if (verwijderInboxKnop) {
         inbox = inbox.filter(item => item.id !== huidigInboxId);
 
         dataOpslaan();
-
         verwerkLijstWeergeven();
 
-        modalSluitenFunctie();
+        verwerkModalSluiten();
+        paginaOpenen("paginaHoofd");
     });
 }
 
 if (taakForm) {
     taakForm.addEventListener("submit", event => {
         event.preventDefault();
-        event.stopPropagation();
 
         if (!huidigInboxId) {
             return;
         }
 
-        const titel = taakTitel
-            ? taakTitel.value.trim()
-            : "";
+        const titel = taakTitel ? taakTitel.value.trim() : "";
 
         if (!titel) {
             if (taakTitel) {
                 taakTitel.focus();
             }
+
             return;
         }
 
@@ -542,8 +527,8 @@ if (taakForm) {
 
         const nieuweTaak = {
             id: maakId(),
-            titel,
-            categorie,
+            titel: titel,
+            categorie: categorie,
             datum: taakDatum ? taakDatum.value : "",
             notitie: taakNotitie ? taakNotitie.value.trim() : "",
             subtaken: subtakenUitFormulier(),
@@ -565,22 +550,23 @@ if (taakForm) {
         ideeenWeergeven();
         categorieenWeergeven();
 
-        modalSluitenFunctie();
+        verwerkModalSluiten();
+        paginaOpenen("paginaHoofd");
     });
 }
 
 if (taakAnnulerenKnop) {
     taakAnnulerenKnop.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
-        modalSluitenFunctie();
+
+        verwerkModalSluiten();
+        paginaOpenen("paginaHoofd");
     });
 }
 
 if (terugNaarKeuzes) {
     terugNaarKeuzes.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
         keuzeSchermTonen();
     });
 }
@@ -588,7 +574,6 @@ if (terugNaarKeuzes) {
 if (ideeOpslaan) {
     ideeOpslaan.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
 
         if (!huidigInboxId) {
             return;
@@ -602,25 +587,20 @@ if (ideeOpslaan) {
             if (ideeTitel) {
                 ideeTitel.focus();
             }
+
             return;
         }
 
-        const categorie = prompt(
-            "Categorie voor dit idee? Laat leeg voor geen categorie."
-        );
+        const nieuweCategorie = vraagOmIdeeCategorie();
 
-        const netteCategorie = categorie
-            ? categorie.trim()
-            : "";
-
-        if (netteCategorie) {
-            categorieToevoegen(netteCategorie);
+        if (nieuweCategorie) {
+            categorieToevoegen(nieuweCategorie);
         }
 
         ideeen.unshift({
             id: maakId(),
-            tekst,
-            categorie: netteCategorie,
+            tekst: tekst,
+            categorie: nieuweCategorie,
             aangemaakt: new Date().toISOString()
         });
 
@@ -634,21 +614,41 @@ if (ideeOpslaan) {
         ideeenWeergeven();
         categorieenWeergeven();
 
-        modalSluitenFunctie();
+        verwerkModalSluiten();
+        paginaOpenen("paginaHoofd");
     });
 }
 
-function taakFormulierLeegmaken() {
-    if (taakCategorie) {
-        taakCategorie.value = "";
+function vraagOmIdeeCategorie() {
+    const bestaandeCategorieen = categorieen.join(", ");
+
+    const tekst =
+        bestaandeCategorieen.length > 0
+            ? "Categorie voor dit idee:\n\nBestaande categorieën: " +
+              bestaandeCategorieen +
+              "\n\nLaat leeg voor geen categorie."
+            : "Categorie voor dit idee:\n\nLaat leeg voor geen categorie.";
+
+    const antwoord = prompt(tekst, "");
+
+    if (antwoord === null) {
+        return "";
     }
 
+    return antwoord.trim();
+}
+
+function taakFormulierLeegmaken() {
     if (taakDatum) {
         taakDatum.value = "";
     }
 
     if (taakNotitie) {
         taakNotitie.value = "";
+    }
+
+    if (taakCategorie) {
+        taakCategorie.value = "";
     }
 
     if (taakSubtaken) {
@@ -659,7 +659,6 @@ function taakFormulierLeegmaken() {
 if (subtaakToevoegen) {
     subtaakToevoegen.addEventListener("click", event => {
         event.preventDefault();
-        event.stopPropagation();
 
         if (!taakSubtaken) {
             return;
@@ -678,16 +677,15 @@ if (subtaakToevoegen) {
         verwijderen.type = "button";
         verwijderen.className = "subtaak-verwijder";
         verwijderen.textContent = "✕";
+        verwijderen.title = "Subtaak verwijderen";
 
         verwijderen.addEventListener("click", event => {
             event.preventDefault();
-            event.stopPropagation();
             regel.remove();
         });
 
         regel.appendChild(input);
         regel.appendChild(verwijderen);
-
         taakSubtaken.appendChild(regel);
 
         input.focus();
@@ -699,9 +697,9 @@ function subtakenUitFormulier() {
         return [];
     }
 
-    return Array.from(
-        taakSubtaken.querySelectorAll(".subtaak-regel")
-    )
+    const regels = taakSubtaken.querySelectorAll(".subtaak-regel");
+
+    return Array.from(regels)
         .map(regel => {
             const input = regel.querySelector(".subtaak-input");
 
@@ -720,18 +718,15 @@ function categorieenLaden() {
         []
     );
 
-    if (!Array.isArray(opgeslagen)) {
+    if (Array.isArray(opgeslagen)) {
+        categorieen = opgeslagen
+            .map(categorie => String(categorie).trim())
+            .filter(Boolean);
+    } else {
         categorieen = [];
-        return;
     }
 
-    categorieen = [
-        ...new Set(
-            opgeslagen
-                .map(categorie => String(categorie).trim())
-                .filter(Boolean)
-        )
-    ];
+    categorieen = [...new Set(categorieen)];
 
     localStorage.setItem(
         OPSLAG_CATEGORIEEN,
@@ -765,54 +760,71 @@ function categorieToevoegen(naam) {
         );
     }
 
-    categorieSelectVullen();
-    categorieenWeergeven();
+    categorieSuggestiesVullen();
 }
 
 function categorieVerwijderen(naam) {
-    const akkoord = confirm(
-        `Categorie "${naam}" verwijderen?`
+    const categorieHeeftTaken = taken.some(
+        taak => taak.categorie === naam
     );
 
-    if (!akkoord) {
+    const categorieHeeftIdeeen = ideeen.some(
+        idee => idee.categorie === naam
+    );
+
+    let waarschuwing =
+        `Categorie "${naam}" verwijderen?`;
+
+    if (categorieHeeftTaken || categorieHeeftIdeeen) {
+        waarschuwing +=
+            "\n\nDe taken en ideeën blijven bestaan, maar krijgen geen categorie meer.";
+    }
+
+    if (!confirm(waarschuwing)) {
         return;
     }
 
+    taken.forEach(taak => {
+        if (taak.categorie === naam) {
+            taak.categorie = "";
+        }
+    });
+
+    ideeen.forEach(idee => {
+        if (idee.categorie === naam) {
+            idee.categorie = "";
+        }
+    });
+
     categorieen = categorieen.filter(
-        categorie =>
-            categorie.toLowerCase() !==
-            naam.toLowerCase()
+        categorie => categorie !== naam
     );
 
-    localStorage.setItem(
-        OPSLAG_CATEGORIEEN,
-        JSON.stringify(categorieen)
-    );
+    actieveCategorie = null;
 
-    categorieSelectVullen();
+    dataOpslaan();
+    categorieSuggestiesVullen();
+
+    vandaagWeergeven();
+    ideeenWeergeven();
     categorieenWeergeven();
 }
 
-function categorieSelectVullen() {
-    if (!taakCategorie) {
+function categorieSuggestiesVullen() {
+    const datalist = document.getElementById(
+        "categorieSuggesties"
+    );
+
+    if (!datalist) {
         return;
     }
 
-    taakCategorie.innerHTML = "";
-
-    const leeg = document.createElement("option");
-    leeg.value = "";
-    leeg.textContent = "Geen categorie";
-
-    taakCategorie.appendChild(leeg);
+    datalist.innerHTML = "";
 
     categorieen.forEach(categorie => {
         const optie = document.createElement("option");
-
         optie.value = categorie;
-        optie.textContent = categorie;
-
-        taakCategorie.appendChild(optie);
+        datalist.appendChild(optie);
     });
 }
 
@@ -878,7 +890,10 @@ function maakTaakKaart(taak) {
         kaart.appendChild(notitie);
     }
 
-    if (taak.subtaken.length > 0) {
+    if (
+        Array.isArray(taak.subtaken) &&
+        taak.subtaken.length > 0
+    ) {
         const subtaken = document.createElement("div");
         subtaken.className = "taak-subtaken";
 
@@ -908,6 +923,23 @@ function maakTaakKaart(taak) {
         kaart.appendChild(subtaken);
     }
 
+    const afronden = document.createElement("button");
+    afronden.type = "button";
+    afronden.className = "taak-afronden-knop";
+    afronden.textContent = "✓ Taak afgerond";
+
+    afronden.addEventListener("click", () => {
+        taak.afgerond = true;
+        taak.gewijzigd = new Date().toISOString();
+
+        dataOpslaan();
+
+        vandaagWeergeven();
+        categorieenWeergeven();
+    });
+
+    kaart.appendChild(afronden);
+
     return kaart;
 }
 
@@ -918,21 +950,11 @@ function ideeenWeergeven() {
 
     ideeenLijst.innerHTML = "";
 
-    let lijst = ideeen;
-
-    if (actieveCategorie) {
-        lijst = ideeen.filter(
-            idee =>
-                idee.categorie.toLowerCase() ===
-                actieveCategorie.toLowerCase()
-        );
-    }
-
     if (legeIdeeen) {
-        legeIdeeen.hidden = lijst.length > 0;
+        legeIdeeen.hidden = ideeen.length > 0;
     }
 
-    lijst.forEach(idee => {
+    ideeen.forEach(idee => {
         ideeenLijst.appendChild(
             maakIdeeKaart(idee)
         );
@@ -971,6 +993,7 @@ function maakIdeeKaart(idee) {
     verwijderen.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
+
         ideeVerwijderen(idee.id);
     });
 
@@ -980,11 +1003,7 @@ function maakIdeeKaart(idee) {
 }
 
 function ideeVerwijderen(id) {
-    const akkoord = confirm(
-        "Dit idee verwijderen?"
-    );
-
-    if (!akkoord) {
+    if (!confirm("Dit idee verwijderen?")) {
         return;
     }
 
@@ -1005,116 +1024,340 @@ function categorieenWeergeven() {
 
     categorieLijst.innerHTML = "";
 
+    if (actieveCategorie) {
+        categorieDetailWeergeven(actieveCategorie);
+        return;
+    }
+
     if (categorieen.length === 0) {
         const leeg = document.createElement("p");
-
         leeg.className = "lege-categorieen";
         leeg.textContent =
             "Je hebt nog geen categorieën aangemaakt.";
-
         categorieLijst.appendChild(leeg);
         return;
     }
 
     categorieen.forEach(categorie => {
-        const kaart = document.createElement("button");
-
-        kaart.type = "button";
-        kaart.className = "categorie-kaart";
-
-        if (
-            actieveCategorie &&
-            actieveCategorie.toLowerCase() ===
-            categorie.toLowerCase()
-        ) {
-            kaart.classList.add("actief");
-        }
-
-        const icoon = document.createElement("span");
-        icoon.className = "categorie-icoon";
-        icoon.textContent = "📁";
-
-        const inhoud = document.createElement("span");
-        inhoud.className = "categorie-inhoud";
-
-        const naam = document.createElement("strong");
-        naam.className = "categorie-naam";
-        naam.textContent = categorie;
-
-        const aantalTaken = taken.filter(
-            taak =>
-                !taak.afgerond &&
-                taak.categorie.toLowerCase() ===
-                categorie.toLowerCase()
-        ).length;
-
-        const aantalIdeeen = ideeen.filter(
-            idee =>
-                idee.categorie.toLowerCase() ===
-                categorie.toLowerCase()
-        ).length;
-
-        const aantal = document.createElement("small");
-        aantal.className = "categorie-aantal";
-
-        const onderdelen = [];
-
-        if (aantalTaken > 0) {
-            onderdelen.push(
-                aantalTaken +
-                (aantalTaken === 1 ? " taak" : " taken")
-            );
-        }
-
-        if (aantalIdeeen > 0) {
-            onderdelen.push(
-                aantalIdeeen +
-                (aantalIdeeen === 1 ? " idee" : " ideeën")
-            );
-        }
-
-        aantal.textContent =
-            onderdelen.length > 0
-                ? onderdelen.join(" • ")
-                : "Nog niets in deze categorie";
-
-        inhoud.appendChild(naam);
-        inhoud.appendChild(aantal);
-
-        const verwijderen = document.createElement("span");
-        verwijderen.className = "categorie-verwijder";
-        verwijderen.textContent = "✕";
-        verwijderen.title = "Categorie verwijderen";
-
-        verwijderen.addEventListener("click", event => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            categorieVerwijderen(categorie);
-        });
-
-        kaart.appendChild(icoon);
-        kaart.appendChild(inhoud);
-        kaart.appendChild(verwijderen);
-
-        kaart.addEventListener("click", () => {
-            categorieOpenen(categorie);
-        });
-
-        categorieLijst.appendChild(kaart);
+        categorieLijst.appendChild(
+            maakCategorieKaart(categorie)
+        );
     });
 }
 
-function categorieOpenen(categorie) {
-    actieveCategorie = categorie;
+function maakCategorieKaart(categorie) {
+    const kaart = document.createElement("button");
+    kaart.type = "button";
+    kaart.className = "categorie-kaart";
 
-    paginaOpenen("paginaIdeeen");
+    const icoon = document.createElement("span");
+    icoon.className = "categorie-icoon";
+    icoon.textContent = "📁";
 
-    ideeenWeergeven();
+    const informatie = document.createElement("span");
+    informatie.className = "categorie-informatie";
+
+    const naam = document.createElement("strong");
+    naam.className = "categorie-naam";
+    naam.textContent = categorie;
+
+    const aantalTaken = taken.filter(
+        taak =>
+            !taak.afgerond &&
+            taak.categorie.toLowerCase() ===
+                categorie.toLowerCase()
+    ).length;
+
+    const aantalIdeeen = ideeen.filter(
+        idee =>
+            idee.categorie.toLowerCase() ===
+            categorie.toLowerCase()
+    ).length;
+
+    const aantal = document.createElement("small");
+    aantal.className = "categorie-aantal";
+
+    const onderdelen = [];
+
+    if (aantalTaken > 0) {
+        onderdelen.push(
+            aantalTaken +
+            (aantalTaken === 1 ? " taak" : " taken")
+        );
+    }
+
+    if (aantalIdeeen > 0) {
+        onderdelen.push(
+            aantalIdeeen +
+            (aantalIdeeen === 1 ? " idee" : " ideeën")
+        );
+    }
+
+    aantal.textContent =
+        onderdelen.length > 0
+            ? onderdelen.join(" • ")
+            : "Nog niets in deze categorie";
+
+    informatie.appendChild(naam);
+    informatie.appendChild(aantal);
+
+    const pijl = document.createElement("span");
+    pijl.className = "categorie-pijl";
+    pijl.textContent = "›";
+
+    kaart.appendChild(icoon);
+    kaart.appendChild(informatie);
+    kaart.appendChild(pijl);
+
+    kaart.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        actieveCategorie = categorie;
+        categorieenWeergeven();
+    });
+
+    return kaart;
+}
+
+function categorieDetailWeergeven(categorie) {
+    const terug = document.createElement("button");
+    terug.type = "button";
+    terug.className = "categorie-terug";
+    terug.textContent = "← Alle categorieën";
+
+    terug.addEventListener("click", event => {
+        event.preventDefault();
+
+        actieveCategorie = null;
+        categorieenWeergeven();
+    });
+
+    categorieLijst.appendChild(terug);
+
+    const kop = document.createElement("div");
+    kop.className = "categorie-detail-kop";
+
+    const icoon = document.createElement("span");
+    icoon.className = "categorie-detail-icoon";
+    icoon.textContent = "📁";
+
+    const titel = document.createElement("h2");
+    titel.textContent = categorie;
+
+    kop.appendChild(icoon);
+    kop.appendChild(titel);
+
+    categorieLijst.appendChild(kop);
+
+    const categorieTaken = taken.filter(
+        taak =>
+            !taak.afgerond &&
+            taak.categorie.toLowerCase() ===
+                categorie.toLowerCase()
+    );
+
+    const categorieIdeeen = ideeen.filter(
+        idee =>
+            idee.categorie.toLowerCase() ===
+                categorie.toLowerCase()
+    );
+
+    if (
+        categorieTaken.length === 0 &&
+        categorieIdeeen.length === 0
+    ) {
+        const leeg = document.createElement("p");
+        leeg.className = "lege-categorie-detail";
+        leeg.textContent =
+            "Er staat nog niets in deze categorie.";
+        categorieLijst.appendChild(leeg);
+    }
+
+    if (categorieTaken.length > 0) {
+        const takenKop = document.createElement("h3");
+        takenKop.className = "categorie-sectie-titel";
+        takenKop.textContent = "☑️ Taken";
+        categorieLijst.appendChild(takenKop);
+
+        categorieTaken.forEach(taak => {
+            const kaart = maakCategorieTaakKaart(taak);
+            categorieLijst.appendChild(kaart);
+        });
+    }
+
+    if (categorieIdeeen.length > 0) {
+        const ideeenKop = document.createElement("h3");
+        ideeenKop.className = "categorie-sectie-titel";
+        ideeenKop.textContent = "💡 Ideeën";
+        categorieLijst.appendChild(ideeenKop);
+
+        categorieIdeeen.forEach(idee => {
+            const kaart = maakCategorieIdeeKaart(idee);
+            categorieLijst.appendChild(kaart);
+        });
+    }
+
+    const verwijderen = document.createElement("button");
+    verwijderen.type = "button";
+    verwijderen.className = "categorie-verwijder-detail";
+    verwijderen.textContent =
+        "🗑️ Categorie verwijderen";
+
+    verwijderen.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        categorieVerwijderen(categorie);
+    });
+
+    categorieLijst.appendChild(verwijderen);
+}
+
+function maakCategorieTaakKaart(taak) {
+    const kaart = document.createElement("article");
+    kaart.className = "categorie-taak-kaart";
+
+    const kop = document.createElement("div");
+    kop.className = "categorie-item-kop";
+
+    const icoon = document.createElement("span");
+    icoon.className = "categorie-item-icoon";
+    icoon.textContent = "☑️";
+
+    const titel = document.createElement("h3");
+    titel.textContent = taak.titel;
+
+    kop.appendChild(icoon);
+    kop.appendChild(titel);
+
+    kaart.appendChild(kop);
+
+    if (taak.datum) {
+        const datum = document.createElement("small");
+        datum.className = "categorie-taak-datum";
+
+        const d = new Date(
+            taak.datum + "T00:00:00"
+        );
+
+        datum.textContent =
+            "📅 " +
+            d.toLocaleDateString(
+                "nl-NL",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long"
+                }
+            );
+
+        kaart.appendChild(datum);
+    }
+
+    if (taak.notitie) {
+        const notitie = document.createElement("p");
+        notitie.className = "categorie-taak-notitie";
+        notitie.textContent = taak.notitie;
+
+        kaart.appendChild(notitie);
+    }
+
+    if (
+        Array.isArray(taak.subtaken) &&
+        taak.subtaken.length > 0
+    ) {
+        const subtaken = document.createElement("div");
+        subtaken.className = "categorie-taak-subtaken";
+
+        taak.subtaken.forEach(subtaak => {
+            const regel = document.createElement("div");
+            regel.className = "categorie-subtaak";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = subtaak.afgerond;
+
+            checkbox.addEventListener("change", () => {
+                subtaak.afgerond = checkbox.checked;
+                taak.gewijzigd = new Date().toISOString();
+
+                dataOpslaan();
+            });
+
+            const tekst = document.createElement("span");
+            tekst.textContent = subtaak.titel;
+
+            regel.appendChild(checkbox);
+            regel.appendChild(tekst);
+
+            subtaken.appendChild(regel);
+        });
+
+        kaart.appendChild(subtaken);
+    }
+
+    const afronden = document.createElement("button");
+    afronden.type = "button";
+    afronden.className = "categorie-taak-afronden";
+    afronden.textContent = "✓ Taak afronden";
+
+    afronden.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        taak.afgerond = true;
+        taak.gewijzigd = new Date().toISOString();
+
+        dataOpslaan();
+
+        categorieenWeergeven();
+        vandaagWeergeven();
+    });
+
+    kaart.appendChild(afronden);
+
+    return kaart;
+}
+
+function maakCategorieIdeeKaart(idee) {
+    const kaart = document.createElement("article");
+    kaart.className = "categorie-idee-kaart";
+
+    const tekst = document.createElement("div");
+    tekst.className = "categorie-idee-tekst";
+    tekst.textContent = idee.tekst;
+
+    kaart.appendChild(tekst);
+
+    const datum = document.createElement("small");
+    datum.className = "categorie-idee-datum";
+    datum.textContent = datumTijdMooi(idee.aangemaakt);
+
+    kaart.appendChild(datum);
+
+    const verwijderen = document.createElement("button");
+    verwijderen.type = "button";
+    verwijderen.className = "categorie-idee-verwijder";
+    verwijderen.textContent = "✕";
+    verwijderen.title = "Idee verwijderen";
+
+    verwijderen.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        ideeVerwijderen(idee.id);
+        categorieenWeergeven();
+    });
+
+    kaart.appendChild(verwijderen);
+
+    return kaart;
 }
 
 function datumNaarString(datum) {
     const jaar = datum.getFullYear();
+
     const maand = String(
         datum.getMonth() + 1
     ).padStart(2, "0");
@@ -1155,10 +1398,10 @@ if (backupKnop) {
             app: "Lucy",
             versie: "4.0",
             datum: new Date().toISOString(),
-            inbox,
-            taken,
-            ideeen,
-            categorieen
+            inbox: inbox,
+            taken: taken,
+            ideeen: ideeen,
+            categorieen: categorieen
         };
 
         const inhoud = JSON.stringify(
@@ -1175,16 +1418,20 @@ if (backupKnop) {
         );
 
         const url = URL.createObjectURL(blob);
+
         const link = document.createElement("a");
 
         link.href = url;
+
         link.download =
             "lucy-backup-" +
             datumNaarString(new Date()) +
             ".json";
 
         document.body.appendChild(link);
+
         link.click();
+
         link.remove();
 
         URL.revokeObjectURL(url);
@@ -1216,11 +1463,11 @@ if (backupInput) {
                     );
                 }
 
-                const akkoord = confirm(
-                    "De huidige gegevens worden vervangen door deze backup. Doorgaan?"
-                );
-
-                if (!akkoord) {
+                if (
+                    !confirm(
+                        "De huidige gegevens worden vervangen door deze backup. Doorgaan?"
+                    )
+                ) {
                     return;
                 }
 
@@ -1239,20 +1486,20 @@ if (backupInput) {
                 categorieen = Array.isArray(
                     backup.categorieen
                 )
-                    ? [
-                        ...new Set(
-                            backup.categorieen
-                                .map(categorie =>
-                                    String(categorie).trim()
-                                )
-                                .filter(Boolean)
+                    ? backup.categorieen
+                        .map(categorie =>
+                            String(categorie).trim()
                         )
-                    ]
+                        .filter(Boolean)
                     : [];
 
-                dataOpslaan();
+                categorieen = [
+                    ...new Set(categorieen)
+                ];
 
-                categorieSelectVullen();
+                dataOpslaan();
+                categorieSuggestiesVullen();
+
                 verwerkLijstWeergeven();
                 vandaagWeergeven();
                 ideeenWeergeven();
@@ -1273,6 +1520,7 @@ if (backupInput) {
         };
 
         reader.readAsText(bestand);
+
         event.target.value = "";
     });
 }
@@ -1306,7 +1554,8 @@ if (allesWissenKnop) {
         categorieen = [];
         actieveCategorie = null;
 
-        categorieSelectVullen();
+        categorieSuggestiesVullen();
+
         verwerkLijstWeergeven();
         vandaagWeergeven();
         ideeenWeergeven();
@@ -1342,4 +1591,3 @@ function serviceWorkerRegistreren() {
             });
     });
 }
-
