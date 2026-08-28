@@ -1,1656 +1,1206 @@
 /* ======================================
-LUCY
-Alles uit je hoofd.
-====================================== */
+   LUCY
+   Alles uit je hoofd.
+   ====================================== */
 
 * {
-  box-sizing: border-box;
-  }
+    box-sizing: border-box;
+}
 
 html {
-margin: 0;
-padding: 0;
-min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #09090d;
 }
 
 body {
-margin: 0;
-padding: 0;
-min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 
-```
-background:
-    radial-gradient(
-        circle at top,
-        #25202d 0%,
-        #15131a 38%,
-        #0d0d11 100%
-    );
+    background:
+        radial-gradient(
+            circle at top,
+            #181326 0%,
+            #0b0a10 45%,
+            #07070a 100%
+        );
 
-color: #f2f2f2;
+    color: #f2f0f7;
 
-font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-overflow-x: hidden;
-```
-
+    padding-bottom: 90px;
 }
+
+
+/* ======================================
+   ALGEMEEN
+   ====================================== */
 
 button,
 input,
-textarea,
-select {
-font: inherit;
+select,
+textarea {
+    font: inherit;
 }
 
 button {
-cursor: pointer;
+    cursor: pointer;
 }
 
-a {
-color: inherit;
-text-decoration: none;
+.hidden {
+    display: none !important;
 }
+
 
 /* ======================================
-HULPKLASSE
-====================================== */
-
-.visueel-verborgen {
-position: absolute;
-
-```
-width: 1px;
-height: 1px;
-
-padding: 0;
-margin: -1px;
-
-overflow: hidden;
-
-clip: rect(0, 0, 0, 0);
-
-white-space: nowrap;
-
-border: 0;
-```
-
-}
-
-/* ======================================
-APP
-====================================== */
-
-#app {
-width: 100%;
-min-height: 100vh;
-
-```
-padding-bottom: 100px;
-```
-
-}
-
-/* ======================================
-PAGINA'S
-====================================== */
+   PAGINA'S
+   ====================================== */
 
 .pagina {
-display: none;
+    display: none;
 
-```
-width: 100%;
-min-height: calc(100vh - 100px);
+    width: 100%;
+    max-width: 900px;
 
-padding: 25px 18px 40px;
-```
+    margin: 0 auto;
 
+    padding:
+        25px
+        20px
+        40px;
 }
 
 .pagina.actief {
-display: block;
+    display: block;
 }
+
 
 /* ======================================
-LUCY STARTSCHERM
-====================================== */
+   HOOFDPAGINA
+   ====================================== */
 
-.lucy-start {
-width: 100%;
-max-width: 720px;
+#paginaHoofd {
+    min-height: calc(100vh - 90px);
 
-```
-min-height: calc(100vh - 140px);
+    display: none;
 
-margin: 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
-display: flex;
-flex-direction: column;
-
-justify-content: flex-start;
-align-items: center;
-
-padding-top: 12vh;
-```
-
+    padding-top: 12vh;
 }
+
+#paginaHoofd.actief {
+    display: flex;
+}
+
 
 /* ======================================
-LUCY LOGO
-====================================== */
+   LUCY TITEL
+   ====================================== */
 
-.lucy-logo {
-font-size: clamp(4.5rem, 20vw, 9rem);
+.lucy-header {
+    width: 100%;
+    text-align: center;
 
-```
-line-height: 0.9;
-
-font-weight: 900;
-
-letter-spacing: 0.08em;
-
-color: #ffffff;
-
-text-align: center;
-
-text-shadow:
-    0 0 8px rgba(255, 255, 255, 0.25),
-    0 0 25px rgba(157, 78, 221, 0.55),
-    0 0 50px rgba(67, 97, 238, 0.35);
-```
-
+    margin-bottom: 35px;
 }
 
-/* ======================================
-LUCY SUBTITEL
-====================================== */
+.lucy-header h1 {
+    margin: 0;
 
-.lucy-subtitel {
-margin-top: 18px;
-
-```
-font-size: clamp(1.1rem, 4vw, 1.5rem);
-
-font-weight: 700;
-
-letter-spacing: 0.12em;
-
-text-transform: uppercase;
-
-color: #cfc7d8;
-
-text-align: center;
-```
-
-}
-
-/* ======================================
-SNEL INVOEREN
-====================================== */
-
-.snel-toevoegen-form {
-width: 100%;
-
-```
-display: flex;
-align-items: stretch;
-
-margin-top: 55px;
-
-position: relative;
-```
-
-}
-
-.snel-toevoegen-form input {
-width: 100%;
-
-```
-min-height: 64px;
-
-padding: 15px 70px 15px 20px;
-
-border: 2px solid #3d3548;
-
-border-radius: 18px;
-
-outline: none;
-
-background: rgba(20, 18, 25, 0.95);
-
-color: #ffffff;
-
-font-size: 1.05rem;
-
-box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.3);
-
-transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-```
-
-}
-
-.snel-toevoegen-form input::placeholder {
-color: #88818f;
-}
-
-.snel-toevoegen-form input:focus {
-border-color: #9d4edd;
-
-```
-box-shadow:
-    0 0 0 3px rgba(157, 78, 221, 0.15),
-    0 0 25px rgba(157, 78, 221, 0.2);
-```
-
-}
-
-.snel-toevoegen-knop {
-position: absolute;
-
-```
-right: 8px;
-top: 8px;
-bottom: 8px;
-
-width: 48px;
-
-border: 0;
-
-border-radius: 14px;
-
-background: #9d4edd;
-
-color: #ffffff;
-
-font-size: 2rem;
-
-line-height: 1;
-
-display: flex;
-align-items: center;
-justify-content: center;
-
-box-shadow:
-    0 0 15px rgba(157, 78, 221, 0.45);
-
-transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-```
-
-}
-
-.snel-toevoegen-knop:hover {
-transform: scale(1.04);
-
-```
-box-shadow:
-    0 0 25px rgba(157, 78, 221, 0.7);
-```
-
-}
-
-.snel-toevoegen-knop:active {
-transform: scale(0.96);
-}
-
-/* ======================================
-PAGINA HEADER
-====================================== */
-
-.pagina-header {
-width: 100%;
-max-width: 900px;
-
-```
-margin: 0 auto 25px;
-
-padding: 24px 20px;
-
-border-radius: 20px;
-
-background:
-    linear-gradient(
-        135deg,
-        rgba(40, 34, 48, 0.96),
-        rgba(22, 20, 28, 0.96)
+    font-size: clamp(
+        4rem,
+        18vw,
+        8rem
     );
 
-border: 1px solid #393142;
+    line-height: 0.9;
 
-box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.25);
-```
+    font-weight: 900;
 
+    letter-spacing:
+        0.08em;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px #7b2cff,
+        0 0 20px #7b2cff,
+        0 0 45px rgba(123, 44, 255, 0.65);
+
+    text-transform: uppercase;
 }
 
-.pagina-header h1 {
-margin: 0;
+.lucy-header p {
+    margin:
+        18px
+        0
+        0;
 
-```
-font-size: clamp(1.7rem, 6vw, 2.4rem);
+    font-size: clamp(
+        1rem,
+        4vw,
+        1.4rem
+    );
 
-font-weight: 900;
-```
+    font-weight: 700;
 
+    letter-spacing:
+        0.08em;
+
+    color: #b9a8ff;
+
+    text-transform: uppercase;
+}
+
+
+/* ======================================
+   SNEL INVOEREN
+   ====================================== */
+
+#snelToevoegenForm {
+    width: 100%;
+    max-width: 700px;
+
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+#snelInput {
+    flex: 1;
+
+    min-width: 0;
+
+    padding:
+        18px
+        18px;
+
+    border:
+        2px solid
+        #33303d;
+
+    border-radius: 14px;
+
+    background: #111017;
+
+    color: #ffffff;
+
+    outline: none;
+
+    font-size: 1.05rem;
+
+    box-shadow:
+        inset 0 0 12px
+        rgba(0, 0, 0, 0.4);
+}
+
+#snelInput::placeholder {
+    color: #77717f;
+}
+
+#snelInput:focus {
+    border-color: #7b2cff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(123, 44, 255, 0.18),
+        0 0 20px
+        rgba(123, 44, 255, 0.25);
+}
+
+#snelToevoegenForm button {
+    width: 58px;
+    min-width: 58px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cff,
+            #a83cff
+        );
+
+    color: white;
+
+    font-size: 1.7rem;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px
+        rgba(123, 44, 255, 0.5);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+#snelToevoegenForm button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 22px
+        rgba(123, 44, 255, 0.75);
+}
+
+#snelToevoegenForm button:active {
+    transform: scale(0.95);
+}
+
+
+/* ======================================
+   PAGINA TITELS
+   ====================================== */
+
+.pagina-header {
+    margin-bottom: 25px;
+}
+
+.pagina-header h2 {
+    margin: 0;
+
+    font-size: 2rem;
+
+    font-weight: 900;
+
+    color: #ffffff;
+
+    text-transform: uppercase;
+
+    letter-spacing:
+        0.04em;
+
+    text-shadow:
+        0 0 10px
+        rgba(123, 44, 255, 0.45);
 }
 
 .pagina-header p {
-margin: 8px 0 0;
+    margin:
+        8px
+        0
+        0;
 
-```
-color: #aaa2b1;
+    color: #928b9c;
 
-font-size: 0.95rem;
-```
-
+    font-size: 0.95rem;
 }
+
 
 /* ======================================
-LIJSTEN
-====================================== */
+   KAARTEN
+   ====================================== */
 
-.inbox-lijst,
-.taken-lijst,
-.ideeen-lijst,
-.categorie-lijst {
-width: 100%;
-max-width: 900px;
+.inbox-kaart,
+.taak-kaart,
+.idee-kaart,
+.categorie-kaart {
+    width: 100%;
 
-```
-margin: 0 auto;
+    margin-bottom: 14px;
 
-display: flex;
-flex-direction: column;
+    padding: 18px;
 
-gap: 14px;
-```
+    background:
+        linear-gradient(
+            145deg,
+            #15131c,
+            #0e0d13
+        );
 
+    border:
+        1px solid
+        #2c2935;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.28);
 }
+
+.inbox-tekst,
+.idee-tekst {
+    color: #ffffff;
+
+    font-size: 1.05rem;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.inbox-datum,
+.idee-datum {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #77717f;
+
+    font-size: 0.8rem;
+}
+
 
 /* ======================================
-INBOX KAART
-====================================== */
-
-.inbox-kaart {
-display: grid;
-
-```
-grid-template-columns: 1fr auto;
-
-grid-template-areas:
-    "tekst knop"
-    "datum knop";
-
-gap: 7px 15px;
-
-padding: 18px;
-
-border-radius: 18px;
-
-background:
-    linear-gradient(
-        135deg,
-        #211d27,
-        #17151c
-    );
-
-border: 1px solid #393142;
-
-box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.22);
-```
-
-}
-
-.inbox-tekst {
-grid-area: tekst;
-
-```
-font-size: 1.05rem;
-
-line-height: 1.4;
-
-color: #ffffff;
-
-overflow-wrap: anywhere;
-```
-
-}
-
-.inbox-datum {
-grid-area: datum;
-
-```
-color: #89828f;
-
-font-size: 0.78rem;
-```
-
-}
+   VERWERKEN KNOP
+   ====================================== */
 
 .inbox-verwerk-knop {
-grid-area: knop;
+    width: 100%;
 
-```
-align-self: center;
+    margin-top: 14px;
 
-border: 0;
+    padding:
+        13px
+        16px;
 
-border-radius: 12px;
+    border:
+        1px solid
+        #7b2cff;
 
-padding: 11px 14px;
+    border-radius: 11px;
 
-background: #4361ee;
+    background:
+        rgba(123, 44, 255, 0.12);
 
-color: #ffffff;
+    color: #d5c5ff;
 
-font-weight: 800;
+    font-weight: 800;
 
-box-shadow:
-    0 0 14px rgba(67, 97, 238, 0.3);
-
-transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-```
-
+    box-shadow:
+        0 0 10px
+        rgba(123, 44, 255, 0.15);
 }
 
 .inbox-verwerk-knop:hover {
-transform: translateY(-1px);
+    background:
+        rgba(123, 44, 255, 0.25);
 
-```
-box-shadow:
-    0 0 22px rgba(67, 97, 238, 0.55);
-```
-
+    box-shadow:
+        0 0 18px
+        rgba(123, 44, 255, 0.35);
 }
 
-/* ======================================
-TAAK KAART
-====================================== */
-
-.taak-kaart {
-padding: 18px;
-
-```
-border-radius: 18px;
-
-background:
-    linear-gradient(
-        135deg,
-        #211d27,
-        #17151c
-    );
-
-border: 1px solid #393142;
-
-box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.22);
-```
-
-}
-
-.taak-kaart h3 {
-margin: 0 0 10px;
-
-```
-font-size: 1.1rem;
-
-line-height: 1.4;
-```
-
-}
-
-.taak-kaart small {
-color: #aaa2b1;
-}
 
 /* ======================================
-IDEE KAART
-====================================== */
+   LEGE LIJST
+   ====================================== */
 
-.idee-kaart {
-padding: 18px;
-
-```
-border-radius: 18px;
-
-background:
-    linear-gradient(
-        135deg,
-        #211d27,
-        #17151c
-    );
-
-border: 1px solid #393142;
-
-box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.22);
-
-transition:
-    transform 0.15s ease,
-    border-color 0.15s ease;
-```
-
-}
-
-.idee-kaart:hover {
-transform: translateY(-2px);
-
-```
-border-color: #9d4edd;
-```
-
-}
-
-.idee-tekst {
-font-size: 1.05rem;
-
-```
-line-height: 1.5;
-
-overflow-wrap: anywhere;
-```
-
-}
-
-.idee-datum {
-display: block;
-
-```
-margin-top: 10px;
-
-color: #89828f;
-
-font-size: 0.78rem;
-```
-
-}
-
-/* ======================================
-CATEGORIEËN
-====================================== */
-
-.categorie-lijst {
-display: grid;
-
-```
-grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(180px, 1fr)
-    );
-
-gap: 14px;
-```
-
-}
-
-.categorie-kaart {
-min-height: 130px;
-
-```
-padding: 20px;
-
-display: flex;
-flex-direction: column;
-
-justify-content: center;
-align-items: center;
-
-text-align: center;
-
-border-radius: 20px;
-
-background:
-    linear-gradient(
-        145deg,
-        #211d27,
-        #17151c
-    );
-
-border: 1px solid #393142;
-
-box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.22);
-
-transition:
-    transform 0.15s ease,
-    border-color 0.15s ease;
-```
-
-}
-
-.categorie-kaart:hover {
-transform: translateY(-2px);
-
-```
-border-color: #4361ee;
-```
-
-}
-
-.categorie-icoon {
-font-size: 2rem;
-
-```
-margin-bottom: 10px;
-```
-
-}
-
-.categorie-naam {
-font-weight: 800;
-
-```
-font-size: 1rem;
-
-overflow-wrap: anywhere;
-```
-
-}
-
-.categorie-aantal {
-margin-top: 6px;
-
-```
-color: #938b9b;
-
-font-size: 0.8rem;
-```
-
-}
-
-/* ======================================
-LEGE MELDING
-====================================== */
-
-.lege-melding {
-width: 100%;
-max-width: 600px;
-
-```
-margin: 35px auto;
-
-padding: 30px 20px;
-
-text-align: center;
-
-color: #8e8795;
-
-border: 1px dashed #403847;
-
-border-radius: 18px;
-
-background: rgba(20, 18, 25, 0.5);
-```
-
-}
-
-/* ======================================
-MODAL
-====================================== */
-
-.modal {
-position: fixed;
-
-```
-inset: 0;
-
-z-index: 1000;
-
-display: flex;
-
-align-items: center;
-justify-content: center;
-
-padding: 18px;
-
-background:
-    rgba(5, 5, 8, 0.82);
-
-backdrop-filter: blur(8px);
-
-overflow-y: auto;
-```
-
-}
-
-.modal[hidden] {
-display: none;
-}
-
-.modal-inhoud {
-width: 100%;
-max-width: 620px;
-
-```
-max-height: calc(100vh - 36px);
-
-overflow-y: auto;
-
-position: relative;
-
-padding: 25px;
-
-border-radius: 24px;
-
-background:
-    linear-gradient(
-        145deg,
-        #211d27,
-        #131118
-    );
-
-border: 1px solid #463b50;
-
-box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.6),
-    0 0 35px rgba(157, 78, 221, 0.12);
-```
-
-}
-
-.modal-sluiten {
-position: absolute;
-
-```
-top: 12px;
-right: 12px;
-
-width: 42px;
-height: 42px;
-
-border: 0;
-
-border-radius: 50%;
-
-background: #2c2632;
-
-color: #ffffff;
-
-font-size: 1.7rem;
-
-line-height: 1;
-
-z-index: 2;
-```
-
-}
-
-.modal-sluiten:hover {
-background: #9d4edd;
-}
-
-/* ======================================
-VERWERKEN KOP
-====================================== */
-
-.verwerk-kop {
-padding: 5px 45px 25px 0;
-}
-
-.verwerk-label {
-display: block;
-
-```
-margin-bottom: 10px;
-
-color: #9d4edd;
-
-font-size: 0.75rem;
-
-font-weight: 900;
-
-letter-spacing: 0.15em;
-```
-
-}
-
-.verwerk-item-tekst {
-font-size: 1.35rem;
-
-```
-line-height: 1.45;
-
-font-weight: 700;
-
-overflow-wrap: anywhere;
-```
-
-}
-
-/* ======================================
-VERWERK KEUZES
-====================================== */
-
-.verwerk-keuzes {
-display: flex;
-
-```
-flex-direction: column;
-
-gap: 12px;
-```
-
-}
-
-.verwerk-keuze {
-width: 100%;
-
-```
-display: flex;
-
-align-items: center;
-
-gap: 15px;
-
-padding: 18px;
-
-border: 1px solid #3e3547;
-
-border-radius: 18px;
-
-text-align: left;
-
-background: #19161f;
-
-color: #ffffff;
-
-transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-```
-
-}
-
-.verwerk-keuze:hover {
-transform: translateY(-2px);
-
-```
-border-color: #9d4edd;
-
-box-shadow:
-    0 0 20px rgba(157, 78, 221, 0.18);
-```
-
-}
-
-.keuze-icoon {
-width: 45px;
-height: 45px;
-
-```
-flex-shrink: 0;
-
-display: flex;
-
-align-items: center;
-justify-content: center;
-
-border-radius: 13px;
-
-background: #28222f;
-
-font-size: 1.5rem;
-```
-
-}
-
-.keuze-tekst {
-display: flex;
-
-```
-flex-direction: column;
-
-gap: 5px;
-```
-
-}
-
-.keuze-tekst strong {
-font-size: 1rem;
-}
-
-.keuze-tekst small {
-color: #928a99;
-
-```
-line-height: 1.35;
-```
-
-}
-
-.verwerk-verwijder {
-margin-top: 8px;
-
-```
-padding: 13px;
-
-border: 0;
-
-border-radius: 12px;
-
-background: transparent;
-
-color: #b7aeba;
-
-font-size: 0.9rem;
-```
-
-}
-
-.verwerk-verwijder:hover {
-color: #ff5c8a;
-
-```
-background: rgba(255, 92, 138, 0.08);
-```
-
-}
-
-/* ======================================
-FORMULIER
-====================================== */
-
-.verwerk-form {
-width: 100%;
-}
-
-.form-kop {
-padding-right: 45px;
-
-```
-margin-bottom: 25px;
-```
-
-}
-
-.form-kop h2 {
-margin: 0;
-
-```
-font-size: 1.5rem;
-```
-
-}
-
-.form-kop p {
-margin: 8px 0 0;
-
-```
-color: #918997;
-
-line-height: 1.4;
-```
-
-}
-
-.form-veld {
-margin-bottom: 18px;
-}
-
-.form-veld label {
-display: block;
-
-```
-margin-bottom: 8px;
-
-font-weight: 800;
-
-color: #ddd7e0;
-```
-
-}
-
-.form-veld input,
-.form-veld textarea {
-width: 100%;
-
-```
-border: 1px solid #42394a;
-
-border-radius: 13px;
-
-padding: 13px 14px;
-
-outline: none;
-
-background: #151219;
-
-color: #ffffff;
-
-resize: vertical;
-```
-
-}
-
-.form-veld input:focus,
-.form-veld textarea:focus {
-border-color: #9d4edd;
-
-```
-box-shadow:
-    0 0 0 3px rgba(157, 78, 221, 0.12);
-```
-
-}
-
-.veld-hulp {
-display: block;
-
-```
-margin-top: 7px;
-
-color: #817987;
-
-font-size: 0.78rem;
-
-line-height: 1.4;
-```
-
-}
-
-/* ======================================
-SUBTAKEN
-====================================== */
-
-.subtaken-sectie {
-margin-top: 25px;
-
-```
-padding: 18px;
-
-border-radius: 18px;
-
-background: rgba(12, 11, 16, 0.45);
-
-border: 1px solid #393142;
-```
-
-}
-
-.subtaken-kop {
-display: flex;
-
-```
-justify-content: space-between;
-align-items: flex-start;
-
-gap: 15px;
-
-margin-bottom: 15px;
-```
-
-}
-
-.subtaken-kop h3 {
-margin: 0;
-
-```
-font-size: 1rem;
-```
-
-}
-
-.subtaken-kop p {
-margin: 5px 0 0;
-
-```
-color: #817987;
-
-font-size: 0.78rem;
-
-line-height: 1.4;
-```
-
-}
-
-.subtaak-toevoegen {
-flex-shrink: 0;
-
-```
-border: 1px solid #4361ee;
-
-border-radius: 10px;
-
-padding: 9px 11px;
-
-background: rgba(67, 97, 238, 0.12);
-
-color: #7d94ff;
-
-font-size: 0.8rem;
-
-font-weight: 800;
-```
-
-}
-
-.subtaak-toevoegen:hover {
-background: #4361ee;
-
-```
-color: #ffffff;
-```
-
-}
-
-.subtaken-lijst {
-display: flex;
-
-```
-flex-direction: column;
-
-gap: 9px;
-```
-
-}
-
-.subtaak-regel {
-display: flex;
-
-```
-gap: 8px;
-```
-
-}
-
-.subtaak-input {
-flex: 1;
-
-```
-min-width: 0;
-
-padding: 11px 12px;
-
-border: 1px solid #3c3444;
-
-border-radius: 11px;
-
-background: #151219;
-
-color: #ffffff;
-
-outline: none;
-```
-
-}
-
-.subtaak-input:focus {
-border-color: #4361ee;
-}
-
-.subtaak-verwijder {
-width: 42px;
-
-```
-flex-shrink: 0;
-
-border: 0;
-
-border-radius: 11px;
-
-background: #2b232d;
-
-color: #a99faa;
-
-font-size: 1rem;
-```
-
-}
-
-.subtaak-verwijder:hover {
-background: #ff5c8a;
-
-```
-color: #ffffff;
-```
-
-}
-
-/* ======================================
-FORMULIER ACTIES
-====================================== */
-
-.form-acties {
-display: flex;
-
-```
-gap: 10px;
-
-margin-top: 25px;
-```
-
-}
-
-.primaire-knop,
-.secundaire-knop {
-flex: 1;
-
-```
-min-height: 48px;
-
-border-radius: 13px;
-
-font-weight: 900;
-```
-
-}
-
-.primaire-knop {
-border: 0;
-
-```
-background: #9d4edd;
-
-color: #ffffff;
-
-box-shadow:
-    0 0 18px rgba(157, 78, 221, 0.3);
-```
-
-}
-
-.primaire-knop:hover {
-box-shadow:
-0 0 28px rgba(157, 78, 221, 0.55);
-}
-
-.secundaire-knop {
-border: 1px solid #403747;
-
-```
-background: #201c25;
-
-color: #c8c0cc;
-```
-
-}
-
-.secundaire-knop:hover {
-border-color: #9d4edd;
-
-```
-color: #ffffff;
-```
-
-}
-
-/* ======================================
-INSTELLINGEN
-====================================== */
-
-.instellingen {
-width: 100%;
-max-width: 700px;
-
-```
-margin: 0 auto;
-
-display: flex;
-flex-direction: column;
-
-gap: 15px;
-```
-
-}
-
-.instelling-blok {
-padding: 20px;
-
-```
-border-radius: 18px;
-
-background:
-    linear-gradient(
-        145deg,
-        #211d27,
-        #17151c
-    );
-
-border: 1px solid #393142;
-```
-
-}
-
-.instelling-blok h2 {
-margin: 0 0 7px;
-
-```
-font-size: 1.1rem;
-```
-
-}
-
-.instelling-blok p {
-margin: 0 0 16px;
-
-```
-color: #8f8796;
-
-font-size: 0.88rem;
-
-line-height: 1.4;
-```
-
-}
-
-.instelling-knop {
-display: inline-flex;
-
-```
-align-items: center;
-justify-content: center;
-
-min-height: 44px;
-
-padding: 10px 15px;
-
-border: 1px solid #4361ee;
-
-border-radius: 12px;
-
-background: rgba(67, 97, 238, 0.12);
-
-color: #ffffff;
-
-font-weight: 800;
-```
-
-}
-
-.instelling-knop:hover {
-background: #4361ee;
-}
-
-.gevaarlijk {
-border-color: rgba(255, 92, 138, 0.25);
-}
-
-.gevaar-knop {
-border-color: #ff5c8a;
-
-```
-background: rgba(255, 92, 138, 0.08);
-
-color: #ff8aaa;
-```
-
-}
-
-.gevaar-knop:hover {
-background: #ff5c8a;
-
-```
-color: #ffffff;
-```
-
-}
-
-/* ======================================
-BOTTOM NAVIGATIE
-====================================== */
-
-.bottom-nav {
-position: fixed;
-
-```
-left: 0;
-right: 0;
-bottom: 0;
-
-z-index: 900;
-
-min-height: 78px;
-
-padding:
-    8px
-    8px
-    calc(8px + env(safe-area-inset-bottom));
-
-display: flex;
-
-align-items: stretch;
-justify-content: center;
-
-gap: 5px;
-
-background:
-    rgba(14, 13, 18, 0.96);
-
-border-top: 1px solid #302936;
-
-box-shadow:
-    0 -10px 35px rgba(0, 0, 0, 0.35);
-
-backdrop-filter: blur(12px);
-```
-
-}
-
-.nav-knop {
-flex: 1;
-
-```
-max-width: 130px;
-
-min-width: 0;
-
-border: 0;
-
-border-radius: 14px;
-
-background: transparent;
-
-color: #827a89;
-
-display: flex;
-
-flex-direction: column;
-
-align-items: center;
-justify-content: center;
-
-gap: 4px;
-
-padding: 6px 3px;
-
-transition:
-    background 0.15s ease,
-    color 0.15s ease;
-```
-
-}
-
-.nav-knop:hover {
-color: #ffffff;
-
-```
-background: rgba(157, 78, 221, 0.08);
-```
-
-}
-
-.nav-knop.actief {
-color: #ffffff;
-
-```
-background:
-    rgba(157, 78, 221, 0.15);
-
-box-shadow:
-    inset 0 0 15px rgba(157, 78, 221, 0.08);
-```
-
-}
-
-.nav-icoon {
-font-size: 1.35rem;
-
-```
-line-height: 1;
-```
-
-}
-
-.nav-tekst {
-font-size: 0.68rem;
-
-```
-font-weight: 800;
-
-white-space: nowrap;
-```
-
-}
-
-/* ======================================
-TABLET / DESKTOP
-====================================== */
-
-@media (min-width: 700px) {
-
-```
-.pagina {
+.leeg-melding {
     padding:
-        40px
-        30px
-        50px;
+        35px
+        20px;
+
+    text-align: center;
+
+    color: #77717f;
+
+    font-size: 0.95rem;
 }
 
-.lucy-start {
-    padding-top: 15vh;
-}
-
-.snel-toevoegen-form {
-    margin-top: 65px;
-}
-
-.bottom-nav {
-    left: 50%;
-
-    right: auto;
-
-    transform: translateX(-50%);
-
-    width: min(
-        900px,
-        calc(100% - 30px)
-    );
-
-    margin-bottom: 12px;
-
-    border: 1px solid #302936;
-
-    border-radius: 22px;
-
-    padding:
-        8px
-        12px
-        calc(8px + env(safe-area-inset-bottom));
-
-}
-```
-
-}
 
 /* ======================================
-KLEINE TELEFOONS
-====================================== */
+   VERWERKEN MODAL
+   ====================================== */
 
-@media (max-width: 430px) {
+#verwerkModal {
+    position: fixed;
 
-```
-.pagina {
-    padding-left: 12px;
-    padding-right: 12px;
-}
+    inset: 0;
 
-.lucy-start {
-    padding-top: 10vh;
-}
+    z-index: 1000;
 
-.lucy-subtitel {
-    font-size: 0.9rem;
+    display: none;
 
-    letter-spacing: 0.08em;
-}
-
-.snel-toevoegen-form {
-    margin-top: 42px;
-}
-
-.inbox-kaart {
-    grid-template-columns: 1fr;
-
-    grid-template-areas:
-        "tekst"
-        "datum"
-        "knop";
-}
-
-.inbox-verwerk-knop {
-    width: 100%;
-}
-
-.modal {
-    padding: 10px;
-}
-
-.modal-inhoud {
-    max-height: calc(100vh - 20px);
+    align-items: center;
+    justify-content: center;
 
     padding: 20px;
 
-    border-radius: 20px;
+    background:
+        rgba(0, 0, 0, 0.82);
+
+    backdrop-filter:
+        blur(8px);
 }
 
-.form-acties {
-    flex-direction: column-reverse;
+#verwerkModal.open {
+    display: flex;
 }
 
-.subtaken-kop {
-    flex-direction: column;
-}
+.verwerk-modal-inhoud {
+    position: relative;
 
-.subtaak-toevoegen {
     width: 100%;
+    max-width: 600px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #18151f,
+            #0e0d13
+        );
+
+    border:
+        1px solid
+        #3b3547;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 40px
+        rgba(123, 44, 255, 0.28);
 }
 
-.nav-icoon {
-    font-size: 1.2rem;
-}
-
-.nav-tekst {
-    font-size: 0.6rem;
-}
-```
-
-}
 
 /* ======================================
-TOEGANKELIJKHEID
-====================================== */
+   MODAL SLUITEN
+   ====================================== */
 
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-outline: 3px solid rgba(67, 97, 238, 0.65);
+#modalSluiten {
+    position: absolute;
 
-```
-outline-offset: 2px;
-```
+    top: 12px;
+    right: 12px;
+
+    width: 42px;
+    height: 42px;
+
+    border:
+        1px solid
+        #403a49;
+
+    border-radius: 50%;
+
+    background:
+        #111017;
+
+    color: #ffffff;
+
+    font-size: 1.3rem;
+
+    font-weight: 900;
+}
+
+#modalSluiten:hover {
+    border-color: #ff3b81;
+
+    color: #ff5c96;
+
+    box-shadow:
+        0 0 15px
+        rgba(255, 59, 129, 0.35);
+}
+
+
+/* ======================================
+   TEKST IN VERWERKEN
+   ====================================== */
+
+#verwerkItemTekst {
+    margin:
+        20px
+        0
+        25px;
+
+    padding: 18px;
+
+    border-left:
+        4px solid
+        #7b2cff;
+
+    background:
+        rgba(123, 44, 255, 0.08);
+
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-size: 1.15rem;
+
+    line-height: 1.5;
+}
+
+
+/* ======================================
+   VERWERK KEUZES
+   ====================================== */
+
+.verwerk-keuzes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+}
+
+.verwerk-keuzes button,
+#maakTaakKnop,
+#maakIdeeKnop,
+#verwijderInboxKnop {
+    min-height: 58px;
+
+    padding:
+        14px
+        16px;
+
+    border-radius: 13px;
+
+    font-weight: 900;
+
+    border: 1px solid;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+#maakTaakKnop {
+    border-color: #2388ff;
+
+    background:
+        rgba(35, 136, 255, 0.12);
+
+    color: #72b8ff;
+
+    box-shadow:
+        0 0 12px
+        rgba(35, 136, 255, 0.18);
+}
+
+#maakIdeeKnop {
+    border-color: #a83cff;
+
+    background:
+        rgba(168, 60, 255, 0.12);
+
+    color: #d39aff;
+
+    box-shadow:
+        0 0 12px
+        rgba(168, 60, 255, 0.18);
+}
+
+#verwijderInboxKnop {
+    width: 100%;
+
+    margin-top: 18px;
+
+    border-color: #ff3b5c;
+
+    background:
+        rgba(255, 59, 92, 0.08);
+
+    color: #ff7189;
+}
+
+#maakTaakKnop:hover,
+#maakIdeeKnop:hover,
+#verwijderInboxKnop:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ======================================
+   FORMULIEREN
+   ====================================== */
+
+#taakForm,
+#ideeScherm {
+    margin-top: 10px;
+}
+
+#taakForm label,
+#ideeScherm label {
+    display: block;
+
+    margin:
+        16px
+        0
+        7px;
+
+    color: #aaa2b4;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+}
+
+#taakForm input,
+#taakForm select,
+#taakForm textarea,
+#ideeScherm input,
+#ideeScherm textarea {
+    width: 100%;
+
+    padding:
+        13px
+        14px;
+
+    border:
+        1px solid
+        #393440;
+
+    border-radius: 11px;
+
+    background:
+        #100f15;
+
+    color: #ffffff;
+
+    outline: none;
+}
+
+#taakForm input:focus,
+#taakForm select:focus,
+#taakForm textarea:focus,
+#ideeScherm input:focus,
+#ideeScherm textarea:focus {
+    border-color: #7b2cff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(123, 44, 255, 0.14);
+}
+
+#taakForm textarea,
+#ideeScherm textarea {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* ======================================
+   SUBTAKEN
+   ====================================== */
+
+.subtaken-container {
+    margin-top: 20px;
+}
+
+.subtaken-container h3 {
+    margin:
+        0
+        0
+        10px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+}
+
+.subtaak-regel {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+}
+
+.subtaak-input {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.subtaak-verwijder {
+    width: 44px;
+
+    border:
+        1px solid
+        #ff3b5c;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 59, 92, 0.08);
+
+    color: #ff6b82;
+
+    font-weight: 900;
+}
+
+#subtaakToevoegenKnop {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 12px;
+
+    border:
+        1px dashed
+        #7b2cff;
+
+    border-radius: 10px;
+
+    background:
+        rgba(123, 44, 255, 0.07);
+
+    color: #bda5ff;
+
+    font-weight: 800;
+}
+
+
+/* ======================================
+   FORMULIER KNOPPEN
+   ====================================== */
+
+.formulier-knoppen {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.formulier-knoppen button {
+    flex: 1;
+
+    min-height: 48px;
+
+    border-radius: 11px;
+
+    font-weight: 900;
+}
+
+.formulier-knoppen button[type="submit"] {
+    border:
+        1px solid
+        #7b2cff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cff,
+            #a83cff
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 14px
+        rgba(123, 44, 255, 0.3);
+}
+
+.formulier-knoppen button[type="button"] {
+    border:
+        1px solid
+        #3b3743;
+
+    background:
+        #15131a;
+
+    color: #aaa3b1;
+}
+
+
+/* ======================================
+   VANDAAG
+   ====================================== */
+
+.taak-kaart h3 {
+    margin:
+        0
+        0
+        10px;
+
+    color: #ffffff;
+
+    font-size: 1.1rem;
+}
+
+.taak-kaart small {
+    color: #9d94aa;
+}
+
+
+/* ======================================
+   IDEEËN
+   ====================================== */
+
+.idee-kaart {
+    border-left:
+        3px solid
+        #a83cff;
+}
+
+
+/* ======================================
+   CATEGORIEËN
+   ====================================== */
+
+#categorieLijst {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                180px,
+                1fr
+            )
+        );
+
+    gap: 12px;
+}
+
+.categorie-kaart {
+    margin: 0;
+
+    text-align: center;
+
+    padding: 20px 15px;
+}
+
+.categorie-icoon {
+    font-size: 2rem;
+
+    margin-bottom: 8px;
+}
+
+.categorie-naam {
+    color: #ffffff;
+
+    font-weight: 800;
+}
+
+.categorie-aantal {
+    margin-top: 6px;
+
+    color: #88818f;
+
+    font-size: 0.85rem;
+}
+
+
+/* ======================================
+   INSTELLINGEN
+   ====================================== */
+
+#paginaInstellingen button,
+#paginaInstellingen label {
+    display: block;
+
+    width: 100%;
+
+    margin-bottom: 12px;
+}
+
+#backupKnop,
+#backupInput {
+    padding: 14px;
+
+    border-radius: 11px;
+}
+
+#backupKnop {
+    border:
+        1px solid
+        #2388ff;
+
+    background:
+        rgba(35, 136, 255, 0.1);
+
+    color: #72b8ff;
+
+    font-weight: 800;
+}
+
+#allesWissenKnop {
+    padding: 14px;
+
+    border:
+        1px solid
+        #ff3b5c;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255, 59, 92, 0.08);
+
+    color: #ff7189;
+
+    font-weight: 900;
+}
+
+
+/* ======================================
+   ONDERSTE WERKBALK
+   ====================================== */
+
+#werkbalk {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 900;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    background:
+        rgba(9, 8, 13, 0.96);
+
+    border-top:
+        1px solid
+        #292530;
+
+    box-shadow:
+        0 -8px 25px
+        rgba(0, 0, 0, 0.4);
+
+    backdrop-filter:
+        blur(12px);
+
+    padding:
+        8px
+        8px
+        calc(
+            8px + env(
+                safe-area-inset-bottom
+            )
+        );
+}
+
+#werkbalk .nav-knop {
+    flex: 1;
+
+    max-width: 150px;
+
+    min-height: 58px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #77717f;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    border-radius: 12px;
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+#werkbalk .nav-knop:hover {
+    color: #c8b9ff;
+}
+
+#werkbalk .nav-knop.actief {
+    color: #ffffff;
+
+    background:
+        rgba(123, 44, 255, 0.16);
+
+    text-shadow:
+        0 0 8px
+        rgba(123, 44, 255, 0.8);
+}
+
+
+/* ======================================
+   INSTELLINGEN KNOP
+   ====================================== */
+
+#instellingenKnop {
+    width: 44px;
+
+    height: 44px;
+
+    margin: 0 0 0 4px;
+
+    border:
+        1px solid
+        #35313d;
+
+    border-radius: 50%;
+
+    background:
+        #111017;
+
+    color: #918a99;
+
+    font-size: 1.1rem;
+}
+
+
+/* ======================================
+   DESKTOP
+   ====================================== */
+
+@media (min-width: 800px) {
+
+    body {
+        padding-bottom: 100px;
+    }
+
+    #paginaHoofd {
+        padding-top: 15vh;
+    }
+
+    #werkbalk {
+        left: 50%;
+        right: auto;
+
+        width: auto;
+
+        min-width: 600px;
+
+        transform:
+            translateX(-50%);
+
+        border:
+            1px solid
+            #292530;
+
+        border-bottom: 0;
+
+        border-radius:
+            18px
+            18px
+            0
+            0;
+    }
 
 }
 
+
+/* ======================================
+   KLEINE TELEFOONS
+   ====================================== */
+
+@media (max-width: 500px) {
+
+    .pagina {
+        padding:
+            20px
+            14px
+            30px;
+    }
+
+    #paginaHoofd {
+        padding-top: 10vh;
+    }
+
+    .lucy-header {
+        margin-bottom: 28px;
+    }
+
+    .lucy-header h1 {
+        font-size: 4.5rem;
+    }
+
+    .lucy-header p {
+        font-size: 0.85rem;
+    }
+
+    #snelToevoegenForm {
+        gap: 7px;
+    }
+
+    #snelInput {
+        padding:
+            16px
+            14px;
+
+        font-size: 1rem;
+    }
+
+    #snelToevoegenForm button {
+        width: 52px;
+        min-width: 52px;
+    }
+
+    .verwerk-keuzes {
+        grid-template-columns: 1fr;
+    }
+
+    .verwerk-modal-inhoud {
+        padding:
+            22px
+            16px;
+        border-radius: 17px;
+    }
+
+    #werkbalk .nav-knop {
+        min-height: 54px;
+
+        font-size: 0.65rem;
+    }
+
+}
+
+
+/* ======================================
+   TOEGANKELIJKHEID
+   ====================================== */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline:
+        3px solid
+        rgba(123, 44, 255, 0.45);
+
+    outline-offset: 2px;
+}
+
+
+/* ======================================
+   REDUCE MOTION
+   ====================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        transition: none !important;
+    }
+
+}
