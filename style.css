@@ -1,1184 +1,1656 @@
 /* ======================================
-   LUCY
-   Alles uit je hoofd.
-   ====================================== */
-
-
-/* ======================================
-   BASIS
-   ====================================== */
+LUCY
+Alles uit je hoofd.
+====================================== */
 
 * {
-    box-sizing: border-box;
-}
+  box-sizing: border-box;
+  }
 
 html {
-    scroll-behavior: smooth;
+margin: 0;
+padding: 0;
+min-height: 100%;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
+margin: 0;
+padding: 0;
+min-height: 100vh;
 
-    background:
-        radial-gradient(
-            circle at top,
-            #21182b 0%,
-            #110f15 42%,
-            #09090c 100%
-        );
+```
+background:
+    radial-gradient(
+        circle at top,
+        #25202d 0%,
+        #15131a 38%,
+        #0d0d11 100%
+    );
 
-    color: #f2edf7;
+color: #f2f2f2;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    line-height: 1.5;
+overflow-x: hidden;
+```
+
 }
-
-
-/* ======================================
-   ALGEMEEN
-   ====================================== */
 
 button,
 input,
-select,
-textarea {
-    font: inherit;
+textarea,
+select {
+font: inherit;
 }
 
 button {
-    cursor: pointer;
+cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid #8d5cff;
-    outline-offset: 2px;
+a {
+color: inherit;
+text-decoration: none;
 }
-
-.hidden {
-    display: none !important;
-}
-
 
 /* ======================================
-   APP
-   ====================================== */
+HULPKLASSE
+====================================== */
 
-.app {
-    width: 100%;
-    min-height: 100vh;
+.visueel-verborgen {
+position: absolute;
 
-    display: flex;
-    flex-direction: column;
+```
+width: 1px;
+height: 1px;
+
+padding: 0;
+margin: -1px;
+
+overflow: hidden;
+
+clip: rect(0, 0, 0, 0);
+
+white-space: nowrap;
+
+border: 0;
+```
+
 }
-
 
 /* ======================================
-   HEADER
-   ====================================== */
+APP
+====================================== */
 
-.app-header {
-    width: 100%;
-    padding: 28px 20px 18px;
+#app {
+width: 100%;
+min-height: 100vh;
 
-    text-align: center;
+```
+padding-bottom: 100px;
+```
+
 }
-
-.app-logo {
-    margin: 0;
-
-    color: #ffffff;
-
-    font-size: clamp(2.6rem, 12vw, 4.5rem);
-    font-weight: 900;
-    letter-spacing: 0.12em;
-
-    text-shadow:
-        0 0 8px #8d5cff,
-        0 0 22px rgba(141, 92, 255, 0.7);
-}
-
-.app-tagline {
-    margin: 2px 0 0;
-
-    color: #aaa1b5;
-
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-}
-
 
 /* ======================================
-   HOOFDCONTENT
-   ====================================== */
-
-.app-main {
-    width: 100%;
-    max-width: 760px;
-
-    margin: 0 auto;
-    padding: 10px 16px 110px;
-
-    flex: 1;
-}
-
-
-/* ======================================
-   PAGINA'S
-   ====================================== */
+PAGINA'S
+====================================== */
 
 .pagina {
-    display: none;
+display: none;
+
+```
+width: 100%;
+min-height: calc(100vh - 100px);
+
+padding: 25px 18px 40px;
+```
+
 }
 
 .pagina.actief {
-    display: block;
+display: block;
 }
-
 
 /* ======================================
-   STARTSCHERM
-   ====================================== */
+LUCY STARTSCHERM
+====================================== */
 
-#paginaHoofd {
-    min-height: 55vh;
+.lucy-start {
+width: 100%;
+max-width: 720px;
 
-    display: none;
+```
+min-height: calc(100vh - 140px);
 
-    align-items: center;
-    justify-content: flex-start;
+margin: 0 auto;
 
-    flex-direction: column;
+display: flex;
+flex-direction: column;
 
-    padding-top: 8vh;
+justify-content: flex-start;
+align-items: center;
+
+padding-top: 12vh;
+```
+
 }
-
-#paginaHoofd.actief {
-    display: flex;
-}
-
 
 /* ======================================
-   LUCY INVOER
-   ====================================== */
+LUCY LOGO
+====================================== */
 
-.snel-toevoegen {
-    width: 100%;
-    max-width: 650px;
+.lucy-logo {
+font-size: clamp(4.5rem, 20vw, 9rem);
+
+```
+line-height: 0.9;
+
+font-weight: 900;
+
+letter-spacing: 0.08em;
+
+color: #ffffff;
+
+text-align: center;
+
+text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.25),
+    0 0 25px rgba(157, 78, 221, 0.55),
+    0 0 50px rgba(67, 97, 238, 0.35);
+```
+
 }
+
+/* ======================================
+LUCY SUBTITEL
+====================================== */
+
+.lucy-subtitel {
+margin-top: 18px;
+
+```
+font-size: clamp(1.1rem, 4vw, 1.5rem);
+
+font-weight: 700;
+
+letter-spacing: 0.12em;
+
+text-transform: uppercase;
+
+color: #cfc7d8;
+
+text-align: center;
+```
+
+}
+
+/* ======================================
+SNEL INVOEREN
+====================================== */
 
 .snel-toevoegen-form {
-    width: 100%;
+width: 100%;
 
-    display: flex;
-    flex-direction: column;
+```
+display: flex;
+align-items: stretch;
 
-    gap: 12px;
+margin-top: 55px;
+
+position: relative;
+```
+
 }
 
-#snelInput {
-    width: 100%;
-    min-height: 130px;
+.snel-toevoegen-form input {
+width: 100%;
 
-    padding: 20px;
+```
+min-height: 64px;
 
-    border: 2px solid #30253b;
-    border-radius: 18px;
+padding: 15px 70px 15px 20px;
 
-    background: rgba(20, 17, 25, 0.92);
+border: 2px solid #3d3548;
 
-    color: #ffffff;
+border-radius: 18px;
 
-    font-size: 1.15rem;
+outline: none;
 
-    resize: vertical;
+background: rgba(20, 18, 25, 0.95);
 
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.35),
-        inset 0 0 20px rgba(141, 92, 255, 0.04);
+color: #ffffff;
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+font-size: 1.05rem;
+
+box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3);
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+```
+
 }
 
-#snelInput::placeholder {
-    color: #756d7d;
+.snel-toevoegen-form input::placeholder {
+color: #88818f;
 }
 
-#snelInput:focus {
-    border-color: #8d5cff;
+.snel-toevoegen-form input:focus {
+border-color: #9d4edd;
 
-    box-shadow:
-        0 0 0 3px rgba(141, 92, 255, 0.12),
-        0 0 25px rgba(141, 92, 255, 0.15);
+```
+box-shadow:
+    0 0 0 3px rgba(157, 78, 221, 0.15),
+    0 0 25px rgba(157, 78, 221, 0.2);
+```
+
 }
 
-.snel-toevoegen-form button[type="submit"] {
-    width: 100%;
-    min-height: 54px;
+.snel-toevoegen-knop {
+position: absolute;
 
-    border: 0;
-    border-radius: 14px;
+```
+right: 8px;
+top: 8px;
+bottom: 8px;
 
-    background: linear-gradient(
+width: 48px;
+
+border: 0;
+
+border-radius: 14px;
+
+background: #9d4edd;
+
+color: #ffffff;
+
+font-size: 2rem;
+
+line-height: 1;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+box-shadow:
+    0 0 15px rgba(157, 78, 221, 0.45);
+
+transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+```
+
+}
+
+.snel-toevoegen-knop:hover {
+transform: scale(1.04);
+
+```
+box-shadow:
+    0 0 25px rgba(157, 78, 221, 0.7);
+```
+
+}
+
+.snel-toevoegen-knop:active {
+transform: scale(0.96);
+}
+
+/* ======================================
+PAGINA HEADER
+====================================== */
+
+.pagina-header {
+width: 100%;
+max-width: 900px;
+
+```
+margin: 0 auto 25px;
+
+padding: 24px 20px;
+
+border-radius: 20px;
+
+background:
+    linear-gradient(
         135deg,
-        #7040d9,
-        #9a62ff
+        rgba(40, 34, 48, 0.96),
+        rgba(22, 20, 28, 0.96)
     );
 
-    color: #ffffff;
+border: 1px solid #393142;
 
-    font-weight: 900;
-    letter-spacing: 0.06em;
+box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.25);
+```
 
-    box-shadow:
-        0 0 15px rgba(141, 92, 255, 0.35);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
 }
 
-.snel-toevoegen-form button[type="submit"]:hover {
-    transform: translateY(-2px);
+.pagina-header h1 {
+margin: 0;
 
-    box-shadow:
-        0 0 25px rgba(141, 92, 255, 0.55);
+```
+font-size: clamp(1.7rem, 6vw, 2.4rem);
+
+font-weight: 900;
+```
+
 }
 
-.snel-toevoegen-form button[type="submit"]:active {
-    transform: translateY(0);
-}
+.pagina-header p {
+margin: 8px 0 0;
 
+```
+color: #aaa2b1;
+
+font-size: 0.95rem;
+```
+
+}
 
 /* ======================================
-   PAGINA TITELS
-   ====================================== */
-
-.pagina-titel {
-    margin: 10px 0 5px;
-
-    color: #ffffff;
-
-    font-size: 1.8rem;
-    font-weight: 900;
-
-    letter-spacing: 0.04em;
-}
-
-.pagina-ondertitel {
-    margin: 0 0 22px;
-
-    color: #918898;
-
-    font-size: 0.95rem;
-}
-
-
-/* ======================================
-   LIJSTEN
-   ====================================== */
+LIJSTEN
+====================================== */
 
 .inbox-lijst,
-.verwerk-lijst,
-.vandaag-lijst,
+.taken-lijst,
 .ideeen-lijst,
 .categorie-lijst {
-    display: flex;
-    flex-direction: column;
+width: 100%;
+max-width: 900px;
 
-    gap: 12px;
+```
+margin: 0 auto;
+
+display: flex;
+flex-direction: column;
+
+gap: 14px;
+```
+
 }
 
-
 /* ======================================
-   INBOX KAARTEN
-   ====================================== */
+INBOX KAART
+====================================== */
 
 .inbox-kaart {
-    display: grid;
+display: grid;
 
-    grid-template-columns: 1fr auto;
-    gap: 8px 14px;
+```
+grid-template-columns: 1fr auto;
 
-    padding: 17px;
+grid-template-areas:
+    "tekst knop"
+    "datum knop";
 
-    border: 1px solid #30253b;
-    border-radius: 15px;
+gap: 7px 15px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30, 24, 37, 0.96),
-            rgba(18, 16, 22, 0.96)
-        );
+padding: 18px;
 
-    box-shadow:
-        0 7px 22px rgba(0, 0, 0, 0.28);
+border-radius: 18px;
+
+background:
+    linear-gradient(
+        135deg,
+        #211d27,
+        #17151c
+    );
+
+border: 1px solid #393142;
+
+box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.22);
+```
+
 }
 
 .inbox-tekst {
-    grid-column: 1 / -1;
+grid-area: tekst;
 
-    color: #f5f0f8;
+```
+font-size: 1.05rem;
 
-    font-size: 1rem;
-    font-weight: 600;
+line-height: 1.4;
 
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+color: #ffffff;
+
+overflow-wrap: anywhere;
+```
+
 }
 
 .inbox-datum {
-    align-self: center;
+grid-area: datum;
 
-    color: #756d7d;
+```
+color: #89828f;
 
-    font-size: 0.78rem;
+font-size: 0.78rem;
+```
+
 }
 
 .inbox-verwerk-knop {
-    min-height: 40px;
+grid-area: knop;
 
-    padding: 8px 13px;
+```
+align-self: center;
 
-    border: 1px solid #7040d9;
-    border-radius: 10px;
+border: 0;
 
-    background: rgba(112, 64, 217, 0.12);
+border-radius: 12px;
 
-    color: #b99cff;
+padding: 11px 14px;
 
-    font-size: 0.85rem;
-    font-weight: 800;
+background: #4361ee;
 
-    transition:
-        background 0.15s ease,
-        color 0.15s ease,
-        transform 0.15s ease;
+color: #ffffff;
+
+font-weight: 800;
+
+box-shadow:
+    0 0 14px rgba(67, 97, 238, 0.3);
+
+transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+```
+
 }
 
 .inbox-verwerk-knop:hover {
-    background: #7040d9;
-    color: #ffffff;
+transform: translateY(-1px);
 
-    transform: translateY(-1px);
+```
+box-shadow:
+    0 0 22px rgba(67, 97, 238, 0.55);
+```
+
 }
-
 
 /* ======================================
-   LEGE LIJST
-   ====================================== */
-
-.lege-lijst {
-    margin: 30px 0;
-
-    padding: 35px 20px;
-
-    text-align: center;
-
-    color: #716978;
-
-    border: 1px dashed #342b3e;
-    border-radius: 16px;
-
-    background: rgba(20, 17, 25, 0.5);
-}
-
-
-/* ======================================
-   MODAL
-   ====================================== */
-
-#verwerkModal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 18px;
-
-    background: rgba(0, 0, 0, 0.78);
-
-    backdrop-filter: blur(7px);
-}
-
-#verwerkModal.open {
-    display: flex;
-}
-
-.verwerk-modal-inhoud {
-    width: 100%;
-    max-width: 600px;
-    max-height: 92vh;
-
-    overflow-y: auto;
-
-    padding: 22px;
-
-    border: 1px solid #49365d;
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #211a29,
-            #121016
-        );
-
-    box-shadow:
-        0 20px 70px rgba(0, 0, 0, 0.65),
-        0 0 35px rgba(141, 92, 255, 0.12);
-}
-
-.verwerk-modal-kop {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 18px;
-}
-
-.verwerk-modal-kop h2 {
-    margin: 0;
-
-    color: #ffffff;
-
-    font-size: 1.35rem;
-}
-
-#modalSluiten {
-    width: 42px;
-    height: 42px;
-
-    flex-shrink: 0;
-
-    border: 1px solid #49365d;
-    border-radius: 50%;
-
-    background: #1b1620;
-
-    color: #ffffff;
-
-    font-size: 1.3rem;
-}
-
-#modalSluiten:hover {
-    border-color: #9a62ff;
-    color: #cbb7ff;
-}
-
-
-/* ======================================
-   GEDACHTE DIE WORDT VERWERKT
-   ====================================== */
-
-.verwerk-item {
-    margin-bottom: 20px;
-
-    padding: 16px;
-
-    border-left: 4px solid #8d5cff;
-    border-radius: 10px;
-
-    background: rgba(141, 92, 255, 0.08);
-
-    color: #d9d0df;
-
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-
-/* ======================================
-   KEUZESCHERM
-   ====================================== */
-
-.verwerk-keuzes {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 12px;
-}
-
-.verwerk-keuze-knop {
-    min-height: 100px;
-
-    padding: 18px;
-
-    border: 1px solid #40334e;
-    border-radius: 16px;
-
-    background: #19151e;
-
-    color: #ffffff;
-
-    font-weight: 800;
-
-    transition:
-        border-color 0.15s ease,
-        background 0.15s ease,
-        transform 0.15s ease;
-}
-
-.verwerk-keuze-knop:hover {
-    border-color: #8d5cff;
-
-    background: #231b2d;
-
-    transform: translateY(-2px);
-}
-
-
-/* ======================================
-   FORMULIEREN
-   ====================================== */
-
-#taakForm,
-#ideeScherm {
-    width: 100%;
-}
-
-.form-groep {
-    margin-bottom: 16px;
-}
-
-.form-groep label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #bdb3c5;
-
-    font-size: 0.88rem;
-    font-weight: 800;
-}
-
-.form-groep input,
-.form-groep select,
-.form-groep textarea {
-    width: 100%;
-
-    min-height: 46px;
-
-    padding: 11px 13px;
-
-    border: 1px solid #3b3045;
-    border-radius: 11px;
-
-    background: #100e13;
-
-    color: #ffffff;
-}
-
-.form-groep textarea {
-    min-height: 100px;
-
-    resize: vertical;
-}
-
-.form-groep input:focus,
-.form-groep select:focus,
-.form-groep textarea:focus {
-    border-color: #8d5cff;
-}
-
-
-/* ======================================
-   FORMULIER KNOPPEN
-   ====================================== */
-
-.form-knoppen {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 20px;
-}
-
-.form-knoppen button,
-#ideeOpslaan,
-#subtaakToevoegenKnop,
-#terugNaarKeuzes,
-#taakAnnulerenKnop {
-    min-height: 45px;
-
-    padding: 10px 15px;
-
-    border: 1px solid #443650;
-    border-radius: 11px;
-
-    background: #1b1621;
-
-    color: #eee8f2;
-
-    font-weight: 800;
-}
-
-.form-knoppen button:hover,
-#ideeOpslaan:hover,
-#subtaakToevoegenKnop:hover,
-#terugNaarKeuzes:hover,
-#taakAnnulerenKnop:hover {
-    border-color: #8d5cff;
-
-    background: #261d31;
-}
-
-
-/* ======================================
-   PRIMAIRE KNOP
-   ====================================== */
-
-.primaire-knop,
-#ideeOpslaan {
-    border-color: #7040d9 !important;
-
-    background: linear-gradient(
-        135deg,
-        #7040d9,
-        #965cff
-    ) !important;
-
-    color: #ffffff !important;
-
-    box-shadow:
-        0 0 14px rgba(141, 92, 255, 0.25);
-}
-
-
-/* ======================================
-   SUBTAKEN
-   ====================================== */
-
-.subtaken-container {
-    margin-top: 18px;
-}
-
-.subtaken-kop {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 10px;
-
-    margin-bottom: 10px;
-}
-
-.subtaken-kop label {
-    margin: 0;
-}
-
-.subtaak-regel {
-    display: grid;
-
-    grid-template-columns: 1fr auto;
-
-    gap: 8px;
-
-    margin-bottom: 8px;
-}
-
-.subtaak-input {
-    width: 100%;
-
-    min-height: 44px;
-
-    padding: 10px 12px;
-
-    border: 1px solid #3b3045;
-    border-radius: 10px;
-
-    background: #100e13;
-
-    color: #ffffff;
-}
-
-.subtaak-verwijder {
-    width: 44px;
-    height: 44px;
-
-    border: 1px solid #543d60;
-    border-radius: 10px;
-
-    background: #1c1621;
-
-    color: #ff7d9a;
-
-    font-weight: 900;
-}
-
-.subtaak-verwijder:hover {
-    border-color: #ff5d83;
-
-    background: rgba(255, 93, 131, 0.12);
-}
-
-
-/* ======================================
-   TERUG / ANNULEREN
-   ====================================== */
-
-#terugNaarKeuzes,
-#taakAnnulerenKnop {
-    color: #a79dae;
-}
-
-
-/* ======================================
-   VERWIJDEREN
-   ====================================== */
-
-#verwijderInboxKnop {
-    width: 100%;
-
-    min-height: 44px;
-
-    margin-top: 12px;
-
-    border: 1px solid #673348;
-    border-radius: 11px;
-
-    background: rgba(120, 30, 60, 0.12);
-
-    color: #ff91a9;
-
-    font-weight: 800;
-}
-
-#verwijderInboxKnop:hover {
-    background: rgba(150, 35, 70, 0.2);
-
-    border-color: #b94b70;
-}
-
-
-/* ======================================
-   VANDAAG
-   ====================================== */
+TAAK KAART
+====================================== */
 
 .taak-kaart {
-    padding: 17px;
+padding: 18px;
 
-    border: 1px solid #30253b;
-    border-radius: 15px;
+```
+border-radius: 18px;
 
-    background: #17131c;
+background:
+    linear-gradient(
+        135deg,
+        #211d27,
+        #17151c
+    );
 
-    box-shadow:
-        0 7px 20px rgba(0, 0, 0, 0.25);
+border: 1px solid #393142;
+
+box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.22);
+```
+
 }
 
 .taak-kaart h3 {
-    margin: 0 0 7px;
+margin: 0 0 10px;
 
-    color: #ffffff;
+```
+font-size: 1.1rem;
 
-    font-size: 1.05rem;
+line-height: 1.4;
+```
+
 }
 
 .taak-kaart small {
-    color: #9e94a7;
+color: #aaa2b1;
 }
 
-
 /* ======================================
-   IDEEËN
-   ====================================== */
+IDEE KAART
+====================================== */
 
 .idee-kaart {
-    padding: 17px;
+padding: 18px;
 
-    border: 1px solid #3c3150;
-    border-radius: 15px;
+```
+border-radius: 18px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(29, 22, 37, 0.95),
-            rgba(18, 15, 23, 0.95)
-        );
+background:
+    linear-gradient(
+        135deg,
+        #211d27,
+        #17151c
+    );
 
-    box-shadow:
-        0 7px 20px rgba(0, 0, 0, 0.25);
+border: 1px solid #393142;
+
+box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.22);
+
+transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+```
+
+}
+
+.idee-kaart:hover {
+transform: translateY(-2px);
+
+```
+border-color: #9d4edd;
+```
+
 }
 
 .idee-tekst {
-    color: #f1ebf5;
+font-size: 1.05rem;
 
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+```
+line-height: 1.5;
+
+overflow-wrap: anywhere;
+```
+
 }
 
 .idee-datum {
-    display: block;
+display: block;
 
-    margin-top: 8px;
+```
+margin-top: 10px;
 
-    color: #766d80;
+color: #89828f;
 
-    font-size: 0.78rem;
+font-size: 0.78rem;
+```
+
 }
 
-
 /* ======================================
-   CATEGORIEËN
-   ====================================== */
+CATEGORIEËN
+====================================== */
 
 .categorie-lijst {
-    display: grid;
+display: grid;
 
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+```
+grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+    );
 
-    gap: 12px;
+gap: 14px;
+```
+
 }
 
 .categorie-kaart {
-    min-height: 110px;
+min-height: 130px;
 
-    padding: 16px;
+```
+padding: 20px;
 
-    display: flex;
+display: flex;
+flex-direction: column;
 
-    flex-direction: column;
+justify-content: center;
+align-items: center;
 
-    justify-content: center;
+text-align: center;
 
-    align-items: center;
+border-radius: 20px;
 
-    text-align: center;
+background:
+    linear-gradient(
+        145deg,
+        #211d27,
+        #17151c
+    );
 
-    border: 1px solid #352a42;
-    border-radius: 15px;
+border: 1px solid #393142;
 
-    background: #17131c;
+box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.22);
 
-    transition:
-        transform 0.15s ease,
-        border-color 0.15s ease;
+transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+```
+
 }
 
 .categorie-kaart:hover {
-    transform: translateY(-2px);
+transform: translateY(-2px);
 
-    border-color: #7950b8;
+```
+border-color: #4361ee;
+```
+
 }
 
 .categorie-icoon {
-    margin-bottom: 5px;
+font-size: 2rem;
 
-    font-size: 1.8rem;
+```
+margin-bottom: 10px;
+```
+
 }
 
 .categorie-naam {
-    color: #eee7f2;
+font-weight: 800;
 
-    font-size: 0.9rem;
-    font-weight: 800;
+```
+font-size: 1rem;
+
+overflow-wrap: anywhere;
+```
+
 }
 
 .categorie-aantal {
-    margin-top: 4px;
+margin-top: 6px;
 
-    color: #82788b;
+```
+color: #938b9b;
 
-    font-size: 0.78rem;
+font-size: 0.8rem;
+```
+
 }
-
 
 /* ======================================
-   NAVIGATIE
-   ====================================== */
+LEGE MELDING
+====================================== */
 
-.app-nav {
-    position: fixed;
+.lege-melding {
+width: 100%;
+max-width: 600px;
 
-    left: 0;
-    right: 0;
-    bottom: 0;
+```
+margin: 35px auto;
 
-    z-index: 900;
+padding: 30px 20px;
 
-    width: 100%;
+text-align: center;
 
-    padding:
-        8px
-        max(8px, env(safe-area-inset-right))
-        calc(8px + env(safe-area-inset-bottom))
-        max(8px, env(safe-area-inset-left));
+color: #8e8795;
 
-    border-top: 1px solid #30253b;
+border: 1px dashed #403847;
 
-    background:
-        rgba(12, 10, 15, 0.96);
+border-radius: 18px;
 
-    backdrop-filter: blur(12px);
+background: rgba(20, 18, 25, 0.5);
+```
 
-    box-shadow:
-        0 -8px 30px rgba(0, 0, 0, 0.35);
 }
 
-.app-nav-inner {
-    width: 100%;
-    max-width: 760px;
+/* ======================================
+MODAL
+====================================== */
 
-    margin: 0 auto;
+.modal {
+position: fixed;
 
-    display: grid;
+```
+inset: 0;
 
-    grid-template-columns:
-        repeat(5, 1fr);
+z-index: 1000;
 
-    gap: 5px;
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+padding: 18px;
+
+background:
+    rgba(5, 5, 8, 0.82);
+
+backdrop-filter: blur(8px);
+
+overflow-y: auto;
+```
+
+}
+
+.modal[hidden] {
+display: none;
+}
+
+.modal-inhoud {
+width: 100%;
+max-width: 620px;
+
+```
+max-height: calc(100vh - 36px);
+
+overflow-y: auto;
+
+position: relative;
+
+padding: 25px;
+
+border-radius: 24px;
+
+background:
+    linear-gradient(
+        145deg,
+        #211d27,
+        #131118
+    );
+
+border: 1px solid #463b50;
+
+box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(157, 78, 221, 0.12);
+```
+
+}
+
+.modal-sluiten {
+position: absolute;
+
+```
+top: 12px;
+right: 12px;
+
+width: 42px;
+height: 42px;
+
+border: 0;
+
+border-radius: 50%;
+
+background: #2c2632;
+
+color: #ffffff;
+
+font-size: 1.7rem;
+
+line-height: 1;
+
+z-index: 2;
+```
+
+}
+
+.modal-sluiten:hover {
+background: #9d4edd;
+}
+
+/* ======================================
+VERWERKEN KOP
+====================================== */
+
+.verwerk-kop {
+padding: 5px 45px 25px 0;
+}
+
+.verwerk-label {
+display: block;
+
+```
+margin-bottom: 10px;
+
+color: #9d4edd;
+
+font-size: 0.75rem;
+
+font-weight: 900;
+
+letter-spacing: 0.15em;
+```
+
+}
+
+.verwerk-item-tekst {
+font-size: 1.35rem;
+
+```
+line-height: 1.45;
+
+font-weight: 700;
+
+overflow-wrap: anywhere;
+```
+
+}
+
+/* ======================================
+VERWERK KEUZES
+====================================== */
+
+.verwerk-keuzes {
+display: flex;
+
+```
+flex-direction: column;
+
+gap: 12px;
+```
+
+}
+
+.verwerk-keuze {
+width: 100%;
+
+```
+display: flex;
+
+align-items: center;
+
+gap: 15px;
+
+padding: 18px;
+
+border: 1px solid #3e3547;
+
+border-radius: 18px;
+
+text-align: left;
+
+background: #19161f;
+
+color: #ffffff;
+
+transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+```
+
+}
+
+.verwerk-keuze:hover {
+transform: translateY(-2px);
+
+```
+border-color: #9d4edd;
+
+box-shadow:
+    0 0 20px rgba(157, 78, 221, 0.18);
+```
+
+}
+
+.keuze-icoon {
+width: 45px;
+height: 45px;
+
+```
+flex-shrink: 0;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 13px;
+
+background: #28222f;
+
+font-size: 1.5rem;
+```
+
+}
+
+.keuze-tekst {
+display: flex;
+
+```
+flex-direction: column;
+
+gap: 5px;
+```
+
+}
+
+.keuze-tekst strong {
+font-size: 1rem;
+}
+
+.keuze-tekst small {
+color: #928a99;
+
+```
+line-height: 1.35;
+```
+
+}
+
+.verwerk-verwijder {
+margin-top: 8px;
+
+```
+padding: 13px;
+
+border: 0;
+
+border-radius: 12px;
+
+background: transparent;
+
+color: #b7aeba;
+
+font-size: 0.9rem;
+```
+
+}
+
+.verwerk-verwijder:hover {
+color: #ff5c8a;
+
+```
+background: rgba(255, 92, 138, 0.08);
+```
+
+}
+
+/* ======================================
+FORMULIER
+====================================== */
+
+.verwerk-form {
+width: 100%;
+}
+
+.form-kop {
+padding-right: 45px;
+
+```
+margin-bottom: 25px;
+```
+
+}
+
+.form-kop h2 {
+margin: 0;
+
+```
+font-size: 1.5rem;
+```
+
+}
+
+.form-kop p {
+margin: 8px 0 0;
+
+```
+color: #918997;
+
+line-height: 1.4;
+```
+
+}
+
+.form-veld {
+margin-bottom: 18px;
+}
+
+.form-veld label {
+display: block;
+
+```
+margin-bottom: 8px;
+
+font-weight: 800;
+
+color: #ddd7e0;
+```
+
+}
+
+.form-veld input,
+.form-veld textarea {
+width: 100%;
+
+```
+border: 1px solid #42394a;
+
+border-radius: 13px;
+
+padding: 13px 14px;
+
+outline: none;
+
+background: #151219;
+
+color: #ffffff;
+
+resize: vertical;
+```
+
+}
+
+.form-veld input:focus,
+.form-veld textarea:focus {
+border-color: #9d4edd;
+
+```
+box-shadow:
+    0 0 0 3px rgba(157, 78, 221, 0.12);
+```
+
+}
+
+.veld-hulp {
+display: block;
+
+```
+margin-top: 7px;
+
+color: #817987;
+
+font-size: 0.78rem;
+
+line-height: 1.4;
+```
+
+}
+
+/* ======================================
+SUBTAKEN
+====================================== */
+
+.subtaken-sectie {
+margin-top: 25px;
+
+```
+padding: 18px;
+
+border-radius: 18px;
+
+background: rgba(12, 11, 16, 0.45);
+
+border: 1px solid #393142;
+```
+
+}
+
+.subtaken-kop {
+display: flex;
+
+```
+justify-content: space-between;
+align-items: flex-start;
+
+gap: 15px;
+
+margin-bottom: 15px;
+```
+
+}
+
+.subtaken-kop h3 {
+margin: 0;
+
+```
+font-size: 1rem;
+```
+
+}
+
+.subtaken-kop p {
+margin: 5px 0 0;
+
+```
+color: #817987;
+
+font-size: 0.78rem;
+
+line-height: 1.4;
+```
+
+}
+
+.subtaak-toevoegen {
+flex-shrink: 0;
+
+```
+border: 1px solid #4361ee;
+
+border-radius: 10px;
+
+padding: 9px 11px;
+
+background: rgba(67, 97, 238, 0.12);
+
+color: #7d94ff;
+
+font-size: 0.8rem;
+
+font-weight: 800;
+```
+
+}
+
+.subtaak-toevoegen:hover {
+background: #4361ee;
+
+```
+color: #ffffff;
+```
+
+}
+
+.subtaken-lijst {
+display: flex;
+
+```
+flex-direction: column;
+
+gap: 9px;
+```
+
+}
+
+.subtaak-regel {
+display: flex;
+
+```
+gap: 8px;
+```
+
+}
+
+.subtaak-input {
+flex: 1;
+
+```
+min-width: 0;
+
+padding: 11px 12px;
+
+border: 1px solid #3c3444;
+
+border-radius: 11px;
+
+background: #151219;
+
+color: #ffffff;
+
+outline: none;
+```
+
+}
+
+.subtaak-input:focus {
+border-color: #4361ee;
+}
+
+.subtaak-verwijder {
+width: 42px;
+
+```
+flex-shrink: 0;
+
+border: 0;
+
+border-radius: 11px;
+
+background: #2b232d;
+
+color: #a99faa;
+
+font-size: 1rem;
+```
+
+}
+
+.subtaak-verwijder:hover {
+background: #ff5c8a;
+
+```
+color: #ffffff;
+```
+
+}
+
+/* ======================================
+FORMULIER ACTIES
+====================================== */
+
+.form-acties {
+display: flex;
+
+```
+gap: 10px;
+
+margin-top: 25px;
+```
+
+}
+
+.primaire-knop,
+.secundaire-knop {
+flex: 1;
+
+```
+min-height: 48px;
+
+border-radius: 13px;
+
+font-weight: 900;
+```
+
+}
+
+.primaire-knop {
+border: 0;
+
+```
+background: #9d4edd;
+
+color: #ffffff;
+
+box-shadow:
+    0 0 18px rgba(157, 78, 221, 0.3);
+```
+
+}
+
+.primaire-knop:hover {
+box-shadow:
+0 0 28px rgba(157, 78, 221, 0.55);
+}
+
+.secundaire-knop {
+border: 1px solid #403747;
+
+```
+background: #201c25;
+
+color: #c8c0cc;
+```
+
+}
+
+.secundaire-knop:hover {
+border-color: #9d4edd;
+
+```
+color: #ffffff;
+```
+
+}
+
+/* ======================================
+INSTELLINGEN
+====================================== */
+
+.instellingen {
+width: 100%;
+max-width: 700px;
+
+```
+margin: 0 auto;
+
+display: flex;
+flex-direction: column;
+
+gap: 15px;
+```
+
+}
+
+.instelling-blok {
+padding: 20px;
+
+```
+border-radius: 18px;
+
+background:
+    linear-gradient(
+        145deg,
+        #211d27,
+        #17151c
+    );
+
+border: 1px solid #393142;
+```
+
+}
+
+.instelling-blok h2 {
+margin: 0 0 7px;
+
+```
+font-size: 1.1rem;
+```
+
+}
+
+.instelling-blok p {
+margin: 0 0 16px;
+
+```
+color: #8f8796;
+
+font-size: 0.88rem;
+
+line-height: 1.4;
+```
+
+}
+
+.instelling-knop {
+display: inline-flex;
+
+```
+align-items: center;
+justify-content: center;
+
+min-height: 44px;
+
+padding: 10px 15px;
+
+border: 1px solid #4361ee;
+
+border-radius: 12px;
+
+background: rgba(67, 97, 238, 0.12);
+
+color: #ffffff;
+
+font-weight: 800;
+```
+
+}
+
+.instelling-knop:hover {
+background: #4361ee;
+}
+
+.gevaarlijk {
+border-color: rgba(255, 92, 138, 0.25);
+}
+
+.gevaar-knop {
+border-color: #ff5c8a;
+
+```
+background: rgba(255, 92, 138, 0.08);
+
+color: #ff8aaa;
+```
+
+}
+
+.gevaar-knop:hover {
+background: #ff5c8a;
+
+```
+color: #ffffff;
+```
+
+}
+
+/* ======================================
+BOTTOM NAVIGATIE
+====================================== */
+
+.bottom-nav {
+position: fixed;
+
+```
+left: 0;
+right: 0;
+bottom: 0;
+
+z-index: 900;
+
+min-height: 78px;
+
+padding:
+    8px
+    8px
+    calc(8px + env(safe-area-inset-bottom));
+
+display: flex;
+
+align-items: stretch;
+justify-content: center;
+
+gap: 5px;
+
+background:
+    rgba(14, 13, 18, 0.96);
+
+border-top: 1px solid #302936;
+
+box-shadow:
+    0 -10px 35px rgba(0, 0, 0, 0.35);
+
+backdrop-filter: blur(12px);
+```
+
 }
 
 .nav-knop {
-    min-width: 0;
+flex: 1;
 
-    min-height: 58px;
+```
+max-width: 130px;
 
-    padding: 6px 4px;
+min-width: 0;
 
-    border: 1px solid transparent;
-    border-radius: 11px;
+border: 0;
 
-    background: transparent;
+border-radius: 14px;
 
-    color: #82788c;
+background: transparent;
 
-    font-size: 0.72rem;
-    font-weight: 800;
+color: #827a89;
 
-    transition:
-        color 0.15s ease,
-        background 0.15s ease,
-        border-color 0.15s ease;
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+justify-content: center;
+
+gap: 4px;
+
+padding: 6px 3px;
+
+transition:
+    background 0.15s ease,
+    color 0.15s ease;
+```
+
 }
 
 .nav-knop:hover {
-    color: #cbb7e5;
+color: #ffffff;
 
-    background: rgba(141, 92, 255, 0.07);
+```
+background: rgba(157, 78, 221, 0.08);
+```
+
 }
 
 .nav-knop.actief {
-    border-color: #49365d;
+color: #ffffff;
 
-    background:
-        rgba(112, 64, 217, 0.15);
+```
+background:
+    rgba(157, 78, 221, 0.15);
 
-    color: #c29fff;
+box-shadow:
+    inset 0 0 15px rgba(157, 78, 221, 0.08);
+```
 
-    box-shadow:
-        0 0 12px rgba(141, 92, 255, 0.1);
 }
 
+.nav-icoon {
+font-size: 1.35rem;
+
+```
+line-height: 1;
+```
+
+}
+
+.nav-tekst {
+font-size: 0.68rem;
+
+```
+font-weight: 800;
+
+white-space: nowrap;
+```
+
+}
 
 /* ======================================
-   INSTELLINGEN
-   ====================================== */
-
-.instellingen-blok {
-    margin-bottom: 18px;
-
-    padding: 18px;
-
-    border: 1px solid #30253b;
-    border-radius: 15px;
-
-    background: #17131c;
-}
-
-.instellingen-blok h3 {
-    margin: 0 0 8px;
-
-    color: #ffffff;
-}
-
-.instellingen-blok p {
-    margin: 0 0 14px;
-
-    color: #8e8497;
-
-    font-size: 0.9rem;
-}
-
-#backupKnop {
-    min-height: 45px;
-
-    padding: 10px 16px;
-
-    border: 1px solid #3f6c83;
-    border-radius: 10px;
-
-    background: rgba(45, 126, 160, 0.12);
-
-    color: #76d5ff;
-
-    font-weight: 800;
-}
-
-#backupKnop:hover {
-    background: rgba(45, 126, 160, 0.2);
-}
-
-#backupInput {
-    display: block;
-
-    width: 100%;
-
-    margin-top: 12px;
-
-    color: #aaa1b0;
-}
-
-#allesWissenKnop {
-    min-height: 45px;
-
-    padding: 10px 16px;
-
-    border: 1px solid #713448;
-    border-radius: 10px;
-
-    background: rgba(120, 30, 60, 0.12);
-
-    color: #ff8da8;
-
-    font-weight: 800;
-}
-
-#allesWissenKnop:hover {
-    background: rgba(150, 35, 70, 0.2);
-}
-
-
-/* ======================================
-   DESKTOP
-   ====================================== */
+TABLET / DESKTOP
+====================================== */
 
 @media (min-width: 700px) {
 
-    .app-header {
-        padding-top: 38px;
-    }
+```
+.pagina {
+    padding:
+        40px
+        30px
+        50px;
+}
 
-    .app-main {
-        padding-top: 20px;
-    }
+.lucy-start {
+    padding-top: 15vh;
+}
 
-    #paginaHoofd {
-        padding-top: 10vh;
-    }
+.snel-toevoegen-form {
+    margin-top: 65px;
+}
 
-    #snelInput {
-        min-height: 150px;
+.bottom-nav {
+    left: 50%;
 
-        font-size: 1.2rem;
-    }
+    right: auto;
 
-    .app-nav {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+    transform: translateX(-50%);
 
-    .nav-knop {
-        font-size: 0.8rem;
-    }
+    width: min(
+        900px,
+        calc(100% - 30px)
+    );
+
+    margin-bottom: 12px;
+
+    border: 1px solid #302936;
+
+    border-radius: 22px;
+
+    padding:
+        8px
+        12px
+        calc(8px + env(safe-area-inset-bottom));
+
+}
+```
 
 }
 
-
 /* ======================================
-   KLEINE TELEFOONS
-   ====================================== */
+KLEINE TELEFOONS
+====================================== */
 
-@media (max-width: 420px) {
+@media (max-width: 430px) {
 
-    .app-header {
-        padding-top: 20px;
-    }
+```
+.pagina {
+    padding-left: 12px;
+    padding-right: 12px;
+}
 
-    .app-logo {
-        font-size: 2.7rem;
-    }
+.lucy-start {
+    padding-top: 10vh;
+}
 
-    .app-main {
-        padding-left: 12px;
-        padding-right: 12px;
-        padding-bottom: 100px;
-    }
+.lucy-subtitel {
+    font-size: 0.9rem;
 
-    #paginaHoofd {
-        padding-top: 5vh;
-    }
+    letter-spacing: 0.08em;
+}
 
-    .verwerk-modal-inhoud {
-        padding: 17px;
-    }
+.snel-toevoegen-form {
+    margin-top: 42px;
+}
 
-    .verwerk-keuzes {
-        grid-template-columns: 1fr;
-    }
+.inbox-kaart {
+    grid-template-columns: 1fr;
 
-    .categorie-lijst {
-        grid-template-columns: 1fr 1fr;
-    }
+    grid-template-areas:
+        "tekst"
+        "datum"
+        "knop";
+}
 
-    .form-knoppen {
-        flex-direction: column;
-    }
+.inbox-verwerk-knop {
+    width: 100%;
+}
 
-    .form-knoppen button {
-        width: 100%;
-    }
+.modal {
+    padding: 10px;
+}
 
-    .inbox-kaart {
-        grid-template-columns: 1fr;
-    }
+.modal-inhoud {
+    max-height: calc(100vh - 20px);
 
-    .inbox-verwerk-knop {
-        width: 100%;
-    }
+    padding: 20px;
+
+    border-radius: 20px;
+}
+
+.form-acties {
+    flex-direction: column-reverse;
+}
+
+.subtaken-kop {
+    flex-direction: column;
+}
+
+.subtaak-toevoegen {
+    width: 100%;
+}
+
+.nav-icoon {
+    font-size: 1.2rem;
+}
+
+.nav-tekst {
+    font-size: 0.6rem;
+}
+```
 
 }
 
-
 /* ======================================
-   TOEGANKELIJKHEID
-   ====================================== */
+TOEGANKELIJKHEID
+====================================== */
 
-@media (prefers-reduced-motion: reduce) {
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+outline: 3px solid rgba(67, 97, 238, 0.65);
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-    }
+```
+outline-offset: 2px;
+```
 
 }
 
