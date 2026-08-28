@@ -8,10 +8,9 @@
 // OPSLAG
 // ======================================
 
-const OPSLAG_TAKEN = "lucyTaken";
 const OPSLAG_INBOX = "lucyInbox";
+const OPSLAG_TAKEN = "lucyTaken";
 const OPSLAG_IDEEEN = "lucyIdeeen";
-const OPSLAG_GEDACHTEN = "lucyGedachten";
 const OPSLAG_CATEGORIEEN = "lucyCategorieen";
 
 
@@ -20,7 +19,6 @@ const OPSLAG_CATEGORIEEN = "lucyCategorieen";
 // ======================================
 
 const STANDAARD_CATEGORIEEN = [
-
     "Sociaal",
     "Administratie",
     "Klussen",
@@ -33,7 +31,6 @@ const STANDAARD_CATEGORIEEN = [
     "Franciska (terwille)",
     "ADHD/Autisme",
     "Overig"
-
 ];
 
 
@@ -41,11 +38,16 @@ const STANDAARD_CATEGORIEEN = [
 // DATA
 // ======================================
 
-let taken = [];
 let inbox = [];
+let taken = [];
 let ideeen = [];
 
-let huidigeTaakId = null;
+
+// ======================================
+// ACTIEVE VERWERKING
+// ======================================
+
+let huidigInboxId = null;
 
 
 // ======================================
@@ -58,32 +60,14 @@ const snelToevoegenForm =
 const snelInput =
     document.getElementById("snelInput");
 
-const instellingenKnop =
-    document.getElementById("instellingenKnop");
+const inboxLijst =
+    document.getElementById("inboxLijst");
 
-const verwerkLijst =
-    document.getElementById("verwerkLijst");
+const legeInbox =
+    document.getElementById("legeInbox");
 
-const legeVerwerkLijst =
-    document.getElementById("legeVerwerkLijst");
-
-const vandaagLijst =
-    document.getElementById("vandaagLijst");
-
-const legeVandaag =
-    document.getElementById("legeVandaag");
-
-const datumVandaag =
-    document.getElementById("datumVandaag");
-
-const ideeenLijst =
-    document.getElementById("ideeenLijst");
-
-const legeIdeeen =
-    document.getElementById("legeIdeeen");
-
-const categorieLijst =
-    document.getElementById("categorieLijst");
+const verwerkKnop =
+    document.getElementById("verwerkKnop");
 
 const verwerkModal =
     document.getElementById("verwerkModal");
@@ -91,56 +75,56 @@ const verwerkModal =
 const modalSluiten =
     document.getElementById("modalSluiten");
 
-const verwerkItemTekst =
-    document.getElementById("verwerkItemTekst");
+const verwerkKeuzeScherm =
+    document.getElementById("verwerkKeuzeScherm");
 
-const maakTaakKnop =
-    document.getElementById("maakTaakKnop");
-
-const maakIdeeKnop =
-    document.getElementById("maakIdeeKnop");
-
-const verwijderInboxKnop =
-    document.getElementById("verwijderInboxKnop");
+const taakScherm =
+    document.getElementById("taakScherm");
 
 const taakForm =
     document.getElementById("taakForm");
 
-const taakAnnulerenKnop =
-    document.getElementById("taakAnnulerenKnop");
+const taakTitel =
+    document.getElementById("taakTitel");
 
-const bewerkId =
-    document.getElementById("bewerkId");
+const taakCategorie =
+    document.getElementById("taakCategorie");
 
-const bewerkTitel =
-    document.getElementById("bewerkTitel");
+const taakDatum =
+    document.getElementById("taakDatum");
 
-const categorieSelect =
-    document.getElementById("categorieSelect");
+const taakNotitie =
+    document.getElementById("taakNotitie");
 
-const labelSelect =
-    document.getElementById("labelSelect");
+const taakSubtaken =
+    document.getElementById("taakSubtaken");
 
-const datumSelect =
-    document.getElementById("datumSelect");
+const subtaakToevoegen =
+    document.getElementById("subtaakToevoegen");
 
-const notitieInput =
-    document.getElementById("notitieInput");
+const terugNaarKeuzes =
+    document.getElementById("terugNaarKeuzes");
 
-const subtakenLijst =
-    document.getElementById("subtakenLijst");
+const taakOpslaan =
+    document.getElementById("taakOpslaan");
 
-const subtaakToevoegenKnop =
-    document.getElementById("subtaakToevoegenKnop");
+const ideeScherm =
+    document.getElementById("ideeScherm");
 
-const backupKnop =
-    document.getElementById("backupKnop");
+const ideeTitel =
+    document.getElementById("ideeTitel");
 
-const backupInput =
-    document.getElementById("backupInput");
+const ideeOpslaan =
+    document.getElementById("ideeOpslaan");
 
-const allesWissenKnop =
-    document.getElementById("allesWissenKnop");
+const weggooienKnop =
+    document.getElementById("weggooienKnop");
+
+const verwerkTaakKnop =
+    document.getElementById("verwerkTaakKnop");
+
+const verwerkIdeeKnop =
+    document.getElementById("verwerkIdeeKnop");
 
 
 // ======================================
@@ -157,20 +141,52 @@ document.addEventListener(
 
         categorieSelectVullen();
 
-        datumVandaagInstellen();
+        elementenControleren();
 
-        navigatieInstellen();
-
-        knoppenInstellen();
-
-        alleLijstenVernieuwen();
+        inboxWeergeven();
 
         serviceWorkerRegistreren();
 
-        snelInput.focus();
+        if (snelInput) {
+            snelInput.focus();
+        }
 
     }
 );
+
+
+// ======================================
+// ELEMENTEN CONTROLEREN
+// ======================================
+
+function elementenControleren() {
+
+    const belangrijkeElementen = [
+
+        ["snelToevoegenForm", snelToevoegenForm],
+        ["snelInput", snelInput],
+        ["inboxLijst", inboxLijst],
+        ["verwerkModal", verwerkModal],
+        ["modalSluiten", modalSluiten]
+
+    ];
+
+
+    belangrijkeElementen.forEach(
+        ([naam, element]) => {
+
+            if (!element) {
+
+                console.warn(
+                    `Lucy: element #${naam} ontbreekt in index.html`
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 // ======================================
@@ -179,121 +195,84 @@ document.addEventListener(
 
 function dataLaden() {
 
-    taken =
-        lokaleArrayLaden(
-            OPSLAG_TAKEN
-        );
-
-    inbox =
-        lokaleArrayLaden(
-            OPSLAG_INBOX
-        );
-
-    ideeen =
-        lokaleArrayLaden(
-            OPSLAG_IDEEEN
-        );
-
-
-    /*
-     * Oude versie van Lucy gebruikte "gedachten".
-     *
-     * Die worden éénmalig naar de inbox gebracht.
-     * Daardoor raken bestaande gegevens niet kwijt.
-     */
-
-    const oudeGedachten =
-        lokaleArrayLaden(
-            OPSLAG_GEDACHTEN
-        );
-
-
-    if (
-        oudeGedachten.length > 0 &&
-        inbox.length === 0
-    ) {
-
-        oudeGedachten.forEach(
-            gedachte => {
-
-                if (
-                    gedachte &&
-                    gedachte.tekst
-                ) {
-
-                    inbox.push({
-
-                        id:
-                            gedachte.id ||
-                            maakId(),
-
-                        tekst:
-                            gedachte.tekst,
-
-                        aangemaakt:
-                            gedachte.datum ||
-                            new Date().toISOString()
-
-                    });
-
-                }
-
-            }
-        );
-
-
-        dataOpslaan();
-
-    }
-
-
-    taken =
-        takenNormaliseren(
-            taken
-        );
-
-}
-
-
-// ======================================
-// LOKALE ARRAY LADEN
-// ======================================
-
-function lokaleArrayLaden(
-    sleutel
-) {
-
     try {
 
-        const opgeslagen =
+        const opgeslagenInbox =
             localStorage.getItem(
-                sleutel
+                OPSLAG_INBOX
+            );
+
+        const opgeslagenTaken =
+            localStorage.getItem(
+                OPSLAG_TAKEN
+            );
+
+        const opgeslagenIdeeen =
+            localStorage.getItem(
+                OPSLAG_IDEEEN
             );
 
 
-        if (!opgeslagen) {
-            return [];
+        if (opgeslagenInbox) {
+
+            const data =
+                JSON.parse(
+                    opgeslagenInbox
+                );
+
+            if (Array.isArray(data)) {
+
+                inbox =
+                    inboxNormaliseren(data);
+
+            }
+
         }
 
 
-        const data =
-            JSON.parse(
-                opgeslagen
-            );
+        if (opgeslagenTaken) {
+
+            const data =
+                JSON.parse(
+                    opgeslagenTaken
+                );
+
+            if (Array.isArray(data)) {
+
+                taken =
+                    takenNormaliseren(data);
+
+            }
+
+        }
 
 
-        return Array.isArray(data)
-            ? data
-            : [];
+        if (opgeslagenIdeeen) {
+
+            const data =
+                JSON.parse(
+                    opgeslagenIdeeen
+                );
+
+            if (Array.isArray(data)) {
+
+                ideeen =
+                    ideeenNormaliseren(data);
+
+            }
+
+        }
 
     } catch (fout) {
 
         console.error(
-            "Lucy kon gegevens niet laden:",
+            "Lucy kon de gegevens niet laden:",
             fout
         );
 
-        return [];
+        inbox = [];
+        taken = [];
+        ideeen = [];
 
     }
 
@@ -301,24 +280,32 @@ function lokaleArrayLaden(
 
 
 // ======================================
-// DATA OPSLAAN
+// INBOX NORMALISEREN
 // ======================================
 
-function dataOpslaan() {
+function inboxNormaliseren(data) {
 
-    localStorage.setItem(
-        OPSLAG_TAKEN,
-        JSON.stringify(taken)
-    );
+    return data.map(
+        item => {
 
-    localStorage.setItem(
-        OPSLAG_INBOX,
-        JSON.stringify(inbox)
-    );
+            return {
 
-    localStorage.setItem(
-        OPSLAG_IDEEEN,
-        JSON.stringify(ideeen)
+                id:
+                    item.id ||
+                    maakId(),
+
+                tekst:
+                    item.tekst ||
+                    item.titel ||
+                    "",
+
+                aangemaakt:
+                    item.aangemaakt ||
+                    new Date().toISOString()
+
+            };
+
+        }
     );
 
 }
@@ -328,9 +315,7 @@ function dataOpslaan() {
 // TAKEN NORMALISEREN
 // ======================================
 
-function takenNormaliseren(
-    data
-) {
+function takenNormaliseren(data) {
 
     return data.map(
         taak => {
@@ -349,16 +334,12 @@ function takenNormaliseren(
                     taak.categorie ||
                     "",
 
-                label:
-                    taak.label ||
+                datum:
+                    taak.datum ||
                     "",
 
                 notitie:
                     taak.notitie ||
-                    "",
-
-                datum:
-                    taak.datum ||
                     "",
 
                 subtaken:
@@ -369,20 +350,45 @@ function takenNormaliseren(
                 afgerond:
                     taak.afgerond === true,
 
-                verwerkt:
-                    true,
-
                 aangemaakt:
                     taak.aangemaakt ||
                     new Date().toISOString(),
 
                 gewijzigd:
                     taak.gewijzigd ||
-                    new Date().toISOString(),
+                    new Date().toISOString()
 
-                afgerondOp:
-                    taak.afgerondOp ||
-                    ""
+            };
+
+        }
+    );
+
+}
+
+
+// ======================================
+// IDEEËN NORMALISEREN
+// ======================================
+
+function ideeenNormaliseren(data) {
+
+    return data.map(
+        idee => {
+
+            return {
+
+                id:
+                    idee.id ||
+                    maakId(),
+
+                tekst:
+                    idee.tekst ||
+                    idee.titel ||
+                    "",
+
+                aangemaakt:
+                    idee.aangemaakt ||
+                    new Date().toISOString()
 
             };
 
@@ -396,55 +402,79 @@ function takenNormaliseren(
 // SUBTAKEN NORMALISEREN
 // ======================================
 
-function subtakenNormaliseren(
-    subtaken
-) {
+function subtakenNormaliseren(subtaken) {
 
     if (!Array.isArray(subtaken)) {
         return [];
     }
 
 
-    return subtaken.map(
-        subtaak => {
+    return subtaken
+        .map(
+            subtaak => {
 
-            if (
-                typeof subtaak ===
-                "string"
-            ) {
+                if (
+                    typeof subtaak ===
+                    "string"
+                ) {
+
+                    return {
+
+                        id: maakId(),
+
+                        titel: subtaak,
+
+                        afgerond: false
+
+                    };
+
+                }
+
 
                 return {
 
                     id:
+                        subtaak.id ||
                         maakId(),
 
                     titel:
-                        subtaak,
+                        subtaak.titel ||
+                        "",
 
                     afgerond:
-                        false
+                        subtaak.afgerond === true
 
                 };
 
             }
+        )
+        .filter(
+            subtaak =>
+                subtaak.titel !== ""
+        );
+
+}
 
 
-            return {
+// ======================================
+// DATA OPSLAAN
+// ======================================
 
-                id:
-                    subtaak.id ||
-                    maakId(),
+function dataOpslaan() {
 
-                titel:
-                    subtaak.titel ||
-                    "",
+    localStorage.setItem(
+        OPSLAG_INBOX,
+        JSON.stringify(inbox)
+    );
 
-                afgerond:
-                    subtaak.afgerond === true
+    localStorage.setItem(
+        OPSLAG_TAKEN,
+        JSON.stringify(taken)
+    );
 
-            };
-
-        }
+    localStorage.setItem(
+        OPSLAG_IDEEEN,
+        JSON.stringify(ideeen)
     );
 
 }
@@ -457,7 +487,7 @@ function subtakenNormaliseren(
 function maakId() {
 
     return (
-        Date.now().toString() +
+        Date.now() +
         "-" +
         Math.random()
             .toString(36)
@@ -468,359 +498,92 @@ function maakId() {
 
 
 // ======================================
-// NAVIGATIE
+// SNEL TOEVOEGEN
+// ======================================
+// Dit is de belangrijkste functie van Lucy.
+//
+// Alles wat in je hoofd zit mag hier
+// direct worden neergezet.
+//
+// Geen categorie.
+// Geen keuze.
+// Geen nadenken.
+//
 // ======================================
 
-function navigatieInstellen() {
-
-    document
-        .querySelectorAll(".nav-knop")
-        .forEach(
-            knop => {
-
-                knop.addEventListener(
-                    "click",
-                    () => {
-
-                        paginaOpenen(
-                            knop.dataset.pagina
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-// ======================================
-// PAGINA OPENEN
-// ======================================
-
-function paginaOpenen(
-    paginaId
-) {
-
-    document
-        .querySelectorAll(".pagina")
-        .forEach(
-            pagina => {
-
-                pagina.classList.remove(
-                    "actief"
-                );
-
-            }
-        );
-
-
-    const pagina =
-        document.getElementById(
-            paginaId
-        );
-
-
-    if (pagina) {
-
-        pagina.classList.add(
-            "actief"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(".nav-knop")
-        .forEach(
-            knop => {
-
-                knop.classList.toggle(
-                    "actief",
-                    knop.dataset.pagina ===
-                    paginaId
-                );
-
-            }
-        );
-
-
-    if (
-        paginaId ===
-        "paginaVerwerken"
-    ) {
-
-        verwerkLijstWeergeven();
-
-    }
-
-
-    if (
-        paginaId ===
-        "paginaVandaag"
-    ) {
-
-        vandaagWeergeven();
-
-    }
-
-
-    if (
-        paginaId ===
-        "paginaIdeeen"
-    ) {
-
-        ideeenWeergeven();
-
-    }
-
-
-    if (
-        paginaId ===
-        "paginaCategorieen"
-    ) {
-
-        categorieenWeergeven();
-
-    }
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-// ======================================
-// KNOPPEN
-// ======================================
-
-function knoppenInstellen() {
-
-    instellingenKnop.addEventListener(
-        "click",
-        () => {
-
-            paginaOpenen(
-                "paginaInstellingen"
-            );
-
-        }
-    );
-
+if (snelToevoegenForm) {
 
     snelToevoegenForm.addEventListener(
         "submit",
-        snelToevoegen
-    );
-
-
-    modalSluiten.addEventListener(
-        "click",
-        modalSluitenFunctie
-    );
-
-
-    verwerkModal.addEventListener(
-        "click",
         event => {
 
-            if (
-                event.target ===
-                verwerkModal
-            ) {
-
-                modalSluitenFunctie();
-
-            }
-
-        }
-    );
+            event.preventDefault();
 
 
-    maakTaakKnop.addEventListener(
-        "click",
-        () => {
-
-            taakForm.hidden = false;
-
-            maakTaakFormKlaar();
-
-        }
-    );
+            const tekst =
+                snelInput.value.trim();
 
 
-    maakIdeeKnop.addEventListener(
-        "click",
-        () => {
+            if (!tekst) {
 
-            huidigeItemNaarIdee();
+                snelInput.focus();
 
-        }
-    );
-
-
-    verwijderInboxKnop.addEventListener(
-        "click",
-        () => {
-
-            huidigeItemVerwijderen();
-
-        }
-    );
-
-
-    taakAnnulerenKnop.addEventListener(
-        "click",
-        () => {
-
-            taakForm.hidden = true;
-
-        }
-    );
-
-
-    taakForm.addEventListener(
-        "submit",
-        taakOpslaan
-    );
-
-
-    subtaakToevoegenKnop.addEventListener(
-        "click",
-        subtaakToevoegen
-    );
-
-
-    document
-        .querySelectorAll(".keuze-knop")
-        .forEach(
-            knop => {
-
-                knop.addEventListener(
-                    "click",
-                    () => {
-
-                        labelSelect.value =
-                            knop.dataset.label;
-
-
-                        document
-                            .querySelectorAll(
-                                ".keuze-knop"
-                            )
-                            .forEach(
-                                item => {
-
-                                    item.classList.toggle(
-                                        "geselecteerd",
-                                        item === knop
-                                    );
-
-                                }
-                            );
-
-                    }
-                );
+                return;
 
             }
-        );
 
 
-    backupKnop.addEventListener(
-        "click",
-        backupMaken
-    );
+            inbox.unshift({
+
+                id: maakId(),
+
+                tekst: tekst,
+
+                aangemaakt:
+                    new Date().toISOString()
+
+            });
 
 
-    backupInput.addEventListener(
-        "change",
-        backupHerstellen
-    );
+            dataOpslaan();
 
 
-    allesWissenKnop.addEventListener(
-        "click",
-        allesWissen
+            snelInput.value = "";
+
+
+            inboxWeergeven();
+
+
+            snelInput.focus();
+
+        }
     );
 
 }
 
 
 // ======================================
-// SNEL TOEVOEGEN
+// INBOX WEERGEVEN
 // ======================================
 
-function snelToevoegen(
-    event
-) {
+function inboxWeergeven() {
 
-    event.preventDefault();
-
-
-    const tekst =
-        snelInput.value.trim();
-
-
-    if (!tekst) {
-
-        snelInput.focus();
-
+    if (!inboxLijst) {
         return;
-
     }
 
 
-    inbox.unshift({
-
-        id:
-            maakId(),
-
-        tekst:
-            tekst,
-
-        aangemaakt:
-            new Date().toISOString()
-
-    });
+    inboxLijst.innerHTML = "";
 
 
-    dataOpslaan();
+    if (
+        legeInbox
+    ) {
 
-
-    snelInput.value = "";
-
-    snelInput.focus();
-
-}
-
-
-// ======================================
-// VERWERKLIJST
-// ======================================
-
-function verwerkLijstWeergeven() {
-
-    verwerkLijst.innerHTML = "";
-
-
-    if (inbox.length === 0) {
-
-        legeVerwerkLijst.classList.add(
-            "zichtbaar"
-        );
-
-        return;
+        legeInbox.hidden =
+            inbox.length !== 0;
 
     }
-
-
-    legeVerwerkLijst.classList.remove(
-        "zichtbaar"
-    );
 
 
     inbox.forEach(
@@ -833,7 +596,7 @@ function verwerkLijstWeergeven() {
 
 
             kaart.className =
-                "verwerk-kaart";
+                "inbox-kaart";
 
 
             const tekst =
@@ -843,7 +606,7 @@ function verwerkLijstWeergeven() {
 
 
             tekst.className =
-                "verwerk-kaart-tekst";
+                "inbox-tekst";
 
 
             tekst.textContent =
@@ -854,6 +617,10 @@ function verwerkLijstWeergeven() {
                 document.createElement(
                     "small"
                 );
+
+
+            datum.className =
+                "inbox-datum";
 
 
             datum.textContent =
@@ -873,18 +640,20 @@ function verwerkLijstWeergeven() {
 
 
             knop.className =
-                "verwerk-knop";
+                "inbox-verwerk-knop";
 
 
             knop.textContent =
-                "VERWERKEN";
+                "⚡ Verwerken";
 
 
             knop.addEventListener(
                 "click",
-                () => {
+                event => {
 
-                    verwerkItemOpenen(
+                    event.stopPropagation();
+
+                    verwerkingOpenen(
                         item.id
                     );
 
@@ -905,7 +674,7 @@ function verwerkLijstWeergeven() {
             );
 
 
-            verwerkLijst.appendChild(
+            inboxLijst.appendChild(
                 kaart
             );
 
@@ -916,17 +685,15 @@ function verwerkLijstWeergeven() {
 
 
 // ======================================
-// VERWERK ITEM OPENEN
+// VERWERKEN OPENEN
 // ======================================
 
-function verwerkItemOpenen(
-    id
-) {
+function verwerkingOpenen(id) {
 
     const item =
         inbox.find(
-            regel =>
-                regel.id === id
+            inboxItem =>
+                inboxItem.id === id
         );
 
 
@@ -935,23 +702,155 @@ function verwerkItemOpenen(
     }
 
 
-    huidigeTaakId =
+    huidigInboxId =
         id;
 
 
-    verwerkItemTekst.textContent =
-        item.tekst;
+    // Zet de tekst alvast klaar.
+
+    if (taakTitel) {
+
+        taakTitel.value =
+            item.tekst;
+
+    }
 
 
-    taakForm.hidden = true;
+    if (ideeTitel) {
+
+        ideeTitel.value =
+            item.tekst;
+
+    }
 
 
-    verwerkModal.hidden =
-        false;
+    keuzeSchermTonen();
+
+
+    if (verwerkModal) {
+
+        verwerkModal.hidden =
+            false;
+
+        verwerkModal.classList.add(
+            "open"
+        );
+
+    }
 
 
     document.body.style.overflow =
         "hidden";
+
+}
+
+
+// ======================================
+// KEUZESCHERM TONEN
+// ======================================
+
+function keuzeSchermTonen() {
+
+    if (verwerkKeuzeScherm) {
+
+        verwerkKeuzeScherm.hidden =
+            false;
+
+    }
+
+
+    if (taakScherm) {
+
+        taakScherm.hidden =
+            true;
+
+    }
+
+
+    if (ideeScherm) {
+
+        ideeScherm.hidden =
+            true;
+
+    }
+
+}
+
+
+// ======================================
+// TAAKSCHERM TONEN
+// ======================================
+
+function taakSchermTonen() {
+
+    if (verwerkKeuzeScherm) {
+
+        verwerkKeuzeScherm.hidden =
+            true;
+
+    }
+
+
+    if (taakScherm) {
+
+        taakScherm.hidden =
+            false;
+
+    }
+
+
+    if (ideeScherm) {
+
+        ideeScherm.hidden =
+            true;
+
+    }
+
+
+    if (taakTitel) {
+
+        taakTitel.focus();
+
+    }
+
+}
+
+
+// ======================================
+// IDEESCHERM TONEN
+// ======================================
+
+function ideeSchermTonen() {
+
+    if (verwerkKeuzeScherm) {
+
+        verwerkKeuzeScherm.hidden =
+            true;
+
+    }
+
+
+    if (taakScherm) {
+
+        taakScherm.hidden =
+            true;
+
+    }
+
+
+    if (ideeScherm) {
+
+        ideeScherm.hidden =
+            false;
+
+    }
+
+
+    if (ideeTitel) {
+
+        ideeTitel.focus();
+
+    }
 
 }
 
@@ -962,84 +861,182 @@ function verwerkItemOpenen(
 
 function modalSluitenFunctie() {
 
-    verwerkModal.hidden =
-        true;
+    if (verwerkModal) {
 
+        verwerkModal.hidden =
+            true;
 
-    taakForm.hidden =
-        true;
+        verwerkModal.classList.remove(
+            "open"
+        );
 
-
-    huidigeTaakId =
-        null;
+    }
 
 
     document.body.style.overflow =
         "";
 
+
+    huidigInboxId =
+        null;
+
+
+    keuzeSchermTonen();
+
 }
 
 
 // ======================================
-// TAAK FORM KLAARMAKEN
+// KRUISJE
 // ======================================
 
-function maakTaakFormKlaar() {
+if (modalSluiten) {
 
-    const item =
-        inbox.find(
-            regel =>
-                regel.id ===
-                huidigeTaakId
-        );
+    modalSluiten.addEventListener(
+        "click",
+        event => {
 
+            event.preventDefault();
 
-    if (!item) {
-        return;
-    }
+            event.stopPropagation();
 
+            modalSluitenFunctie();
 
-    bewerkId.value =
-        item.id;
+        }
+    );
 
-
-    bewerkTitel.value =
-        item.tekst;
+}
 
 
-    categorieSelect.value =
-        "";
+// ======================================
+// KLIK BUITEN MODAL
+// ======================================
 
+if (verwerkModal) {
 
-    labelSelect.value =
-        "";
+    verwerkModal.addEventListener(
+        "click",
+        event => {
 
+            if (
+                event.target ===
+                verwerkModal
+            ) {
 
-    datumSelect.value =
-        "";
-
-
-    notitieInput.value =
-        "";
-
-
-    subtakenLijst.innerHTML =
-        "";
-
-
-    document
-        .querySelectorAll(
-            ".keuze-knop"
-        )
-        .forEach(
-            knop => {
-
-                knop.classList.remove(
-                    "geselecteerd"
-                );
+                modalSluitenFunctie();
 
             }
-        );
+
+        }
+    );
+
+}
+
+
+// ======================================
+// ESCAPE
+// ======================================
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            verwerkModal &&
+            !verwerkModal.hidden
+        ) {
+
+            modalSluitenFunctie();
+
+        }
+
+    }
+);
+
+
+// ======================================
+// TAAK KIEZEN
+// ======================================
+
+if (verwerkTaakKnop) {
+
+    verwerkTaakKnop.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            taakSchermTonen();
+
+        }
+    );
+
+}
+
+
+// ======================================
+// IDEE KIEZEN
+// ======================================
+
+if (verwerkIdeeKnop) {
+
+    verwerkIdeeKnop.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            ideeSchermTonen();
+
+        }
+    );
+
+}
+
+
+// ======================================
+// WEGGOOIEN
+// ======================================
+
+if (weggooienKnop) {
+
+    weggooienKnop.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            if (!huidigInboxId) {
+                return;
+            }
+
+
+            inbox =
+                inbox.filter(
+                    item =>
+                        item.id !==
+                        huidigInboxId
+                );
+
+
+            dataOpslaan();
+
+
+            modalSluitenFunctie();
+
+
+            inboxWeergeven();
+
+        }
+    );
 
 }
 
@@ -1048,198 +1045,190 @@ function maakTaakFormKlaar() {
 // TAAK OPSLAAN
 // ======================================
 
-function taakOpslaan(
-    event
-) {
+if (taakForm) {
 
-    event.preventDefault();
+    taakForm.addEventListener(
+        "submit",
+        event => {
 
+            event.preventDefault();
 
-    const item =
-        inbox.find(
-            regel =>
-                regel.id ===
-                huidigeTaakId
-        );
+            event.stopPropagation();
 
 
-    if (!item) {
-        return;
-    }
+            if (!huidigInboxId) {
+                return;
+            }
 
 
-    const titel =
-        bewerkTitel.value.trim();
+            const titel =
+                taakTitel
+                    ? taakTitel.value.trim()
+                    : "";
 
 
-    if (!titel) {
+            if (!titel) {
 
-        alert(
-            "Een taak moet een naam hebben."
-        );
+                if (taakTitel) {
+                    taakTitel.focus();
+                }
 
-        return;
+                return;
 
-    }
-
-
-    const taak = {
-
-        id:
-            maakId(),
-
-        titel:
-            titel,
-
-        categorie:
-            categorieSelect.value,
-
-        label:
-            labelSelect.value,
-
-        notitie:
-            notitieInput.value.trim(),
-
-        datum:
-            datumSelect.value,
-
-        subtaken:
-            subtakenUitFormulierHalen(),
-
-        afgerond:
-            false,
-
-        verwerkt:
-            true,
-
-        aangemaakt:
-            item.aangemaakt ||
-            new Date().toISOString(),
-
-        gewijzigd:
-            new Date().toISOString(),
-
-        afgerondOp:
-            ""
-
-    };
+            }
 
 
-    taken.unshift(
-        taak
+            const nieuweTaak = {
+
+                id: maakId(),
+
+                titel: titel,
+
+                categorie:
+                    taakCategorie
+                        ? taakCategorie.value
+                        : "",
+
+                datum:
+                    taakDatum
+                        ? taakDatum.value
+                        : "",
+
+                notitie:
+                    taakNotitie
+                        ? taakNotitie.value.trim()
+                        : "",
+
+                subtaken:
+                    subtakenUitFormulier(),
+
+                afgerond: false,
+
+                aangemaakt:
+                    new Date().toISOString(),
+
+                gewijzigd:
+                    new Date().toISOString()
+
+            };
+
+
+            taken.unshift(
+                nieuweTaak
+            );
+
+
+            inbox =
+                inbox.filter(
+                    item =>
+                        item.id !==
+                        huidigInboxId
+                );
+
+
+            dataOpslaan();
+
+
+            modalSluitenFunctie();
+
+
+            inboxWeergeven();
+
+        }
     );
 
-
-    inbox =
-        inbox.filter(
-            regel =>
-                regel.id !==
-                huidigeTaakId
-        );
+}
 
 
-    dataOpslaan();
+// ======================================
+// IDEE OPSLAAN
+// ======================================
+
+if (ideeOpslaan) {
+
+    ideeOpslaan.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
 
 
-    modalSluitenFunctie();
+            if (!huidigInboxId) {
+                return;
+            }
 
 
-    verwerkLijstWeergeven();
+            const tekst =
+                ideeTitel
+                    ? ideeTitel.value.trim()
+                    : "";
 
-    vandaagWeergeven();
 
-    categorieenWeergeven();
+            if (!tekst) {
+
+                if (ideeTitel) {
+                    ideeTitel.focus();
+                }
+
+                return;
+
+            }
+
+
+            ideeen.unshift({
+
+                id: maakId(),
+
+                tekst: tekst,
+
+                aangemaakt:
+                    new Date().toISOString()
+
+            });
+
+
+            inbox =
+                inbox.filter(
+                    item =>
+                        item.id !==
+                        huidigInboxId
+                );
+
+
+            dataOpslaan();
+
+
+            modalSluitenFunctie();
+
+
+            inboxWeergeven();
+
+        }
+    );
 
 }
 
 
 // ======================================
-// ITEM NAAR IDEE
+// TERUG NAAR KEUZES
 // ======================================
 
-function huidigeItemNaarIdee() {
+if (terugNaarKeuzes) {
 
-    const item =
-        inbox.find(
-            regel =>
-                regel.id ===
-                huidigeTaakId
-        );
+    terugNaarKeuzes.addEventListener(
+        "click",
+        event => {
 
+            event.preventDefault();
 
-    if (!item) {
-        return;
-    }
+            event.stopPropagation();
 
+            keuzeSchermTonen();
 
-    ideeen.unshift({
-
-        id:
-            maakId(),
-
-        tekst:
-            item.tekst,
-
-        aangemaakt:
-            item.aangemaakt ||
-            new Date().toISOString()
-
-    });
-
-
-    inbox =
-        inbox.filter(
-            regel =>
-                regel.id !==
-                huidigeTaakId
-        );
-
-
-    dataOpslaan();
-
-
-    modalSluitenFunctie();
-
-
-    verwerkLijstWeergeven();
-
-    ideeenWeergeven();
-
-}
-
-
-// ======================================
-// ITEM VERWIJDEREN
-// ======================================
-
-function huidigeItemVerwijderen() {
-
-    const akkoord =
-        confirm(
-            "Dit item verwijderen?"
-        );
-
-
-    if (!akkoord) {
-        return;
-    }
-
-
-    inbox =
-        inbox.filter(
-            regel =>
-                regel.id !==
-                huidigeTaakId
-        );
-
-
-    dataOpslaan();
-
-
-    modalSluitenFunctie();
-
-
-    verwerkLijstWeergeven();
+        }
+    );
 
 }
 
@@ -1248,175 +1237,96 @@ function huidigeItemVerwijderen() {
 // SUBTAKEN TOEVOEGEN
 // ======================================
 
-function subtaakToevoegen() {
+if (subtaakToevoegen) {
 
-    const subtaak = {
-
-        id:
-            maakId(),
-
-        titel:
-            "",
-
-        afgerond:
-            false
-
-    };
-
-
-    subtakenLijst.appendChild(
-        subtaakRegelMaken(
-            subtaak
-        )
-    );
-
-
-    const regels =
-        subtakenLijst.querySelectorAll(
-            ".subtaak-regel"
-        );
-
-
-    const laatste =
-        regels[regels.length - 1];
-
-
-    if (laatste) {
-
-        const input =
-            laatste.querySelector(
-                ".subtaak-input"
-            );
-
-
-        if (input) {
-            input.focus();
-        }
-
-    }
-
-}
-
-
-// ======================================
-// SUBTAAK REGEL
-// ======================================
-
-function subtaakRegelMaken(
-    subtaak
-) {
-
-    const regel =
-        document.createElement(
-            "div"
-        );
-
-
-    regel.className =
-        "subtaak-regel";
-
-
-    regel.dataset.id =
-        subtaak.id;
-
-
-    const checkbox =
-        document.createElement(
-            "input"
-        );
-
-
-    checkbox.type =
-        "checkbox";
-
-
-    checkbox.className =
-        "subtaak-checkbox";
-
-
-    checkbox.checked =
-        subtaak.afgerond === true;
-
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.type =
-        "text";
-
-
-    input.className =
-        "subtaak-input";
-
-
-    input.placeholder =
-        "Beschrijf de kleine opdracht...";
-
-
-    input.value =
-        subtaak.titel || "";
-
-
-    checkbox.addEventListener(
-        "change",
-        () => {
-
-            input.classList.toggle(
-                "afgerond",
-                checkbox.checked
-            );
-
-        }
-    );
-
-
-    const verwijderen =
-        document.createElement(
-            "button"
-        );
-
-
-    verwijderen.type =
-        "button";
-
-
-    verwijderen.className =
-        "subtaak-verwijder";
-
-
-    verwijderen.textContent =
-        "✕";
-
-
-    verwijderen.addEventListener(
+    subtaakToevoegen.addEventListener(
         "click",
-        () => {
+        event => {
 
-            regel.remove();
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            if (!taakSubtaken) {
+                return;
+            }
+
+
+            const regel =
+                document.createElement(
+                    "div"
+                );
+
+
+            regel.className =
+                "subtaak-regel";
+
+
+            const input =
+                document.createElement(
+                    "input"
+                );
+
+
+            input.type =
+                "text";
+
+            input.className =
+                "subtaak-input";
+
+            input.placeholder =
+                "Kleine opdracht...";
+
+
+            const verwijderen =
+                document.createElement(
+                    "button"
+                );
+
+
+            verwijderen.type =
+                "button";
+
+            verwijderen.className =
+                "subtaak-verwijder";
+
+            verwijderen.textContent =
+                "✕";
+
+
+            verwijderen.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    regel.remove();
+
+                }
+            );
+
+
+            regel.appendChild(
+                input
+            );
+
+            regel.appendChild(
+                verwijderen
+            );
+
+
+            taakSubtaken.appendChild(
+                regel
+            );
+
+
+            input.focus();
 
         }
     );
-
-
-    regel.appendChild(
-        checkbox
-    );
-
-
-    regel.appendChild(
-        input
-    );
-
-
-    regel.appendChild(
-        verwijderen
-    );
-
-
-    return regel;
 
 }
 
@@ -1425,10 +1335,15 @@ function subtaakRegelMaken(
 // SUBTAKEN UIT FORMULIER
 // ======================================
 
-function subtakenUitFormulierHalen() {
+function subtakenUitFormulier() {
+
+    if (!taakSubtaken) {
+        return [];
+    }
+
 
     const regels =
-        subtakenLijst.querySelectorAll(
+        taakSubtaken.querySelectorAll(
             ".subtaak-regel"
         );
 
@@ -1443,27 +1358,16 @@ function subtakenUitFormulierHalen() {
                     );
 
 
-                const checkbox =
-                    regel.querySelector(
-                        ".subtaak-checkbox"
-                    );
-
-
                 return {
 
-                    id:
-                        regel.dataset.id ||
-                        maakId(),
+                    id: maakId(),
 
                     titel:
                         input
                             ? input.value.trim()
                             : "",
 
-                    afgerond:
-                        checkbox
-                            ? checkbox.checked
-                            : false
+                    afgerond: false
 
                 };
 
@@ -1478,620 +1382,47 @@ function subtakenUitFormulierHalen() {
 
 
 // ======================================
-// VANDAAG
-// ======================================
-
-function datumVandaagInstellen() {
-
-    const vandaag =
-        new Date();
-
-
-    datumVandaag.textContent =
-        vandaag.toLocaleDateString(
-            "nl-NL",
-            {
-                weekday: "long",
-                day: "numeric",
-                month: "long"
-            }
-        );
-
-}
-
-
-function vandaagWeergeven() {
-
-    vandaagLijst.innerHTML =
-        "";
-
-
-    const vandaag =
-        datumNaarString(
-            new Date()
-        );
-
-
-    const vandaagTaken =
-        taken.filter(
-            taak =>
-                !taak.afgerond &&
-                taak.datum === vandaag
-        );
-
-
-    if (
-        vandaagTaken.length === 0
-    ) {
-
-        legeVandaag.classList.add(
-            "zichtbaar"
-        );
-
-        return;
-
-    }
-
-
-    legeVandaag.classList.remove(
-        "zichtbaar"
-    );
-
-
-    vandaagTaken.forEach(
-        taak => {
-
-            vandaagLijst.appendChild(
-                taakKaartMaken(
-                    taak
-                )
-            );
-
-        }
-    );
-
-}
-
-
-// ======================================
-// TAAKKAART
-// ======================================
-
-function taakKaartMaken(
-    taak
-) {
-
-    const kaart =
-        document.createElement(
-            "article"
-        );
-
-
-    kaart.className =
-        "taak-kaart";
-
-
-    const check =
-        document.createElement(
-            "button"
-        );
-
-
-    check.type =
-        "button";
-
-
-    check.className =
-        "taak-check";
-
-
-    check.textContent =
-        "✓";
-
-
-    check.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            taakAfronden(
-                taak.id
-            );
-
-        }
-    );
-
-
-    const inhoud =
-        document.createElement(
-            "div"
-        );
-
-
-    inhoud.className =
-        "taak-inhoud";
-
-
-    const titel =
-        document.createElement(
-            "h3"
-        );
-
-
-    titel.textContent =
-        taak.titel;
-
-
-    inhoud.appendChild(
-        titel
-    );
-
-
-    const meta =
-        document.createElement(
-            "div"
-        );
-
-
-    meta.className =
-        "taak-meta";
-
-
-    if (taak.label) {
-
-        const label =
-            document.createElement(
-                "span"
-            );
-
-
-        label.className =
-            "badge " +
-            taak.label;
-
-
-        label.textContent =
-            labelTekst(
-                taak.label
-            );
-
-
-        meta.appendChild(
-            label
-        );
-
-    }
-
-
-    if (taak.categorie) {
-
-        const categorie =
-            document.createElement(
-                "span"
-            );
-
-
-        categorie.className =
-            "badge";
-
-
-        categorie.textContent =
-            categorieIcoon(
-                taak.categorie
-            ) +
-            " " +
-            taak.categorie;
-
-
-        meta.appendChild(
-            categorie
-        );
-
-    }
-
-
-    if (taak.datum) {
-
-        const datum =
-            document.createElement(
-                "span"
-            );
-
-
-        datum.className =
-            "badge datum";
-
-
-        datum.textContent =
-            "📅 " +
-            datumMooiWeergeven(
-                taak.datum
-            );
-
-
-        meta.appendChild(
-            datum
-        );
-
-    }
-
-
-    inhoud.appendChild(
-        meta
-    );
-
-
-    if (
-        taak.subtaken &&
-        taak.subtaken.length > 0
-    ) {
-
-        const klaar =
-            taak.subtaken.filter(
-                subtaak =>
-                    subtaak.afgerond
-            ).length;
-
-
-        const subtaken =
-            document.createElement(
-                "small"
-            );
-
-
-        subtaken.className =
-            "subtaken-mini";
-
-
-        subtaken.textContent =
-            "☑ " +
-            klaar +
-            "/" +
-            taak.subtaken.length +
-            " subtaken";
-
-
-        inhoud.appendChild(
-            subtaken
-        );
-
-    }
-
-
-    kaart.appendChild(
-        check
-    );
-
-
-    kaart.appendChild(
-        inhoud
-    );
-
-
-    kaart.addEventListener(
-        "click",
-        () => {
-
-            taakBewerken(
-                taak.id
-            );
-
-        }
-    );
-
-
-    return kaart;
-
-}
-
-
-// ======================================
-// TAAK BEWERKEN
-// ======================================
-
-function taakBewerken(
-    id
-) {
-
-    const taak =
-        taken.find(
-            item =>
-                item.id === id
-        );
-
-
-    if (!taak) {
-        return;
-    }
-
-
-    huidigeTaakId =
-        taak.id;
-
-
-    bewerkId.value =
-        taak.id;
-
-
-    bewerkTitel.value =
-        taak.titel;
-
-
-    categorieSelect.value =
-        taak.categorie || "";
-
-
-    labelSelect.value =
-        taak.label || "";
-
-
-    datumSelect.value =
-        taak.datum || "";
-
-
-    notitieInput.value =
-        taak.notitie || "";
-
-
-    subtakenWeergeven(
-        taak.subtaken || []
-    );
-
-
-    document
-        .querySelectorAll(
-            ".keuze-knop"
-        )
-        .forEach(
-            knop => {
-
-                knop.classList.toggle(
-                    "geselecteerd",
-                    knop.dataset.label ===
-                    taak.label
-                );
-
-            }
-        );
-
-
-    verwerkItemTekst.textContent =
-        taak.titel;
-
-
-    taakForm.hidden =
-        false;
-
-
-    verwerkModal.hidden =
-        false;
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-// ======================================
-// SUBTAKEN WEERGEVEN
-// ======================================
-
-function subtakenWeergeven(
-    subtaken
-) {
-
-    subtakenLijst.innerHTML =
-        "";
-
-
-    subtaken.forEach(
-        subtaak => {
-
-            subtakenLijst.appendChild(
-                subtaakRegelMaken(
-                    subtaak
-                )
-            );
-
-        }
-    );
-
-}
-
-
-// ======================================
-// TAAK AFRONDEN
-// ======================================
-
-function taakAfronden(
-    id
-) {
-
-    const taak =
-        taken.find(
-            item =>
-                item.id === id
-        );
-
-
-    if (!taak) {
-        return;
-    }
-
-
-    taak.afgerond =
-        true;
-
-
-    taak.afgerondOp =
-        new Date().toISOString();
-
-
-    taak.gewijzigd =
-        new Date().toISOString();
-
-
-    dataOpslaan();
-
-
-    vandaagWeergeven();
-
-}
-
-
-// ======================================
-// IDEEËN
-// ======================================
-
-function ideeenWeergeven() {
-
-    ideeenLijst.innerHTML =
-        "";
-
-
-    if (ideeen.length === 0) {
-
-        legeIdeeen.classList.add(
-            "zichtbaar"
-        );
-
-        return;
-
-    }
-
-
-    legeIdeeen.classList.remove(
-        "zichtbaar"
-    );
-
-
-    ideeen.forEach(
-        idee => {
-
-            const kaart =
-                document.createElement(
-                    "article"
-                );
-
-
-            kaart.className =
-                "idee-kaart";
-
-
-            const tekst =
-                document.createElement(
-                    "p"
-                );
-
-
-            tekst.textContent =
-                idee.tekst;
-
-
-            const datum =
-                document.createElement(
-                    "small"
-                );
-
-
-            datum.textContent =
-                datumTijdMooi(
-                    idee.aangemaakt
-                );
-
-
-            const verwijderen =
-                document.createElement(
-                    "button"
-                );
-
-
-            verwijderen.type =
-                "button";
-
-
-            verwijderen.className =
-                "kleine-verwijder-knop";
-
-
-            verwijderen.textContent =
-                "✕";
-
-
-            verwijderen.addEventListener(
-                "click",
-                () => {
-
-                    const akkoord =
-                        confirm(
-                            "Dit idee verwijderen?"
-                        );
-
-
-                    if (!akkoord) {
-                        return;
-                    }
-
-
-                    ideeen =
-                        ideeen.filter(
-                            item =>
-                                item.id !==
-                                idee.id
-                        );
-
-
-                    dataOpslaan();
-
-                    ideeenWeergeven();
-
-                }
-            );
-
-
-            kaart.appendChild(
-                tekst
-            );
-
-
-            kaart.appendChild(
-                datum
-            );
-
-
-            kaart.appendChild(
-                verwijderen
-            );
-
-
-            ideeenLijst.appendChild(
-                kaart
-            );
-
-        }
-    );
-
-}
-
-
-// ======================================
 // CATEGORIEËN
 // ======================================
 
 function categorieenLaden() {
 
-    let categorieen =
-        lokaleArrayLaden(
-            OPSLAG_CATEGORIEEN
+    let categorieen = [];
+
+
+    try {
+
+        const opgeslagen =
+            localStorage.getItem(
+                OPSLAG_CATEGORIEEN
+            );
+
+
+        if (opgeslagen) {
+
+            categorieen =
+                JSON.parse(
+                    opgeslagen
+                );
+
+        }
+
+    } catch (fout) {
+
+        console.error(
+            "Categorieën konden niet worden geladen:",
+            fout
         );
 
+    }
 
-    if (categorieen.length === 0) {
+
+    if (!Array.isArray(categorieen)) {
 
         categorieen =
-            [...STANDAARD_CATEGORIEEN];
+            [
+                ...STANDAARD_CATEGORIEEN
+            ];
 
     }
 
@@ -2123,35 +1454,61 @@ function categorieenLaden() {
 }
 
 
+// ======================================
+// CATEGORIE SELECT
+// ======================================
+
 function categorieSelectVullen() {
 
-    categorieSelect.innerHTML =
+    if (!taakCategorie) {
+        return;
+    }
+
+
+    taakCategorie.innerHTML =
         "";
 
 
-    const geenCategorie =
+    const leeg =
         document.createElement(
             "option"
         );
 
 
-    geenCategorie.value =
+    leeg.value =
         "";
 
 
-    geenCategorie.textContent =
+    leeg.textContent =
         "Geen categorie";
 
 
-    categorieSelect.appendChild(
-        geenCategorie
+    taakCategorie.appendChild(
+        leeg
     );
 
 
-    const categorieen =
-        lokaleArrayLaden(
-            OPSLAG_CATEGORIEEN
+    let categorieen =
+        STANDAARD_CATEGORIEEN;
+
+
+    try {
+
+        categorieen =
+            JSON.parse(
+                localStorage.getItem(
+                    OPSLAG_CATEGORIEEN
+                )
+            ) ||
+            STANDAARD_CATEGORIEEN;
+
+    } catch (fout) {
+
+        console.warn(
+            fout
         );
+
+    }
 
 
     categorieen.forEach(
@@ -2175,116 +1532,8 @@ function categorieSelectVullen() {
                 categorie;
 
 
-            categorieSelect.appendChild(
+            taakCategorie.appendChild(
                 optie
-            );
-
-        }
-    );
-
-}
-
-
-function categorieenWeergeven() {
-
-    categorieLijst.innerHTML =
-        "";
-
-
-    const categorieen =
-        lokaleArrayLaden(
-            OPSLAG_CATEGORIEEN
-        );
-
-
-    categorieen.forEach(
-        categorie => {
-
-            const aantal =
-                taken.filter(
-                    taak =>
-                        !taak.afgerond &&
-                        taak.categorie ===
-                        categorie
-                ).length;
-
-
-            const kaart =
-                document.createElement(
-                    "div"
-                );
-
-
-            kaart.className =
-                "categorie-kaart";
-
-
-            const icoon =
-                document.createElement(
-                    "div"
-                );
-
-
-            icoon.className =
-                "categorie-icoon";
-
-
-            icoon.textContent =
-                categorieIcoon(
-                    categorie
-                );
-
-
-            const naam =
-                document.createElement(
-                    "div"
-                );
-
-
-            naam.className =
-                "categorie-naam";
-
-
-            naam.textContent =
-                categorie;
-
-
-            const aantalElement =
-                document.createElement(
-                    "div"
-                );
-
-
-            aantalElement.className =
-                "categorie-aantal";
-
-
-            aantalElement.textContent =
-                aantal +
-                (
-                    aantal === 1
-                        ? " taak"
-                        : " taken"
-                );
-
-
-            kaart.appendChild(
-                icoon
-            );
-
-
-            kaart.appendChild(
-                naam
-            );
-
-
-            kaart.appendChild(
-                aantalElement
-            );
-
-
-            categorieLijst.appendChild(
-                kaart
             );
 
         }
@@ -2297,9 +1546,7 @@ function categorieenWeergeven() {
 // CATEGORIE ICONEN
 // ======================================
 
-function categorieIcoon(
-    categorie
-) {
+function categorieIcoon(categorie) {
 
     const iconen = {
 
@@ -2351,121 +1598,15 @@ function categorieIcoon(
 
 
 // ======================================
-// LABEL
+// DATUM / TIJD
 // ======================================
 
-function labelTekst(
-    label
-) {
-
-    if (label === "nu") {
-        return "🔴 Nu";
-    }
-
-
-    if (label === "later") {
-        return "🟠 Later";
-    }
-
-
-    if (label === "bewaren") {
-        return "🔵 Bewaren";
-    }
-
-
-    return label;
-
-}
-
-
-// ======================================
-// ALLE LIJSTEN VERNIEUWEN
-// ======================================
-
-function alleLijstenVernieuwen() {
-
-    verwerkLijstWeergeven();
-
-    vandaagWeergeven();
-
-    ideeenWeergeven();
-
-    categorieenWeergeven();
-
-}
-
-
-// ======================================
-// DATUM
-// ======================================
-
-function datumNaarString(
-    datum
-) {
-
-    const jaar =
-        datum.getFullYear();
-
-
-    const maand =
-        String(
-            datum.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const dag =
-        String(
-            datum.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    return (
-        jaar +
-        "-" +
-        maand +
-        "-" +
-        dag
-    );
-
-}
-
-
-function datumMooiWeergeven(
-    datum
-) {
+function datumTijdMooi(datum) {
 
     if (!datum) {
         return "";
     }
 
-
-    const delen =
-        datum.split("-");
-
-
-    if (delen.length !== 3) {
-        return datum;
-    }
-
-
-    return (
-        delen[2] +
-        "-" +
-        delen[1]
-    );
-
-}
-
-
-function datumTijdMooi(
-    datum
-) {
 
     const d =
         new Date(datum);
@@ -2497,334 +1638,50 @@ function datumTijdMooi(
 
 
 // ======================================
-// BACKUP MAKEN
-// ======================================
-
-function backupMaken() {
-
-    const backup = {
-
-        app:
-            "Lucy",
-
-        versie:
-            "2.0",
-
-        datum:
-            new Date().toISOString(),
-
-        taken:
-            taken,
-
-        inbox:
-            inbox,
-
-        ideeen:
-            ideeen,
-
-        gedachten:
-            [],
-
-        categorieen:
-            lokaleArrayLaden(
-                OPSLAG_CATEGORIEEN
-            )
-
-    };
-
-
-    const inhoud =
-        JSON.stringify(
-            backup,
-            null,
-            2
-        );
-
-
-    const blob =
-        new Blob(
-            [inhoud],
-            {
-                type:
-                    "application/json"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        "lucy-backup-" +
-        datumNaarString(
-            new Date()
-        ) +
-        ".json";
-
-
-    link.click();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-}
-
-
-// ======================================
-// BACKUP HERSTELLEN
-// ======================================
-
-function backupHerstellen(
-    event
-) {
-
-    const bestand =
-        event.target.files[0];
-
-
-    if (!bestand) {
-        return;
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function () {
-
-            try {
-
-                const backup =
-                    JSON.parse(
-                        reader.result
-                    );
-
-
-                if (
-                    !backup ||
-                    !Array.isArray(
-                        backup.taken
-                    )
-                ) {
-
-                    throw new Error(
-                        "Ongeldige backup."
-                    );
-
-                }
-
-
-                const akkoord =
-                    confirm(
-                        "De huidige gegevens worden vervangen door deze backup. Doorgaan?"
-                    );
-
-
-                if (!akkoord) {
-                    return;
-                }
-
-
-                taken =
-                    takenNormaliseren(
-                        backup.taken
-                    );
-
-
-                inbox =
-                    Array.isArray(
-                        backup.inbox
-                    )
-                        ? backup.inbox
-                        : [];
-
-
-                ideeen =
-                    Array.isArray(
-                        backup.ideeen
-                    )
-                        ? backup.ideeen
-                        : [];
-
-
-                if (
-                    Array.isArray(
-                        backup.categorieen
-                    )
-                ) {
-
-                    localStorage.setItem(
-                        OPSLAG_CATEGORIEEN,
-                        JSON.stringify(
-                            backup.categorieen
-                        )
-                    );
-
-                }
-
-
-                categorieenLaden();
-
-                categorieSelectVullen();
-
-                dataOpslaan();
-
-                alleLijstenVernieuwen();
-
-
-                alert(
-                    "Backup succesvol teruggezet."
-                );
-
-
-            } catch (fout) {
-
-                console.error(
-                    fout
-                );
-
-
-                alert(
-                    "Deze backup kon niet worden teruggezet."
-                );
-
-            }
-
-        };
-
-
-    reader.readAsText(
-        bestand
-    );
-
-
-    event.target.value =
-        "";
-
-}
-
-
-// ======================================
-// ALLES WISSEN
-// ======================================
-
-function allesWissen() {
-
-    const eersteVraag =
-        confirm(
-            "Weet je zeker dat je alle gegevens van Lucy wilt verwijderen?"
-        );
-
-
-    if (!eersteVraag) {
-        return;
-    }
-
-
-    const tweedeVraag =
-        confirm(
-            "Dit kan niet automatisch worden teruggedraaid. Echt alles wissen?"
-        );
-
-
-    if (!tweedeVraag) {
-        return;
-    }
-
-
-    localStorage.removeItem(
-        OPSLAG_TAKEN
-    );
-
-    localStorage.removeItem(
-        OPSLAG_INBOX
-    );
-
-    localStorage.removeItem(
-        OPSLAG_IDEEEN
-    );
-
-    localStorage.removeItem(
-        OPSLAG_GEDACHTEN
-    );
-
-
-    taken = [];
-
-    inbox = [];
-
-    ideeen = [];
-
-
-    alleLijstenVernieuwen();
-
-
-    alert(
-        "Lucy is weer helemaal leeg."
-    );
-
-}
-
-
-// ======================================
 // SERVICE WORKER
 // ======================================
 
 function serviceWorkerRegistreren() {
 
     if (
-        "serviceWorker" in navigator
+        !("serviceWorker" in navigator)
     ) {
 
-        window.addEventListener(
-            "load",
-            () => {
-
-                navigator.serviceWorker
-                    .register(
-                        "sw.js"
-                    )
-                    .then(
-                        registratie => {
-
-                            console.log(
-                                "Lucy service worker actief:",
-                                registratie.scope
-                            );
-
-                        }
-                    )
-                    .catch(
-                        fout => {
-
-                            console.error(
-                                "Service worker fout:",
-                                fout
-                            );
-
-                        }
-                    );
-
-            }
-        );
+        return;
 
     }
+
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register(
+                    "sw.js"
+                )
+                .then(
+                    registratie => {
+
+                        console.log(
+                            "Lucy service worker actief:",
+                            registratie.scope
+                        );
+
+                    }
+                )
+                .catch(
+                    fout => {
+
+                        console.error(
+                            "Service worker fout:",
+                            fout
+                        );
+
+                    }
+                );
+
+        }
+    );
 
 }
