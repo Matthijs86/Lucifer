@@ -1,959 +1,634 @@
 /* ======================================
    LUCY
    Alles uit je hoofd.
-   
-   Donkere / neon / ADHD-vriendelijke stijl
-====================================== */
-
-
-/* ======================================
-   RESET
-====================================== */
+   ====================================== */
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
-
 
 html {
     min-height: 100%;
-    background: #0d0d12;
     scroll-behavior: smooth;
 }
 
-
 body {
+    margin: 0;
     min-height: 100vh;
-    background:
-        radial-gradient(
-            circle at top,
-            #1a1530 0%,
-            #0d0d12 42%,
-            #08080b 100%
-        );
-    color: #f4f4f7;
+
     font-family:
         Arial,
         Helvetica,
         sans-serif;
-    line-height: 1.5;
-    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #25213a 0%,
+            #151522 45%,
+            #0d0d14 100%
+        );
+
+    color: #f2f0f7;
 }
 
 
 /* ======================================
    BASIS
-====================================== */
+   ====================================== */
 
 button,
 input,
-textarea,
-select {
+select,
+textarea {
     font: inherit;
 }
-
 
 button {
     cursor: pointer;
 }
 
-
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-    outline: 3px solid #7c5cff;
-    outline-offset: 3px;
-}
-
-
 input,
-textarea,
-select {
-    color: #f5f5f7;
-}
-
-
+select,
 textarea {
-    resize: vertical;
+    width: 100%;
 }
-
 
 .hidden {
     display: none !important;
 }
-
 
 [hidden] {
     display: none !important;
 }
 
 
-.visueel-verborgen {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+/* ======================================
+   APP
+   ====================================== */
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+
+    padding-bottom: 90px;
 }
 
 
 /* ======================================
-   APP
-====================================== */
+   HEADER
+   ====================================== */
 
-#app {
-    min-height: 100vh;
-    padding-bottom: 92px;
+.app-header {
+    padding: 28px 18px 20px;
+
+    text-align: center;
+}
+
+.logo {
+    margin: 0;
+
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px #8b5cf6,
+        0 0 18px #8b5cf6,
+        0 0 30px rgba(139, 92, 246, 0.7);
+}
+
+.slogan {
+    margin: 7px 0 0;
+
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+
+    color: #aaa6ba;
 }
 
 
 /* ======================================
    PAGINA'S
-====================================== */
+   ====================================== */
 
 .pagina {
     display: none;
-    width: 100%;
-    min-height: calc(100vh - 92px);
-}
 
+    width: 100%;
+    max-width: 720px;
+
+    margin: 0 auto;
+    padding: 0 16px;
+}
 
 .pagina.actief {
     display: block;
 }
 
 
-.pagina-inhoud {
-    width: min(900px, 100%);
-    margin: 0 auto;
-    padding:
-        28px
-        22px
-        40px;
+/* ======================================
+   PAGINA TITELS
+   ====================================== */
+
+.pagina-header {
+    margin-bottom: 20px;
+}
+
+.pagina-header h2 {
+    margin: 0;
+
+    font-size: 1.5rem;
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+.pagina-header p {
+    margin: 6px 0 0;
+
+    color: #9f9bad;
+    font-size: 0.9rem;
 }
 
 
 /* ======================================
    HOOFDSCHERM
-====================================== */
+   ====================================== */
 
-.hoofdscherm {
-    min-height: calc(100vh - 92px);
+.hoofd-invoer {
+    padding-top: 35px;
+}
 
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    padding:
-        30px
-        22px
-        100px;
+.hoofd-invoer h2 {
+    margin: 0 0 16px;
 
     text-align: center;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+
+    color: #aaa6ba;
 }
 
 
 /* ======================================
-   LUCY LOGO
-====================================== */
+   SNEL INVOEREN
+   ====================================== */
 
-.lucy-logo {
-    font-size: clamp(4rem, 18vw, 8rem);
-    font-weight: 900;
-    letter-spacing: 0.12em;
-    line-height: 0.9;
-
-    color: #ffffff;
-
-    text-shadow:
-        0 0 8px rgba(124, 92, 255, 0.8),
-        0 0 22px rgba(124, 92, 255, 0.65),
-        0 0 45px rgba(0, 180, 255, 0.35);
-
-    margin-left: 0.12em;
-}
-
-
-.lucy-ondertitel {
-    margin-top: 18px;
-
-    color: #a9a9b7;
-
-    font-size: 1rem;
-    letter-spacing: 0.08em;
-}
-
-
-/* ======================================
-   SNEL TOEVOEGEN
-====================================== */
-
-.snel-toevoegen-form {
-    width: min(680px, 100%);
-
+.snel-formulier {
     display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
 
-    margin-top: 45px;
+#snelInput {
+    min-height: 58px;
 
-    background: #15151d;
+    padding: 15px 17px;
 
-    border:
-        1px solid
-        rgba(124, 92, 255, 0.45);
+    border: 2px solid #373247;
+    border-radius: 16px;
 
-    border-radius: 18px;
+    outline: none;
 
-    box-shadow:
-        0 0 20px rgba(124, 92, 255, 0.08);
-
-    overflow: hidden;
+    background: #191824;
+    color: #ffffff;
 
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
 }
 
+#snelInput::placeholder {
+    color: #777386;
+}
 
-.snel-toevoegen-form:focus-within {
-    border-color: #7c5cff;
+#snelInput:focus {
+    border-color: #8b5cf6;
 
     box-shadow:
-        0 0 25px rgba(124, 92, 255, 0.22),
-        0 0 50px rgba(0, 180, 255, 0.08);
+        0 0 0 3px rgba(139, 92, 246, 0.14),
+        0 0 18px rgba(139, 92, 246, 0.18);
 }
 
+.snel-toevoegen-knop {
+    flex: 0 0 auto;
 
-#snelInput {
-    flex: 1;
-
-    min-width: 0;
+    min-width: 58px;
 
     border: 0;
-    outline: none;
+    border-radius: 16px;
 
-    background: transparent;
-
-    padding:
-        20px
-        20px;
-
-    font-size: 1.05rem;
-}
-
-
-#snelInput::placeholder {
-    color: #777785;
-}
-
-
-.hoofd-toevoegen-knop {
-    flex: 0 0 62px;
-
-    border: 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c5cff,
-            #00b4ff
-        );
-
+    background: #8b5cf6;
     color: #ffffff;
 
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 10px rgba(139, 92, 246, 0.45);
 
     transition:
         transform 0.15s ease,
-        filter 0.15s ease;
+        box-shadow 0.15s ease;
 }
 
+.snel-toevoegen-knop:hover {
+    transform: translateY(-2px);
 
-.hoofd-toevoegen-knop:hover {
-    filter: brightness(1.15);
+    box-shadow:
+        0 0 18px rgba(139, 92, 246, 0.65);
 }
 
-
-.hoofd-toevoegen-knop:active {
-    transform: scale(0.94);
+.snel-toevoegen-knop:active {
+    transform: scale(0.96);
 }
 
 
 /* ======================================
-   PAGINA HEADER
-====================================== */
+   KAARTEN
+   ====================================== */
 
-.pagina-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.inbox-kaart,
+.taak-kaart,
+.idee-kaart {
+    position: relative;
 
-    margin-bottom: 28px;
+    margin-bottom: 12px;
+    padding: 17px;
 
-    padding-bottom: 18px;
+    border: 1px solid #302c3d;
+    border-radius: 16px;
 
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(
+            145deg,
+            #1d1b28,
+            #15141e
+        );
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.22);
 }
 
 
-.klein-label {
-    color: #7c5cff;
+/* ======================================
+   INBOX
+   ====================================== */
 
-    font-size: 0.72rem;
-    font-weight: 800;
+.inbox-tekst {
+    margin-bottom: 8px;
 
-    letter-spacing: 0.18em;
+    font-size: 1rem;
+    line-height: 1.45;
 
-    text-transform: uppercase;
+    color: #ffffff;
 
-    margin-bottom: 5px;
+    overflow-wrap: anywhere;
+}
+
+.inbox-datum,
+.idee-datum {
+    display: block;
+
+    margin-bottom: 13px;
+
+    color: #777386;
+    font-size: 0.75rem;
 }
 
 
-.pagina-header h1 {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    line-height: 1.1;
+/* ======================================
+   VERWERK KNOP
+   ====================================== */
+
+.inbox-verwerk-knop {
+    width: 100%;
+
+    padding: 11px 14px;
+
+    border: 1px solid #4b3a73;
+    border-radius: 12px;
+
+    background: #241d35;
+    color: #cbb8ff;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
 }
 
+.inbox-verwerk-knop:hover {
+    background: #30234a;
+    border-color: #8b5cf6;
 
-.pagina-subtitel {
-    margin-top: 7px;
-
-    color: #8f8f9d;
-
-    text-transform: capitalize;
+    transform: translateY(-1px);
 }
 
 
 /* ======================================
    LIJSTEN
-====================================== */
-
-.lijst-sectie {
-    width: 100%;
-}
-
+   ====================================== */
 
 .inbox-lijst,
-.taken-lijst,
-.ideeen-lijst {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
+.verwerk-lijst,
+.vandaag-lijst,
+.ideeen-lijst,
+.categorie-lijst {
+    margin-top: 16px;
 }
 
 
 /* ======================================
-   LEGE MELDING
-====================================== */
+   LEGE LIJST
+   ====================================== */
 
 .lege-melding {
-    padding: 30px 20px;
-
-    color: #777785;
+    padding: 35px 20px;
 
     text-align: center;
 
-    border:
-        1px dashed
-        rgba(255, 255, 255, 0.12);
+    color: #777386;
 
-    border-radius: 14px;
-
-    background:
-        rgba(255, 255, 255, 0.02);
-}
-
-
-/* ======================================
-   INBOX KAART
-====================================== */
-
-.inbox-kaart {
-    display: grid;
-
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-        "tekst knop"
-        "datum knop";
-
-    gap:
-        5px
-        16px;
-
-    align-items: center;
-
-    padding: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #171720,
-            #111117
-        );
-
-    border:
-        1px solid
-        rgba(124, 92, 255, 0.18);
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.2);
-
-    transition:
-        transform 0.18s ease,
-        border-color 0.18s ease;
-}
-
-
-.inbox-kaart:hover {
-    transform: translateY(-2px);
-
-    border-color:
-        rgba(124, 92, 255, 0.45);
-}
-
-
-.inbox-tekst {
-    grid-area: tekst;
-
-    font-size: 1rem;
-
-    color: #f5f5f7;
-
-    overflow-wrap: anywhere;
-}
-
-
-.inbox-datum {
-    grid-area: datum;
-
-    color: #70707e;
-
-    font-size: 0.72rem;
-}
-
-
-.inbox-verwerk-knop {
-    grid-area: knop;
-
-    min-height: 44px;
-
-    padding:
-        9px
-        14px;
-
-    border: 1px solid #7c5cff;
-
-    border-radius: 10px;
-
-    background:
-        rgba(124, 92, 255, 0.12);
-
-    color: #cfc7ff;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-
-    transition:
-        background 0.15s ease,
-        color 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-
-.inbox-verwerk-knop:hover {
-    background: #7c5cff;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 0 18px rgba(124, 92, 255, 0.35);
+    font-size: 0.95rem;
 }
 
 
 /* ======================================
    TAAK KAART
-====================================== */
-
-.taak-kaart {
-    padding: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #15151d,
-            #101015
-        );
-
-    border:
-        1px solid
-        rgba(0, 180, 255, 0.2);
-
-    border-left:
-        4px solid
-        #00b4ff;
-
-    border-radius: 14px;
-}
-
+   ====================================== */
 
 .taak-kaart h3 {
+    margin: 0 0 9px;
+
     font-size: 1.05rem;
-    margin-bottom: 8px;
+    color: #ffffff;
 }
 
-
 .taak-kaart small {
-    color: #8f8f9d;
+    color: #aaa6ba;
 }
 
 
 /* ======================================
-   IDEE KAART
-====================================== */
-
-.idee-kaart {
-    padding: 19px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #191522,
-            #111117
-        );
-
-    border:
-        1px solid
-        rgba(180, 92, 255, 0.25);
-
-    border-left:
-        4px solid
-        #a55cff;
-
-    border-radius: 14px;
-
-    user-select: none;
-
-    cursor: context-menu;
-
-    transition:
-        transform 0.15s ease,
-        border-color 0.15s ease;
-}
-
-
-.idee-kaart:hover {
-    transform: translateY(-2px);
-
-    border-color:
-        rgba(180, 92, 255, 0.55);
-}
-
+   IDEEËN
+   ====================================== */
 
 .idee-tekst {
-    color: #f4f4f7;
+    margin-bottom: 6px;
+
+    color: #ffffff;
+
+    line-height: 1.5;
 
     overflow-wrap: anywhere;
 }
 
-
-.idee-datum {
-    display: block;
-
-    margin-top: 8px;
-
-    color: #777785;
-
-    font-size: 0.72rem;
+.idee-kaart {
+    cursor: pointer;
 }
 
-
-.lijst-hulptekst {
-    margin-top: 20px;
-
-    color: #646470;
-
-    font-size: 0.78rem;
-
-    text-align: center;
+.idee-kaart:active {
+    transform: scale(0.99);
 }
 
 
 /* ======================================
    CATEGORIEËN
-====================================== */
+   ====================================== */
 
 .categorie-lijst {
     display: grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
+        repeat(2, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 12px;
 }
 
-
 .categorie-kaart {
-    display: grid;
-
-    grid-template-columns:
-        auto
-        1fr
-        auto;
-
-    align-items: center;
-
-    gap: 13px;
+    min-width: 0;
 
     padding: 17px;
 
+    border: 1px solid #332d45;
+    border-radius: 16px;
+
     background:
         linear-gradient(
-            135deg,
-            #171720,
-            #111117
+            145deg,
+            #201d2d,
+            #171620
         );
 
-    border:
-        1px solid
-        rgba(124, 92, 255, 0.18);
-
-    border-radius: 14px;
+    text-align: center;
 
     transition:
         transform 0.15s ease,
-        border-color 0.15s ease;
+        border-color 0.2s ease;
 }
-
 
 .categorie-kaart:hover {
     transform: translateY(-2px);
 
-    border-color:
-        rgba(124, 92, 255, 0.45);
+    border-color: #6950a1;
 }
-
 
 .categorie-icoon {
-    width: 40px;
-    height: 40px;
+    margin-bottom: 8px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background:
-        rgba(124, 92, 255, 0.1);
-
-    font-size: 1.25rem;
+    font-size: 1.7rem;
 }
 
-
 .categorie-naam {
+    color: #ffffff;
+
+    font-size: 0.9rem;
     font-weight: 700;
 
     overflow-wrap: anywhere;
 }
 
-
 .categorie-aantal {
-    color: #7c5cff;
+    margin-top: 6px;
 
-    font-size: 0.8rem;
-    font-weight: 700;
+    color: #8f889f;
 
-    white-space: nowrap;
+    font-size: 0.75rem;
 }
 
 
 /* ======================================
-   INSTELLINGEN
-====================================== */
+   NAVIGATIE ONDERIN
+   ====================================== */
 
-.instellingen-blok {
-    display: flex;
-    flex-direction: column;
-
-    gap: 15px;
-}
-
-
-.instelling-kaart {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #171720,
-            #111117
-        );
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.08);
-
-    border-radius: 15px;
-}
-
-
-.instelling-tekst {
-    flex: 1;
-}
-
-
-.instelling-tekst h2 {
-    font-size: 1.05rem;
-
-    margin-bottom: 5px;
-}
-
-
-.instelling-tekst p {
-    color: #858592;
-
-    font-size: 0.84rem;
-}
-
-
-.instelling-knop,
-.bestand-knop {
-    flex-shrink: 0;
-
-    min-height: 44px;
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding:
-        10px
-        15px;
-
-    border:
-        1px solid
-        #7c5cff;
-
-    border-radius: 10px;
-
-    background:
-        rgba(124, 92, 255, 0.12);
-
-    color: #d8d1ff;
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    transition:
-        background 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-
-.instelling-knop:hover,
-.bestand-knop:hover {
-    background: #7c5cff;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 0 18px
-        rgba(124, 92, 255, 0.3);
-}
-
-
-.bestand-knop input {
-    position: absolute;
-
-    width: 1px;
-    height: 1px;
-
-    opacity: 0;
-
-    pointer-events: none;
-}
-
-
-.instelling-kaart.gevaarlijk {
-    border-color:
-        rgba(255, 70, 90, 0.15);
-}
-
-
-.gevaar-knop {
-    border-color: #ff4660;
-
-    color: #ff9aa8;
-
-    background:
-        rgba(255, 70, 90, 0.08);
-}
-
-
-.gevaar-knop:hover {
-    background: #ff4660;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 0 18px
-        rgba(255, 70, 90, 0.3);
-}
-
-
-/* ======================================
-   ONDERNAVIGATIE
-====================================== */
-
-.onder-navigatie {
+.bottom-nav {
     position: fixed;
-
-    z-index: 100;
 
     left: 0;
     right: 0;
     bottom: 0;
 
-    height: 82px;
+    z-index: 100;
 
     display: grid;
 
     grid-template-columns:
-        repeat(
-            6,
-            1fr
-        );
+        repeat(5, 1fr);
 
-    align-items: stretch;
+    gap: 4px;
 
     padding:
-        7px
-        max(
-            7px,
-            env(safe-area-inset-right)
-        )
-        max(
-            7px,
-            env(safe-area-inset-bottom)
-        )
-        max(
-            7px,
-            env(safe-area-inset-left)
-        );
+        9px 8px
+        calc(9px + env(safe-area-inset-bottom));
+
+    border-top: 1px solid #302c3d;
 
     background:
-        rgba(10, 10, 15, 0.94);
+        rgba(15, 14, 22, 0.96);
 
-    border-top:
-        1px solid
-        rgba(124, 92, 255, 0.18);
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-    box-shadow:
-        0 -8px 30px
-        rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(14px);
 }
 
-
 .nav-knop {
-    min-width: 0;
-
     display: flex;
 
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
-    gap: 3px;
+    min-height: 58px;
+
+    padding: 6px 3px;
 
     border: 0;
-
-    border-radius: 10px;
+    border-radius: 12px;
 
     background: transparent;
 
-    color: #666674;
+    color: #777386;
 
     font-size: 0.68rem;
     font-weight: 700;
 
     transition:
-        color 0.15s ease,
-        background 0.15s ease;
+        color 0.2s ease,
+        background 0.2s ease;
 }
 
-
-.nav-icoon {
-    font-size: 1.25rem;
-
-    line-height: 1;
+.nav-knop span {
+    font-size: 1.2rem;
+    margin-bottom: 3px;
 }
-
 
 .nav-knop:hover {
-    color: #cfc7ff;
-
-    background:
-        rgba(124, 92, 255, 0.07);
+    color: #cbb8ff;
 }
-
 
 .nav-knop.actief {
     color: #ffffff;
 
-    background:
-        rgba(124, 92, 255, 0.12);
+    background: #241d35;
 
-    text-shadow:
-        0 0 10px
-        rgba(124, 92, 255, 0.7);
+    box-shadow:
+        inset 0 0 0 1px #4b3a73;
 }
 
 
 /* ======================================
-   MODAL
-====================================== */
+   INSTELLINGEN
+   ====================================== */
 
-.modal {
+.instellingen-blok {
+    margin-bottom: 18px;
+    padding: 18px;
+
+    border: 1px solid #302c3d;
+    border-radius: 16px;
+
+    background: #191824;
+}
+
+.instellingen-blok h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.instellingen-blok p {
+    margin: 0 0 14px;
+
+    color: #8f899d;
+    line-height: 1.5;
+}
+
+
+/* ======================================
+   ALGEMENE KNOP
+   ====================================== */
+
+.knop {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #413750;
+    border-radius: 12px;
+
+    background: #211d2b;
+    color: #ffffff;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.knop:hover {
+    background: #2b2538;
+    border-color: #6950a1;
+
+    transform: translateY(-1px);
+}
+
+.knop.gevaar {
+    border-color: #713b49;
+
+    background: #351c24;
+    color: #ff9faf;
+}
+
+.knop.gevaar:hover {
+    border-color: #a54c61;
+
+    background: #46232e;
+}
+
+
+/* ======================================
+   MODAL ACHTERGROND
+   ====================================== */
+
+.verwerk-modal {
     position: fixed;
 
-    z-index: 1000;
-
     inset: 0;
+
+    z-index: 1000;
 
     display: flex;
 
@@ -963,176 +638,109 @@ textarea {
     padding: 18px;
 
     background:
-        rgba(0, 0, 0, 0.78);
+        rgba(5, 5, 10, 0.82);
 
-    backdrop-filter:
-        blur(8px);
-
-    -webkit-backdrop-filter:
-        blur(8px);
-
-    overflow-y: auto;
+    backdrop-filter: blur(7px);
 }
 
-
-.modal:not(.open) {
+.verwerk-modal:not(.open) {
     display: none;
 }
 
 
-.modal-inhoud {
-    width: min(680px, 100%);
+/* ======================================
+   MODAL
+   ====================================== */
 
-    max-height:
-        calc(
-            100vh - 36px
-        );
+.verwerk-modal-inhoud {
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 36px);
 
     overflow-y: auto;
+
+    padding: 22px;
+
+    border: 1px solid #44385b;
+    border-radius: 20px;
 
     background:
         linear-gradient(
             145deg,
-            #1a1a24,
-            #101015
+            #211e2c,
+            #15141d
         );
 
-    border:
-        1px solid
-        rgba(124, 92, 255, 0.4);
-
-    border-radius: 20px;
-
     box-shadow:
-        0 25px 80px
-        rgba(0, 0, 0, 0.65),
-        0 0 35px
-        rgba(124, 92, 255, 0.12);
-
-    animation:
-        modalBinnenkomen
-        0.18s
-        ease-out;
-}
-
-
-@keyframes modalBinnenkomen {
-
-    from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(139, 92, 246, 0.12);
 }
 
 
 /* ======================================
    MODAL HEADER
-====================================== */
+   ====================================== */
 
-.modal-header {
+.verwerk-modal-header {
     display: flex;
 
     align-items: flex-start;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 15px;
 
-    padding:
-        22px
-        22px
-        16px;
+    margin-bottom: 20px;
 }
 
+.verwerk-modal-header h2 {
+    margin: 0;
 
-.modal-header h2 {
-    font-size: 1.7rem;
+    color: #ffffff;
+
+    font-size: 1.25rem;
 }
-
 
 .modal-sluiten {
-    flex-shrink: 0;
+    flex: 0 0 auto;
 
     width: 42px;
     height: 42px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.12);
-
+    border: 1px solid #40384c;
     border-radius: 50%;
 
-    background:
-        rgba(255, 255, 255, 0.05);
+    background: #201d28;
+    color: #aaa6ba;
 
-    color: #ffffff;
-
-    font-size: 1.8rem;
-    line-height: 1;
+    font-size: 1.2rem;
 
     transition:
-        background 0.15s ease,
-        transform 0.15s ease;
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
-
 .modal-sluiten:hover {
-    background:
-        rgba(255, 70, 90, 0.2);
-
-    transform: rotate(5deg);
+    background: #302b3a;
+    color: #ffffff;
 }
 
 
 /* ======================================
-   BRONTEKST
-====================================== */
+   TEKST DIE VERWERKT WORDT
+   ====================================== */
 
-.verwerk-bron {
-    margin:
-        0
-        22px
-        22px;
+.verwerk-item-tekst {
+    margin-bottom: 22px;
+    padding: 15px;
 
-    padding: 17px;
+    border-left: 3px solid #8b5cf6;
+    border-radius: 8px;
 
-    background:
-        rgba(124, 92, 255, 0.07);
+    background: #17151f;
 
-    border:
-        1px solid
-        rgba(124, 92, 255, 0.18);
+    color: #d9d5e4;
 
-    border-radius: 13px;
-}
-
-
-.bron-label {
-    margin-bottom: 7px;
-
-    color: #7c5cff;
-
-    font-size: 0.7rem;
-    font-weight: 800;
-
-    letter-spacing: 0.14em;
-}
-
-
-.bron-tekst {
-    color: #eeeeF2;
-
-    font-size: 1rem;
+    line-height: 1.5;
 
     overflow-wrap: anywhere;
 }
@@ -1140,272 +748,115 @@ textarea {
 
 /* ======================================
    KEUZESCHERM
-====================================== */
+   ====================================== */
 
 .verwerk-keuzes {
-    padding:
-        0
-        22px
-        25px;
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
 }
 
+.verwerk-keuze-knop {
+    min-height: 100px;
 
-.keuze-uitleg {
-    margin-bottom: 14px;
+    padding: 18px;
 
-    color: #92929f;
+    border: 1px solid #44395b;
+    border-radius: 16px;
 
-    font-size: 0.9rem;
-}
-
-
-.keuze-knop {
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 16px;
-
-    padding: 17px;
-
-    margin-top: 10px;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.09);
-
-    border-radius: 14px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
+    background: #211d2d;
     color: #ffffff;
 
-    text-align: left;
+    font-weight: 800;
 
     transition:
         transform 0.15s ease,
-        background 0.15s ease,
-        border-color 0.15s ease;
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
-
-.keuze-knop:hover {
+.verwerk-keuze-knop:hover {
     transform: translateY(-2px);
 
-    background:
-        rgba(255, 255, 255, 0.065);
+    border-color: #8b5cf6;
+
+    background: #2a2340;
 }
 
-
-.keuze-icoon {
-    width: 45px;
-    height: 45px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    background:
-        rgba(124, 92, 255, 0.13);
-
-    font-size: 1.3rem;
+.verwerk-keuze-knop.taak {
+    box-shadow:
+        inset 0 0 20px rgba(59, 130, 246, 0.05);
 }
 
-
-.keuze-tekst {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 3px;
-}
-
-
-.keuze-tekst strong {
-    font-size: 0.98rem;
-}
-
-
-.keuze-tekst small {
-    color: #7e7e8c;
-
-    font-size: 0.78rem;
-}
-
-
-.taak-keuze {
-    border-color:
-        rgba(0, 180, 255, 0.25);
-}
-
-
-.taak-keuze .keuze-icoon {
-    background:
-        rgba(0, 180, 255, 0.12);
-}
-
-
-.idee-keuze {
-    border-color:
-        rgba(165, 92, 255, 0.25);
-}
-
-
-.idee-keuze .keuze-icoon {
-    background:
-        rgba(165, 92, 255, 0.12);
-}
-
-
-.verwijderen-keuze {
-    border-color:
-        rgba(255, 70, 90, 0.2);
-}
-
-
-.verwijderen-keuze .keuze-icoon {
-    background:
-        rgba(255, 70, 90, 0.1);
+.verwerk-keuze-knop.idee {
+    box-shadow:
+        inset 0 0 20px rgba(139, 92, 246, 0.05);
 }
 
 
 /* ======================================
    FORMULIEREN
-====================================== */
+   ====================================== */
 
-.verwerk-formulier,
-.idee-formulier {
-    padding:
-        0
-        22px
-        25px;
+.formulier-groep {
+    margin-bottom: 16px;
 }
 
+.formulier-groep label {
+    display: block;
 
-.formulier-kop {
-    margin-bottom: 20px;
-}
+    margin-bottom: 7px;
 
-
-.formulier-kop h3 {
-    font-size: 1.25rem;
-}
-
-
-.formulier-veld {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-
-    margin-bottom: 17px;
-}
-
-
-.formulier-veld label,
-.subtaken-label {
-    color: #bdbdc8;
+    color: #aaa6ba;
 
     font-size: 0.82rem;
     font-weight: 700;
 }
 
+.formulier-groep input,
+.formulier-groep select,
+.formulier-groep textarea {
+    padding: 12px 13px;
 
-.formulier-veld input,
-.formulier-veld textarea,
-.formulier-veld select {
-    width: 100%;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.1);
-
+    border: 1px solid #393345;
     border-radius: 11px;
-
-    background:
-        #111118;
-
-    padding:
-        13px
-        14px;
-
-    color: #f5f5f7;
 
     outline: none;
 
+    background: #17151f;
+    color: #ffffff;
+
     transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-
-.formulier-veld input:focus,
-.formulier-veld textarea:focus,
-.formulier-veld select:focus {
-    border-color: #7c5cff;
+.formulier-groep input:focus,
+.formulier-groep select:focus,
+.formulier-groep textarea:focus {
+    border-color: #8b5cf6;
 
     box-shadow:
-        0 0 0 3px
-        rgba(124, 92, 255, 0.1);
+        0 0 0 3px rgba(139, 92, 246, 0.12);
 }
 
+.formulier-groep textarea {
+    min-height: 100px;
 
-.formulier-veld select {
+    resize: vertical;
+}
+
+.formulier-groep select {
     appearance: auto;
-}
-
-
-.formulier-veld textarea {
-    min-height: 90px;
-}
-
-
-.formulier-veld input::placeholder,
-.formulier-veld textarea::placeholder {
-    color: #60606c;
-}
-
-
-.formulier-rij {
-    display: grid;
-
-    grid-template-columns:
-        1fr
-        1fr;
-
-    gap: 14px;
 }
 
 
 /* ======================================
    SUBTAKEN
-====================================== */
-
-.subtaken-sectie {
-    margin-top: 8px;
-
-    padding:
-        17px;
-
-    background:
-        rgba(0, 180, 255, 0.035);
-
-    border:
-        1px solid
-        rgba(0, 180, 255, 0.12);
-
-    border-radius: 14px;
-}
-
+   ====================================== */
 
 .subtaken-kop {
     display: flex;
@@ -1413,578 +864,350 @@ textarea {
     align-items: center;
     justify-content: space-between;
 
-    gap: 15px;
+    gap: 10px;
 
-    margin-bottom: 13px;
+    margin-bottom: 9px;
 }
 
-
-.subtaken-kop p {
-    margin-top: 3px;
-
-    color: #686874;
-
-    font-size: 0.73rem;
+.subtaken-kop label {
+    margin: 0;
 }
 
+#subtaakToevoegenKnop {
+    min-height: 36px;
 
-.subtaak-toevoegen {
-    flex-shrink: 0;
+    padding: 7px 11px;
 
-    border:
-        1px solid
-        rgba(0, 180, 255, 0.5);
-
+    border: 1px solid #51406e;
     border-radius: 9px;
 
-    padding:
-        8px
-        11px;
-
-    background:
-        rgba(0, 180, 255, 0.08);
-
-    color: #79d9ff;
+    background: #251e34;
+    color: #cbb8ff;
 
     font-size: 0.78rem;
     font-weight: 700;
 }
 
-
-.subtaak-toevoegen:hover {
-    background:
-        rgba(0, 180, 255, 0.18);
+#subtaakToevoegenKnop:hover {
+    border-color: #8b5cf6;
+    background: #302442;
 }
-
-
-.subtaken-lijst {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-}
-
 
 .subtaak-regel {
     display: flex;
 
-    align-items: center;
-
     gap: 8px;
+
+    margin-bottom: 9px;
 }
 
-
 .subtaak-input {
-    flex: 1;
-
     min-width: 0;
 
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.1);
+    padding: 11px 12px;
 
-    border-radius: 9px;
+    border: 1px solid #393345;
+    border-radius: 10px;
 
-    background:
-        #111118;
-
-    color: #f5f5f7;
-
-    padding:
-        11px
-        12px;
+    background: #17151f;
+    color: #ffffff;
 
     outline: none;
 }
 
-
 .subtaak-input:focus {
-    border-color:
-        #00b4ff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(0, 180, 255, 0.08);
+    border-color: #8b5cf6;
 }
-
-
-.subtaak-input::placeholder {
-    color: #5e5e69;
-}
-
 
 .subtaak-verwijder {
-    width: 40px;
-    height: 40px;
+    flex: 0 0 42px;
 
-    flex-shrink: 0;
+    border: 1px solid #59333f;
+    border-radius: 10px;
 
-    border:
-        1px solid
-        rgba(255, 70, 90, 0.25);
+    background: #281a21;
+    color: #ff9faf;
 
-    border-radius: 9px;
-
-    background:
-        rgba(255, 70, 90, 0.07);
-
-    color: #ff8494;
-
-    font-size: 1rem;
+    font-weight: 800;
 }
 
-
 .subtaak-verwijder:hover {
-    background:
-        rgba(255, 70, 90, 0.18);
+    background: #39212a;
 }
 
 
 /* ======================================
-   FORMULIER ACTIES
-====================================== */
+   FORMULIER KNOPPEN
+   ====================================== */
 
-.formulier-acties {
+.formulier-knoppen {
     display: flex;
-
-    justify-content: flex-end;
 
     gap: 10px;
 
-    margin-top: 22px;
+    margin-top: 20px;
+}
+
+.formulier-knoppen button {
+    flex: 1;
 }
 
 
-.primaire-knop,
-.secundaire-knop {
-    min-height: 46px;
+/* ======================================
+   TAAK OPSLAAN
+   ====================================== */
 
-    border-radius: 11px;
+.taak-opslaan-knop,
+.idee-opslaan-knop {
+    min-height: 48px;
 
-    padding:
-        11px
-        18px;
+    border: 0;
+    border-radius: 12px;
+
+    background: #8b5cf6;
+    color: #ffffff;
 
     font-weight: 800;
 
-    transition:
-        transform 0.15s ease,
-        filter 0.15s ease,
-        background 0.15s ease;
+    box-shadow:
+        0 0 12px rgba(139, 92, 246, 0.28);
 }
 
-
-.primaire-knop {
-    border: 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c5cff,
-            #00b4ff
-        );
-
-    color: #ffffff;
+.taak-opslaan-knop:hover,
+.idee-opslaan-knop:hover {
+    background: #9b72f7;
 
     box-shadow:
-        0 5px 18px
-        rgba(124, 92, 255, 0.18);
+        0 0 20px rgba(139, 92, 246, 0.42);
 }
 
 
-.primaire-knop:hover {
-    filter: brightness(1.12);
+/* ======================================
+   ANNULEREN / TERUG
+   ====================================== */
 
-    transform: translateY(-1px);
+.taak-annuleren-knop,
+.terug-naar-keuzes {
+    min-height: 48px;
+
+    border: 1px solid #40394c;
+    border-radius: 12px;
+
+    background: #211e28;
+    color: #aaa6ba;
+
+    font-weight: 700;
 }
 
-
-.secundaire-knop {
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.12);
-
-    background:
-        rgba(255, 255, 255, 0.04);
-
-    color: #a5a5b1;
-}
-
-
-.secundaire-knop:hover {
-    background:
-        rgba(255, 255, 255, 0.08);
-
+.taak-annuleren-knop:hover,
+.terug-naar-keuzes:hover {
+    background: #2d2935;
     color: #ffffff;
 }
 
 
 /* ======================================
-   VERBORGEN PAGINA
-====================================== */
+   VERWIJDER INBOX
+   ====================================== */
 
-.verborgen-pagina {
-    display: none !important;
+.verwijder-inbox-knop {
+    width: 100%;
+
+    margin-top: 12px;
+
+    min-height: 44px;
+
+    border: 1px solid #673744;
+    border-radius: 11px;
+
+    background: #291b21;
+    color: #ff9faf;
+
+    font-weight: 700;
+}
+
+.verwijder-inbox-knop:hover {
+    background: #3a2028;
+    border-color: #965064;
 }
 
 
 /* ======================================
-   SCROLLBARS
-====================================== */
+   IDEE SCHERM
+   ====================================== */
 
-* {
-    scrollbar-width: thin;
-
-    scrollbar-color:
-        #373744
-        #101015;
+.idee-scherm {
+    width: 100%;
 }
 
 
-*::-webkit-scrollbar {
+/* ======================================
+   FILE INPUT
+   ====================================== */
+
+input[type="file"] {
+    padding: 10px;
+
+    border: 1px dashed #453b55;
+    border-radius: 10px;
+
+    background: #17151f;
+    color: #aaa6ba;
+}
+
+
+/* ======================================
+   SCROLLBAR
+   ====================================== */
+
+::-webkit-scrollbar {
     width: 8px;
 }
 
-
-*::-webkit-scrollbar-track {
-    background: #101015;
+::-webkit-scrollbar-track {
+    background: #111018;
 }
 
-
-*::-webkit-scrollbar-thumb {
-    background: #373744;
-
+::-webkit-scrollbar-thumb {
     border-radius: 10px;
+
+    background: #393246;
 }
 
-
-*::-webkit-scrollbar-thumb:hover {
-    background: #555565;
+::-webkit-scrollbar-thumb:hover {
+    background: #51466a;
 }
 
 
 /* ======================================
-   TABLET
-====================================== */
+   FOCUS
+   ====================================== */
 
-@media (max-width: 800px) {
-
-    .pagina-inhoud {
-        padding:
-            24px
-            17px
-            35px;
-    }
-
-
-    .hoofdscherm {
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-
-
-    .categorie-lijst {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
-    }
-
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
 }
 
 
 /* ======================================
    MOBIEL
-====================================== */
+   ====================================== */
 
 @media (max-width: 600px) {
 
-    #app {
-        padding-bottom: 88px;
+    .app-header {
+        padding-top: 22px;
     }
 
+    .logo {
+        font-size: 2rem;
+    }
 
     .pagina {
-        min-height:
-            calc(
-                100vh - 88px
-            );
+        padding-left: 13px;
+        padding-right: 13px;
     }
 
-
-    .pagina-inhoud {
-        padding:
-            20px
-            13px
-            30px;
+    .hoofd-invoer {
+        padding-top: 25px;
     }
-
-
-    .hoofdscherm {
-        min-height:
-            calc(
-                100vh - 88px
-            );
-
-        padding:
-            20px
-            13px
-            105px;
-    }
-
-
-    .lucy-logo {
-        font-size:
-            clamp(
-                3.4rem,
-                20vw,
-                5.5rem
-            );
-    }
-
-
-    .lucy-ondertitel {
-        font-size: 0.88rem;
-    }
-
-
-    .snel-toevoegen-form {
-        margin-top: 35px;
-
-        border-radius: 15px;
-    }
-
-
-    #snelInput {
-        padding:
-            17px
-            15px;
-
-        font-size: 1rem;
-    }
-
-
-    .hoofd-toevoegen-knop {
-        flex-basis: 56px;
-    }
-
-
-    .pagina-header {
-        margin-bottom: 20px;
-    }
-
-
-    .pagina-header h1 {
-        font-size: 1.8rem;
-    }
-
-
-    .inbox-kaart {
-        grid-template-columns: 1fr;
-
-        grid-template-areas:
-            "tekst"
-            "datum"
-            "knop";
-
-        gap: 8px;
-
-        padding: 15px;
-    }
-
-
-    .inbox-verwerk-knop {
-        width: 100%;
-
-        margin-top: 5px;
-    }
-
 
     .categorie-lijst {
-        grid-template-columns: 1fr;
-    }
-
-
-    .instelling-kaart {
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 15px;
-    }
-
-
-    .instelling-knop,
-    .bestand-knop {
-        width: 100%;
-    }
-
-
-    .onder-navigatie {
-        height: 78px;
-
         grid-template-columns:
-            repeat(
-                6,
-                minmax(0, 1fr)
-            );
-
-        padding:
-            5px
-            4px
-            max(
-                5px,
-                env(safe-area-inset-bottom)
-            )
-            4px;
+            repeat(2, minmax(0, 1fr));
     }
 
-
-    .nav-knop {
-        font-size: 0.57rem;
-
-        border-radius: 8px;
+    .verwerk-modal {
+        padding: 10px;
     }
 
+    .verwerk-modal-inhoud {
+        max-height: calc(100vh - 20px);
 
-    .nav-icoon {
-        font-size: 1.12rem;
+        padding: 18px;
+
+        border-radius: 18px;
     }
 
-
-    .modal {
-        align-items: flex-end;
-
-        padding: 0;
-    }
-
-
-    .modal-inhoud {
-        width: 100%;
-
-        max-height:
-            calc(
-                100vh - 15px
-            );
-
-        border-radius:
-            20px
-            20px
-            0
-            0;
-
-        border-bottom: 0;
-    }
-
-
-    .modal-header {
-        padding:
-            19px
-            17px
-            14px;
-    }
-
-
-    .verwerk-bron {
-        margin:
-            0
-            17px
-            17px;
-    }
-
-
-    .verwerk-keuzes,
-    .verwerk-formulier,
-    .idee-formulier {
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-
-
-    .keuze-knop {
-        padding: 14px;
-    }
-
-
-    .formulier-rij {
+    .verwerk-keuzes {
         grid-template-columns: 1fr;
-        gap: 0;
     }
 
+    .verwerk-keuze-knop {
+        min-height: 75px;
+    }
 
-    .subtaken-kop {
-        align-items: flex-start;
+    .formulier-knoppen {
         flex-direction: column;
-    }
-
-
-    .subtaak-toevoegen {
-        width: 100%;
-    }
-
-
-    .formulier-acties {
-        flex-direction: column-reverse;
-    }
-
-
-    .primaire-knop,
-    .secundaire-knop {
-        width: 100%;
     }
 
 }
 
 
 /* ======================================
-   KLEINE TELEFOONS
-====================================== */
+   KLEINERE TELEFOONS
+   ====================================== */
 
 @media (max-width: 380px) {
 
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .categorie-lijst {
+        gap: 8px;
+    }
+
+    .categorie-kaart {
+        padding: 13px 8px;
+    }
+
     .nav-knop {
-        font-size: 0.52rem;
+        font-size: 0.62rem;
     }
 
-
-    .nav-icoon {
-        font-size: 1rem;
-    }
-
-
-    .lucy-logo {
-        font-size: 3.2rem;
-    }
-
-
-    .snel-toevoegen-form {
-        margin-top: 28px;
+    .nav-knop span {
+        font-size: 1.05rem;
     }
 
 }
 
 
 /* ======================================
-   REDUCE MOTION
-====================================== */
+   TABLET / GROTER SCHERM
+   ====================================== */
 
-@media (prefers-reduced-motion: reduce) {
+@media (min-width: 768px) {
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
+    .app-header {
+        padding-top: 35px;
+    }
 
-        animation-duration:
-            0.01ms !important;
+    .pagina {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
-        animation-iteration-count:
-            1 !important;
+    .categorie-lijst {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
 
-        transition-duration:
-            0.01ms !important;
+    .bottom-nav {
+        left: 50%;
+
+        right: auto;
+
+        width: 100%;
+        max-width: 720px;
+
+        transform: translateX(-50%);
+
+        border-left: 1px solid #302c3d;
+        border-right: 1px solid #302c3d;
     }
 
 }
