@@ -2,7 +2,6 @@
 <html lang="nl">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -22,21 +21,12 @@
 
     <title>Lucy</title>
 
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 
 <body>
-
 
 <div class="app">
 
@@ -65,6 +55,7 @@
             class="icon-button"
             type="button"
             aria-label="Instellingen"
+            title="Instellingen"
         >
             ⚙️
         </button>
@@ -420,7 +411,6 @@
                     📥 BACKUP TERUGZETTEN
                 </label>
 
-
                 <input
                     type="file"
                     id="backupInput"
@@ -472,7 +462,6 @@
 
         </section>
 
-
     </main>
 
 
@@ -481,18 +470,18 @@
          BOTTOM NAVIGATIE
     ======================================= -->
 
-    <nav class="bottom-nav">
-
+    <nav
+        class="bottom-nav"
+        aria-label="Hoofdnavigatie"
+    >
 
         <button
             class="nav-knop actief"
             data-pagina="paginaHoofd"
             type="button"
         >
-
             <span>🧠</span>
             <small>Hoofd</small>
-
         </button>
 
 
@@ -501,10 +490,8 @@
             data-pagina="paginaVerwerken"
             type="button"
         >
-
             <span>📥</span>
             <small>Verwerken</small>
-
         </button>
 
 
@@ -513,10 +500,8 @@
             data-pagina="paginaVandaag"
             type="button"
         >
-
             <span>📅</span>
             <small>Vandaag</small>
-
         </button>
 
 
@@ -525,10 +510,8 @@
             data-pagina="paginaIdeeen"
             type="button"
         >
-
             <span>💡</span>
             <small>Ideeën</small>
-
         </button>
 
 
@@ -537,15 +520,11 @@
             data-pagina="paginaCategorieen"
             type="button"
         >
-
             <span>🗂️</span>
             <small>Categorieën</small>
-
         </button>
 
-
     </nav>
-
 
 </div>
 
@@ -561,8 +540,15 @@
     hidden
 >
 
-    <div class="modal">
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="verwerkModalTitel"
+    >
 
+
+        <!-- MODAL HEADER -->
 
         <div class="modal-header">
 
@@ -572,7 +558,7 @@
                     VERWERKEN
                 </span>
 
-                <h2>
+                <h2 id="verwerkModalTitel">
                     Wat wil je hiermee?
                 </h2>
 
@@ -583,13 +569,16 @@
                 id="modalSluiten"
                 class="modal-sluit-knop"
                 type="button"
-                aria-label="Sluiten"
+                aria-label="Verwerken sluiten"
             >
                 ✕
             </button>
 
         </div>
 
+
+
+        <!-- ITEM -->
 
         <div class="verwerk-item">
 
@@ -600,6 +589,11 @@
 
         </div>
 
+
+
+        <!-- ==================================
+             KEUZES
+        =================================== -->
 
         <div class="verwerk-keuzes">
 
@@ -668,8 +662,9 @@
         </div>
 
 
+
         <!-- ==================================
-             TAAK GEGEVENS
+             TAAK FORMULIER
         =================================== -->
 
         <form
@@ -707,9 +702,12 @@
             </select>
 
 
-            <label>
+            <!-- AANDACHT IS EEN KOPJE,
+                 GEEN LABEL -->
+
+            <div class="form-label">
                 Aandacht
-            </label>
+            </div>
 
 
             <div class="keuze-grid">
@@ -720,7 +718,9 @@
                     data-label="nu"
                 >
 
-                    <span>🔴</span>
+                    <span>
+                        🔴
+                    </span>
 
                     <strong>
                         Nu
@@ -739,7 +739,9 @@
                     data-label="later"
                 >
 
-                    <span>🟠</span>
+                    <span>
+                        🟠
+                    </span>
 
                     <strong>
                         Later
@@ -758,7 +760,9 @@
                     data-label="bewaren"
                 >
 
-                    <span>🔵</span>
+                    <span>
+                        🔵
+                    </span>
 
                     <strong>
                         Bewaren
@@ -801,11 +805,14 @@
             ></textarea>
 
 
+
+            <!-- SUBTAKEN -->
+
             <div class="subtaken-header">
 
-                <label>
+                <div class="form-label">
                     Subtaken
-                </label>
+                </div>
 
                 <button
                     type="button"
@@ -823,6 +830,9 @@
                 class="subtaken-lijst"
             ></div>
 
+
+
+            <!-- ACTIES -->
 
             <div class="modal-acties">
 
@@ -846,7 +856,6 @@
 
         </form>
 
-
     </div>
 
 </div>
@@ -856,5 +865,5 @@
 <script src="script.js"></script>
 
 </body>
-
 </html>
+
