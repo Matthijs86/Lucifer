@@ -2146,3 +2146,37 @@ select:focus {
     }
 
 }
+/* ======================================
+   BELANGRIJK
+   Verborgen elementen MOETEN verborgen blijven
+====================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ======================================
+   PAGINA'S
+====================================== */
+
+.pagina {
+    display: none;
+}
+
+.pagina.actief {
+    display: block;
+}
+
+
+/* ======================================
+   MODAL
+====================================== */
+
+.modal-overlay {
+    display: flex;
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
