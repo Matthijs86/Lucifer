@@ -1,723 +1,232 @@
 <!DOCTYPE html>
-
 <html lang="nl">
 
 <head>
     <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-<meta
-    name="theme-color"
-    content="#111111"
->
+    <meta
+        name="theme-color"
+        content="#09090f"
+    >
 
-<meta
-    name="description"
-    content="Lucy - Alles uit je hoofd."
->
+    <meta
+        name="description"
+        content="Lucy - Alles uit je hoofd."
+    >
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
+    <title>Lucy - Alles uit je hoofd.</title>
 
-<title>Lucy</title>
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
 
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
+
 
 <body>
 
-<div id="app">
 
-<!-- ==================================
-     HOOFDSCHERM
-=================================== -->
+    <!-- ======================================
+         HOOFDPAGINA
+         ====================================== -->
 
-<main
-    id="paginaHoofd"
-    class="pagina actief"
->
-
-    <section class="lucy-start">
-
-        <div class="lucy-logo">
-            LUCY
-        </div>
-
-        <div class="lucy-subtitel">
-            Alles uit je hoofd.
-        </div>
-
-        <form
-            id="snelToevoegenForm"
-            class="snel-toevoegen-form"
-        >
-
-            <label
-                for="snelInput"
-                class="visueel-verborgen"
-            >
-                Gedachte invoeren
-            </label>
-
-            <input
-                type="text"
-                id="snelInput"
-                name="snelInput"
-                placeholder="Gedachte invoeren..."
-                autocomplete="off"
-                enterkeyhint="done"
-            >
-
-            <button
-                type="submit"
-                class="snel-toevoegen-knop"
-                aria-label="Gedachte toevoegen"
-            >
-                +
-            </button>
-
-        </form>
-
-    </section>
-
-</main>
-
-
-<!-- ==================================
-     VERWERKEN
-=================================== -->
-
-<main
-    id="paginaVerwerken"
-    class="pagina"
->
-
-    <header class="pagina-header">
-
-        <h1>⚡ Verwerken</h1>
-
-        <p>
-            Geef iedere gedachte een plek.
-        </p>
-
-    </header>
-
-    <section
-        id="verwerkLijst"
-        class="inbox-lijst"
-    ></section>
-
-    <p
-        id="legeVerwerkLijst"
-        class="lege-melding"
-        hidden
-    >
-        Alles is verwerkt. 🧠
-    </p>
-
-</main>
-
-
-<!-- ==================================
-     VANDAAG
-=================================== -->
-
-<main
-    id="paginaVandaag"
-    class="pagina"
->
-
-    <header class="pagina-header">
-
-        <h1>📅 Vandaag</h1>
-
-        <p id="datumVandaag"></p>
-
-    </header>
-
-    <section
-        id="vandaagLijst"
-        class="taken-lijst"
-    ></section>
-
-    <p
-        id="legeVandaag"
-        class="lege-melding"
-        hidden
-    >
-        Geen taken voor vandaag.
-    </p>
-
-</main>
-
-
-<!-- ==================================
-     IDEEËN
-=================================== -->
-
-<main
-    id="paginaIdeeen"
-    class="pagina"
->
-
-    <header class="pagina-header">
-
-        <h1>💡 Ideeën</h1>
-
-        <p>
-            Ideeën voor later.
-        </p>
-
-    </header>
-
-    <section
-        id="ideeenLijst"
-        class="ideeen-lijst"
-    ></section>
-
-    <p
-        id="legeIdeeen"
-        class="lege-melding"
-        hidden
-    >
-        Nog geen ideeën voor later.
-    </p>
-
-</main>
-
-
-<!-- ==================================
-     CATEGORIEËN
-=================================== -->
-
-<main
-    id="paginaCategorieen"
-    class="pagina"
->
-
-    <header class="pagina-header">
-
-        <h1>📂 Categorieën</h1>
-
-        <p>
-            Jouw eigen categorieën.
-        </p>
-
-    </header>
-
-    <section
-        id="categorieLijst"
-        class="categorie-lijst"
-    ></section>
-
-</main>
-
-
-<!-- ==================================
-     INSTELLINGEN
-=================================== -->
-
-<main
-    id="paginaInstellingen"
-    class="pagina"
->
-
-    <header class="pagina-header">
-
-        <h1>⚙️ Instellingen</h1>
-
-    </header>
-
-    <section class="instellingen">
-
-        <div class="instelling-blok">
-
-            <h2>Backup</h2>
-
-            <p>
-                Bewaar al je gegevens als bestand.
-            </p>
-
-            <button
-                type="button"
-                id="backupKnop"
-                class="instelling-knop"
-            >
-                💾 Backup maken
-            </button>
-
-        </div>
-
-
-        <div class="instelling-blok">
-
-            <h2>Backup terugzetten</h2>
-
-            <p>
-                Zet eerder opgeslagen gegevens terug.
-            </p>
-
-            <label
-                for="backupInput"
-                class="instelling-knop"
-            >
-                📂 Backup kiezen
-            </label>
-
-            <input
-                type="file"
-                id="backupInput"
-                accept=".json,application/json"
-                hidden
-            >
-
-        </div>
-
-
-        <div class="instelling-blok gevaarlijk">
-
-            <h2>Gegevens verwijderen</h2>
-
-            <p>
-                Verwijder alle gegevens uit Lucy.
-            </p>
-
-            <button
-                type="button"
-                id="allesWissenKnop"
-                class="instelling-knop gevaar-knop"
-            >
-                🗑️ Alles wissen
-            </button>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- ==================================
-     ONDERSTE NAVIGATIE
-=================================== -->
-
-<nav
-    class="bottom-nav"
-    aria-label="Hoofdnavigatie"
->
-
-    <a
-        href="#"
-        class="nav-knop actief"
-        data-pagina="paginaHoofd"
-    >
-        <span class="nav-icoon">🧠</span>
-        <span class="nav-tekst">Lucy</span>
-    </a>
-
-
-    <a
-        href="#"
-        class="nav-knop"
-        data-pagina="paginaVerwerken"
-    >
-        <span class="nav-icoon">⚡</span>
-        <span class="nav-tekst">Verwerken</span>
-    </a>
-
-
-    <a
-        href="#"
-        class="nav-knop"
-        data-pagina="paginaVandaag"
-    >
-        <span class="nav-icoon">📅</span>
-        <span class="nav-tekst">Vandaag</span>
-    </a>
-
-
-    <a
-        href="#"
-        class="nav-knop"
-        data-pagina="paginaIdeeen"
-    >
-        <span class="nav-icoon">💡</span>
-        <span class="nav-tekst">Ideeën</span>
-    </a>
-
-
-    <a
-        href="#"
-        class="nav-knop"
-        data-pagina="paginaCategorieen"
-    >
-        <span class="nav-icoon">📂</span>
-        <span class="nav-tekst">Categorieën</span>
-    </a>
-
-
-    <button
-        type="button"
-        id="instellingenKnop"
-        class="nav-knop instellingen-nav-knop"
-    >
-        <span class="nav-icoon">⚙️</span>
-        <span class="nav-tekst">Instellingen</span>
-    </button>
-
-</nav>
-
-</div>
-
-<!-- ======================================
-     VERWERKEN MODAL
-======================================= -->
-
-<div
-    id="verwerkModal"
-    class="modal"
-    hidden
->
-
-<div
-    class="modal-inhoud"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="verwerkItemTekst"
->
-
-    <button
-        type="button"
-        id="modalSluiten"
-        class="modal-sluiten"
-        aria-label="Verwerken sluiten"
-    >
-        ×
-    </button>
-
-
-    <!-- ==============================
-         KEUZESCHERM
-    =============================== -->
-
-    <section
-        id="verwerkKeuzeScherm"
-        class="verwerk-scherm"
+    <main
+        id="paginaHoofd"
+        class="pagina actief"
     >
 
-        <div class="verwerk-kop">
+        <section class="lucy-start">
 
-            <span class="verwerk-label">
-                GEDACHTE
-            </span>
+            <div class="lucy-logo-blok">
 
-            <div
-                id="verwerkItemTekst"
-                class="verwerk-item-tekst"
-            ></div>
+                <h1 class="lucy-logo">
+                    LUCY
+                </h1>
 
-        </div>
-
-
-        <div class="verwerk-keuzes">
-
-            <button
-                type="button"
-                id="maakTaakKnop"
-                class="verwerk-keuze taak-keuze"
-            >
-
-                <span class="keuze-icoon">
-                    ☑️
-                </span>
-
-                <span class="keuze-tekst">
-
-                    <strong>
-                        Maak er een taak van
-                    </strong>
-
-                    <small>
-                        Iets wat je daadwerkelijk moet doen.
-                    </small>
-
-                </span>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="maakIdeeKnop"
-                class="verwerk-keuze idee-keuze"
-            >
-
-                <span class="keuze-icoon">
-                    💡
-                </span>
-
-                <span class="keuze-tekst">
-
-                    <strong>
-                        Idee voor later
-                    </strong>
-
-                    <small>
-                        Bewaar het zonder dat je er nu iets mee hoeft.
-                    </small>
-
-                </span>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="verwijderInboxKnop"
-                class="verwerk-verwijder"
-            >
-                🗑️ Weggooien
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==============================
-         TAAKSCHERM
-    =============================== -->
-
-    <form
-        id="taakForm"
-        class="verwerk-form"
-        hidden
-    >
-
-        <div class="form-kop">
-
-            <h2>
-                ☑️ Nieuwe taak
-            </h2>
-
-            <p>
-                Geef deze gedachte een duidelijke plek.
-            </p>
-
-        </div>
-
-
-        <input
-            type="hidden"
-            id="bewerkId"
-            name="bewerkId"
-        >
-
-
-        <div class="form-veld">
-
-            <label for="bewerkTitel">
-                Taak
-            </label>
-
-            <input
-                type="text"
-                id="bewerkTitel"
-                name="bewerkTitel"
-                autocomplete="off"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-veld">
-
-            <label for="categorieSelect">
-                Categorie
-            </label>
-
-            <input
-                type="text"
-                id="categorieSelect"
-                name="categorieSelect"
-                list="categorieSuggesties"
-                placeholder="Bijvoorbeeld: Huis"
-                autocomplete="off"
-            >
-
-            <datalist id="categorieSuggesties"></datalist>
-
-            <small class="veld-hulp">
-                Typ zelf een categorie. Deze blijft beschikbaar voor later.
-            </small>
-
-        </div>
-
-
-        <div class="form-veld">
-
-            <label for="datumSelect">
-                Wanneer?
-            </label>
-
-            <input
-                type="date"
-                id="datumSelect"
-                name="datumSelect"
-            >
-
-        </div>
-
-
-        <div class="form-veld">
-
-            <label for="notitieInput">
-                Notitie
-            </label>
-
-            <textarea
-                id="notitieInput"
-                name="notitieInput"
-                rows="4"
-                placeholder="Extra informatie..."
-            ></textarea>
-
-        </div>
-
-
-        <!-- ==========================
-             SUBTAKEN
-        =========================== -->
-
-        <div class="subtaken-sectie">
-
-            <div class="subtaken-kop">
-
-                <div>
-
-                    <h3>
-                        Subtaken
-                    </h3>
-
-                    <p>
-                        Kleine stappen die samen de taak vormen.
-                    </p>
-
-                </div>
-
-                <button
-                    type="button"
-                    id="subtaakToevoegenKnop"
-                    class="subtaak-toevoegen"
-                >
-                    + Subtaak
-                </button>
+                <p class="lucy-ondertitel">
+                    Alles uit je hoofd.
+                </p>
 
             </div>
 
 
-            <div
-                id="subtakenLijst"
-                class="subtaken-lijst"
-            ></div>
+            <!-- GEDACHTE INVOER -->
 
-        </div>
+            <form
+                id="snelToevoegenForm"
+                class="snel-toevoegen-form"
+            >
+
+                <label
+                    for="snelInput"
+                    class="visueel-verborgen"
+                >
+                    Gedachte
+                </label>
+
+                <textarea
+                    id="snelInput"
+                    name="gedachte"
+                    class="snel-input"
+                    placeholder="Gooi hier alles uit je hoofd..."
+                    autocomplete="off"
+                    autocapitalize="sentences"
+                    spellcheck="true"
+                    rows="8"
+                ></textarea>
 
 
-        <div class="form-acties">
+                <button
+                    type="submit"
+                    class="snel-opslaan-knop"
+                >
+                    OPSLAAN
+                </button>
+
+            </form>
+
+
+            <!-- ======================================
+                 GROTE VERWERKEN KNOP
+                 ====================================== -->
 
             <button
                 type="button"
-                id="taakAnnulerenKnop"
-                class="secundaire-knop"
+                id="verwerkKnop"
+                class="grote-verwerk-knop"
             >
-                Annuleren
+
+                <span class="verwerk-icoon">
+                    🧠
+                </span>
+
+                <span class="verwerk-tekst">
+                    VERWERKEN
+                </span>
+
+                <span class="verwerk-uitleg">
+                    Bekijk je gedachten
+                </span>
+
             </button>
 
-            <button
-                type="submit"
-                class="primaire-knop"
-            >
-                ✓ Taak opslaan
-            </button>
+        </section>
 
-        </div>
-
-    </form>
+    </main>
 
 
-    <!-- ==============================
-         IDEE SCHERM
-    =============================== -->
 
-    <section
-        id="ideeScherm"
-        class="verwerk-form"
-        hidden
+    <!-- ======================================
+         VERWERK PAGINA
+         ====================================== -->
+
+    <main
+        id="paginaVerwerken"
+        class="pagina"
     >
 
-        <div class="form-kop">
+        <section class="verwerken-pagina">
 
-            <h2>
-                💡 Idee voor later
-            </h2>
+            <!-- PAGINA KOP -->
 
-            <p>
-                Bewaar het idee. Je hoeft er nu niets mee.
-            </p>
+            <header class="verwerken-header">
 
-        </div>
-
-
-        <div class="form-veld">
-
-            <label for="ideeTitel">
-                Idee
-            </label>
-
-            <textarea
-                id="ideeTitel"
-                name="ideeTitel"
-                rows="6"
-                placeholder="Je idee..."
-            ></textarea>
-
-        </div>
+                <button
+                    type="button"
+                    id="terugNaarLucy"
+                    class="terug-knop"
+                >
+                    ← LUCY
+                </button>
 
 
-        <div class="form-acties">
+                <div class="verwerken-titel-blok">
 
-            <button
-                type="button"
-                id="terugNaarKeuzes"
-                class="secundaire-knop"
+                    <h1>
+                        VERWERKEN
+                    </h1>
+
+                    <p>
+                        Wat wil je met deze gedachten doen?
+                    </p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- ======================================
+                 GEDACHTEN
+                 ====================================== -->
+
+            <section
+                id="verwerkLijst"
+                class="verwerk-lijst"
+                aria-live="polite"
             >
-                ← Terug
-            </button>
+                <!-- Gedachten worden hier door
+                     script.js geplaatst -->
+            </section>
 
-            <button
-                type="button"
-                id="ideeOpslaan"
-                class="primaire-knop"
+
+            <!-- ======================================
+                 GEEN GEDACHTEN
+                 ====================================== -->
+
+            <div
+                id="legeVerwerkLijst"
+                class="lege-verwerk-lijst"
+                hidden
             >
-                ✓ Idee bewaren
-            </button>
 
-        </div>
+                <div class="lege-verwerk-icoon">
+                    🧠
+                </div>
 
-    </section>
+                <h2>
+                    Je hoofd is leeg.
+                </h2>
 
-</div>
+                <p>
+                    Er staan geen gedachten meer
+                    te verwerken.
+                </p>
 
-</div>
+                <button
+                    type="button"
+                    class="terug-naar-lucy-groot"
+                    onclick="paginaOpenen('paginaHoofd')"
+                >
+                    ← TERUG NAAR LUCY
+                </button>
 
-<script src="script.js"></script>
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ======================================
+         JAVASCRIPT
+         ====================================== -->
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
 
 
